@@ -62,11 +62,24 @@ function CreatePost() {
     var _time; 
     var _date; 
     var _buddies; 
+    var $location = $('.location')
+    var $name = $('.name')
+    var $time = $('.time-selector')
+    var $date = $('.date-selector')
+    var $buddies = $('.buddies')
+    var $description = $('.description')
 
     var createPost = function() {
 
         var isValid = function(data) {
             console.log(data)
+
+            if (!data.name || data.name.length < 3)                 return false
+            if (!data.location || data.location.length < 3)         return false
+            if (!data.description || data.description.length < 3)   return false
+            if (!data.time || data.time.length < 1)                 return false
+            if (!data.date || data.date.length < 1)                 return false
+            if (!data.buddies)                                      return false
             return true;
         }
         
@@ -74,7 +87,6 @@ function CreatePost() {
 
             var date = $('.root-date-selector input')[0].value;
             var time = $('.root-time-selector input')[0].value;
-            console.log(time)
 
             var data = {
                 name:              _name,
@@ -84,7 +96,13 @@ function CreatePost() {
                 date:              date,
                 buddies:           _buddies
             }
-            if (!isValid(data)) return false
+            if (!isValid(data)) { 
+                $('.error').removeClass('hidden');
+                return false
+            } else {
+                $('.error').addClass('hidden');
+                // todo post to server
+            }
 
         }
 
@@ -92,14 +110,24 @@ function CreatePost() {
     };
 
     var handleChange = function(value, field) {
-        console.log('here');
-    if (field === 'name')           _name                   = value.target.value
-    if (field === 'location')       _location               = value.target.value
-    if (field === 'description')    _description            = value.target.value
-    if (field === 'time')           { _time                 = value.target.value; console.log(_time) }
-    if (field === 'date')           { _date                 = value.target.value; console.log(_date) }
-    if (field === 'buddies')        { _buddies              = value.target.value; console.log(_buddies) }
-    }
+
+        // var className = '.' + field
+        // console.log(className);
+        // console.log($(className));
+        // var isError = (value.target.value.length < 3) ? true : false;
+        // $(className).attr('error', isError)
+
+        // if (isError) return;
+        if (field === 'name')           _name                = value.target.value
+        if (field === 'location')       _location             = value.target.value
+        if (field === 'description')    _description          = value.target.value
+        if (field === 'time')           _time                 = value.target.value;
+        if (field === 'date')           _date                 = value.target.value;
+        if (field === 'buddies')        _buddies              = value.target.value;
+        
+            
+       
+    };
 
     return (
         <article className='root-create-post'>
@@ -108,20 +136,20 @@ function CreatePost() {
 
             <Container>
                 <TextField id="activity-name"   className="full-text name" label="Activity Name" variant="outlined" onChange={function(value) {handleChange(value, 'name')}} />
-                <TextField id="outlined-basic"  className="full-text" label="Location" variant="outlined" onChange={function(value) {handleChange(value, 'location')}}/>
+                <TextField id="outlined-basic"  className="full-text location" label="Location" variant="outlined" onChange={function(value) {handleChange(value, 'location')}}/>
                 <Row>
 
                     <Col>
-                        <DateSelector className="date-selector" onChange={function(value) {handleChange(value, 'date')}}/>
+                        <DateSelector error className="date-selector"/>
                     </Col>
 
                     <Col>
-                        <TimeSelector className="time-selector" onChange={function(value) {handleChange(value, 'time')}}/>
+                        <TimeSelector className="time-selector"/>
                     </Col>
                     
                 </Row>
-                <TextField id="outlined-multiline-static" className="full-text" label="Describe Plan" multiline rows={3} onChange={function(value) {handleChange(value, 'description')}} />
-                <TextField id="outlined-select-currency" className='full-text' select label="Buddies Needed" defaultValue="Any" onChange={function(value) {handleChange(value, 'buddies')}}>
+                <TextField id="outlined-multiline-static" className="full-text description" label="Describe Plan" multiline rows={3} onChange={function(value) {handleChange(value, 'description')}} />
+                <TextField id="outlined-select-currency" className='full-text buddies' select label="Buddies Needed" defaultValue="Any" onChange={function(value) {handleChange(value, 'buddies')}}>
                     {numberOfBuddies.map((option) => (
                         <MenuItem key={option.id} value={option.value}>
                             {option.value}
@@ -131,6 +159,7 @@ function CreatePost() {
             </Container>
 
             <button className='button' onClick={createPost}>Create</button>
+            <p className='hidden error'>Please Fix Errors Indicated Above</p>
 
         </article>
     );

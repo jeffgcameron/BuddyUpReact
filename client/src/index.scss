@@ -3,10 +3,20 @@
 
 $mainBlue:             		#445d71;
 $mainWhite:             	#FFFFFF;
+$styleText:					'Economica', sans-serif;
 
 body {
-	font-family: 			'Economica', sans-serif;
+	font-family: 			"Roboto","Helvetica","Arial",sans-serif;
 	font-size: 				16px;
+}
+
+h1, h2, h3, .header-text {
+   font-family: 			$styleText;
+   font-weight: 			bold;
+}
+
+.style-text {
+	font-family: 			$styleText;
 }
 
 .main-blue {
@@ -27,5 +37,10 @@ li {
 	width: 					7em;
 	border: 				none;
 	margin-top: 			1em;
-	padding: .33em
+	padding: 				.33em;
+	font-family: 			$styleText;
+}
+
+.hidden {
+    display: none;
 }

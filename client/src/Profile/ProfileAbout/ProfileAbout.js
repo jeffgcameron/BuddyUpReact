@@ -20,8 +20,8 @@ var profiles = [
     return (
         <article className='root-profile-about'>
             <img className='profile-picture' src={jeffProPic} alt="Profile"></img>
-            <div className='profile-name'>{profiles[0].name}</div>
-            <div className='profile-location'><FontAwesomeIcon icon={faLocationDot} /> {profiles[0].location}</div>
+            <div className='profile-name header-text'>{profiles[0].name}</div>
+            <div className='profile-location style-text'><FontAwesomeIcon icon={faLocationDot} /> {profiles[0].location}</div>
             <div className='profile-bio'>{profiles[0].about}</div>
         </article>
     )

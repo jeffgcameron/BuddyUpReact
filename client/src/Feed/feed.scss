@@ -1,7 +1,11 @@
 @import '../index.scss';
 
 .root-feed {
-    display: block;
+
+    .scroll-text{
+        font-weight: bold;
+        margin-top: 1em;
+    }
 
     .center-text {
         text-align: center;
@@ -29,15 +33,18 @@
         border-radius: 100%;
     }
 
-    .label {
-        font-weight: bold;
-    }
-
     ul {
         padding-left: unset;
     }
 
     span {
         font-weight: bold;
+    }
+
+    .view-details {
+        margin-top: .5em;
+        font-size: .9em;
+        color: $mainBlue;
+    
     }
 }

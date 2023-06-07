@@ -50,7 +50,7 @@ function ProfileActivites() {
             <Container>
                 <Row>
                     <Col>
-                        <p>Activites</p>    
+                        <p className='style-text'>Activites</p>    
                         <ul>
                             {activites.map((item) => (
                                 <li className='profile-activities' key={item.id}>
@@ -60,7 +60,7 @@ function ProfileActivites() {
                         </ul>
                     </Col>
                     <Col>
-                        <p>Certifications</p>    
+                        <p className='style-text'>Certifications</p>    
                         <ul>
                             {certifications.map((item) => (
                                 <li className='profile-certifications' key={item.id}>

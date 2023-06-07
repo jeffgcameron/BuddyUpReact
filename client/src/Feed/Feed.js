@@ -46,7 +46,7 @@ function Feed() {
 
   return (
     <article className="root-feed">
-		<p className="center-text scroll-text">Scroll to View Upcoming Activities!</p>
+		<p className="center-text scroll-text header-text">Scroll to View Upcoming Activities!</p>
 		<hr></hr>
 		{activities.map((item) => (
 			<Container key={item.id} className="activity">
@@ -59,7 +59,7 @@ function Feed() {
 								<img className='profile-picture' src={item.img} alt="Profile"></img>
 							</li>
 							
-							<li className='center-text'>{item.userName}</li>
+							<li className='center-text header-text'>{item.userName}</li>
 
 						</Col>
 						<Col xs={8} className="vertical-justify">
@@ -76,7 +76,7 @@ function Feed() {
 
 					</Row>
 
-					<li className="view-details center-text" onClick={toggleDetails}>View Plan Details</li>
+					<li className="view-details center-text header-text" onClick={toggleDetails}>View Plan Details</li>
 
 					<li className="hidden activity-details">{item.details}</li>
 
