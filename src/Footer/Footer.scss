@@ -1,0 +1,31 @@
+@import '../index.scss';
+
+.root-footer {
+
+    .phantom {
+        display:                block;
+        padding:                2em;
+        height:                 12vh;
+        width:                  100%;
+    }
+
+    .navbar {
+        height:                 10vh;
+        position:               fixed;
+        bottom:                 0;
+        width:                  100%;
+        z-index:                100;
+    }
+
+    .nav-link {
+        color:                  $mainWhite;
+        width:                  33%;
+    }
+    
+    .container {
+        min-width:              100%;
+        display:                block !important;
+        text-align:             center;
+    }
+
+}
