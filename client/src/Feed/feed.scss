@@ -1,0 +1,43 @@
+@import '../index.scss';
+
+.root-feed {
+    display: block;
+
+    .center-text {
+        text-align: center;
+    }
+
+    li {
+        width: 100%;
+    }
+
+    .align-picture {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .vertical-justify {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .profile-picture {
+        height: 10vh;
+        border-radius: 100%;
+    }
+
+    .label {
+        font-weight: bold;
+    }
+
+    ul {
+        padding-left: unset;
+    }
+
+    span {
+        font-weight: bold;
+    }
+}

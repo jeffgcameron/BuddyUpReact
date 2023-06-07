@@ -7,6 +7,22 @@
     flex-direction:             column;
 }
 
+.scroll-text{
+    font-weight: bold;
+    margin-top: 1em;
+}
+
 .footer-component {
     margin-top:                 auto;
+}
+
+.view-details {
+    margin-top: .5em;
+    font-size: .9em;
+    color: $mainBlue;
+
+}
+
+.hidden {
+    display: none;
 }
