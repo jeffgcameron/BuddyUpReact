@@ -1,0 +1,54 @@
+// @import url('https://fonts.googleapis.com/css2?family=Economica&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Economica:wght@400;700&display=swap');
+
+$mainBlue:             		#445d71;
+$mainWhite:             	#FFFFFF;
+$styleText:					'Economica', sans-serif;
+
+body {
+	font-family: 			"Roboto","Helvetica","Arial",sans-serif;
+	font-size: 				16px;
+}
+
+h1, h2, h3, .header-text {
+   font-family: 			$styleText;
+   font-weight: 			bold;
+}
+
+.style-text {
+	font-family: 			$styleText;
+}
+
+.main-blue {
+  background-color:   		$mainBlue;
+}
+
+.main-white {
+  color:              		$mainWhite;
+}
+
+li {
+	list-style: 			none;
+}
+
+.button {
+	background-color: 		$mainBlue;
+	color: 					$mainWhite;
+	width: 					7em;
+	border: 				none;
+	margin-top: 			1em;
+	padding: 				.33em;
+	font-family: 			$styleText;
+}
+
+.hidden {
+    display: 				none;
+}
+
+.center-text {
+	text-align: 			center;
+}
+
+.full-width {
+	width: 100%;
+}

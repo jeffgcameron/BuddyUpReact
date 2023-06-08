@@ -1,0 +1,25 @@
+@import '../../index.scss';
+
+.root-profile-about {
+
+    text-align:                     center;
+    min-height:                     40vh;
+
+    .profile-picture {
+        height:                     20vh;
+        border-radius:              100%;
+        margin-top:                 1em;
+    }
+
+    .profile-name {
+        font-size:                  2em;
+    }
+
+    .profile-location {
+        font-size:                  .8em;
+        margin-bottom: .5em;
+    }
+
+
+
+}
