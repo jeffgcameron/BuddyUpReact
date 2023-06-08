@@ -7,6 +7,7 @@ import CreatePost from './CreatePost/CreatePost.js';
 import Feed from './Feed/Feed.js'
 import Login from './Login/Login.js';
 import Register from './Register/Register.js';
+import BuildProfile from './BuildProfile/BuildProfile.js';
 import { Routes, Route }  from 'react-router-dom';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path='/register' element={<Register/>} />
         <Route path='/profile' element={<Profile/>} />
         <Route path='/post' element={<CreatePost/>} />
+        <Route path='/buildprofile' element={<BuildProfile/>} />
       </Routes>
       <div className='footer-component'> <Footer /></div>
     </div>

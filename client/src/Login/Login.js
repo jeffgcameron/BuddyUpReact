@@ -55,7 +55,7 @@ function Login() {
       <button className="button margin-bottom">Login</button>
       <br></br>
 
-      <Link to="/register">Not Registered? Register Here</Link>
+      <Link to="/register">Don't Have an Account? Register Here</Link>
 
     </article>
   );
