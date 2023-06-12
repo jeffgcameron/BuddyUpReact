@@ -25,15 +25,18 @@ function Register() {
     event.preventDefault();
   };
 
-  var register = function() {
-
+  var showError = function(text){
     var $error = $('.error')
+    $error.removeClass('hidden');
+    $error.text(text);
+  }
+
+  var register = function() {
 
     var passwordsMatch = function() {
 
       if (password !== confirmPassword) {
-        $error.removeClass('hidden');
-        $error.text('Passwords dont match');
+        showError('Passwords dont match');
         return false;
       }
 
@@ -43,8 +46,7 @@ function Register() {
     var passwordLengthIsValid = function() {
 
       if (password.length === 0) {
-        $error.removeClass('hidden');
-        $error.text('Password must contain a value');
+        showError('Password must contain a value');
         return false;
       }
 
@@ -54,8 +56,7 @@ function Register() {
     var emailIsEmail = function() {
 
       if (email.length === 0) {
-        $error.removeClass('hidden');
-        $error.text('Please enter valid email');
+        showError('Please enter valid email');
         return false;
       }
 
@@ -65,14 +66,20 @@ function Register() {
     if (!emailIsEmail())              return;
     if (!passwordsMatch())            return;
     if (!passwordLengthIsValid())     return;
-    $error.addClass('hidden')
+    // $error.addClass('hidden')
 
     var data = {
       email:        email,
       password:     password
     }
      
-    Axios.post("http://localhost:3001/register", data)
+    Axios.post("http://localhost:3001/register", data).then((response) => {
+      if (response.data.err) {
+        showError('This email already exists. Please sign in.')
+      }
+    }).catch((e) => {
+      console.log(e);
+    })
 
   }
 

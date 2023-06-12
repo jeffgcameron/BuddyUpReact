@@ -2,6 +2,7 @@ import './login.scss';
 import * as React from 'react';
 import TextField  from '@mui/material/TextField/TextField';
 import Axios from "axios";
+import $ from "jquery";
 import { Link } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -24,13 +25,21 @@ function Login() {
   };
 
   var login = function() {
+
     var data = {
       email:        email,
       password:     password
     }
 
       Axios.post("http://localhost:3001/login", data).then((response) => {
-        console.log(response)
+
+        if (response.data.message) {
+          var $error = $('.error');
+          $error.removeClass('hidden');
+          $error.text(response.data.message);
+        } else {
+          console.log('yeah buddy')
+        }
       })
   };
 

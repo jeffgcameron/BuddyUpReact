@@ -1,10 +1,11 @@
 const express = require("express")
 const cors = require("cors")
+
 const mysql = require("mysql")
-const badyParser = require("body-parser");
 const bodyParser = require("body-parser");
-const e = require("express");
 const app = express();
+const bcrypt = require('bcrypt');
+const { response } = require("express");
 
 app.use(express.json())
 app.use(cors());
@@ -46,13 +47,19 @@ app.post('/api/activites', (req, res) => {
 
 app.post('/register', (req, res) => {
 
-    const email      = req.body.email
-    const password   = req.body.password
+    var post = function(hash) {
+        const sqlInsert = "INSERT INTO users (email, password) VALUES (?, ?);";
+        db.query(sqlInsert, [req.body.email, hash], (err, result) => {
+                if (err) res.send({err: err});
+                if (result) res.send(result);
+        });
+    }
 
-    const sqlInsert = "INSERT INTO users (email, password) VALUES (?, ?);";
-    db.query(sqlInsert, [email, password], (err, reult) => {
-        console.log(err)
-    })
+    bcrypt.hash(req.body.password, 10).then((hash) => {
+        post(hash)
+    }) 
+
+
 
 });
 
@@ -60,18 +67,21 @@ app.post('/login', (req, res) => {
 
     const email      = req.body.email
     const password   = req.body.password
+    console.log(email)
 
-    const sqlSelect = "SELECT * FROM users WHERE username = ? AND password = ?";
-    db.query(sqlSelect, [email, password], (err, result) => {
-        if (err) {
-            res.send({err: err});
-        } 
-        
-        if (result) {
-            res.send(result);
-        } else {
-            res.send({message: 'Wrong username/password'});
-        }
+    const sqlSelect = "SELECT * FROM users WHERE email = ?";
+
+    db.query(sqlSelect, [email], (err, result) => {
+        if (result.length === 0) { res.send({message: 'No username found'}); return; }
+        bcrypt.compare(password, result[0].password).then((match) => {
+            if (!match) {
+                res.send({message: "Wrong password"})
+            } else {
+                res.json("logged in")
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
         
     })
 
