@@ -31,6 +31,20 @@ function Register() {
     $error.text(text);
   }
 
+  var login = function(data) {
+
+      Axios.post("http://localhost:3001/login", data, {withCredentials: true}).then((response) => {
+
+        if (response.data.message) {
+          var $error = $('.error');
+          $error.removeClass('hidden');
+          $error.text(response.data.message);
+        } else {
+          console.log(response)
+        }
+      })
+  }
+
   var register = function() {
 
     var passwordsMatch = function() {
@@ -76,6 +90,8 @@ function Register() {
     Axios.post("http://localhost:3001/register", data).then((response) => {
       if (response.data.err) {
         showError('This email already exists. Please sign in.')
+      } else {
+        login(data)
       }
     }).catch((e) => {
       console.log(e);

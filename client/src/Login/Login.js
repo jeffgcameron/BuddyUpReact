@@ -31,14 +31,14 @@ function Login() {
       password:     password
     }
 
-      Axios.post("http://localhost:3001/login", data).then((response) => {
+      Axios.post("http://localhost:3001/login", data, {withCredentials: true}).then((response) => {
 
         if (response.data.message) {
           var $error = $('.error');
           $error.removeClass('hidden');
           $error.text(response.data.message);
         } else {
-          console.log('yeah buddy')
+          console.log(response)
         }
       })
   };

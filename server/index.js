@@ -1,14 +1,18 @@
-const express = require("express")
-const cors = require("cors")
+const express                   = require("express")
+const cors                      = require("cors")
 
-const mysql = require("mysql")
-const bodyParser = require("body-parser");
-const app = express();
-const bcrypt = require('bcrypt');
-const { response } = require("express");
+const session                   = require('express-session');
+const mysql                     = require("mysql")
+const bodyParser                = require("body-parser");
+const app                       = express();
+const bcrypt                    = require('bcrypt');
+const cookieParser              = require('cookie-parser');
+
+const { createTokens, validateToken }                        = require('./JWT.js');
 
 app.use(express.json())
-app.use(cors());
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}))
 
 const db = mysql.createPool({
@@ -17,6 +21,8 @@ const db = mysql.createPool({
     password:       "root",
     database:       "BUdb"
 });
+
+//
 
 // activities routes
 
@@ -59,16 +65,12 @@ app.post('/register', (req, res) => {
         post(hash)
     }) 
 
-
-
 });
 
 app.post('/login', (req, res) => {
 
     const email      = req.body.email
     const password   = req.body.password
-    console.log(email)
-
     const sqlSelect = "SELECT * FROM users WHERE email = ?";
 
     db.query(sqlSelect, [email], (err, result) => {
@@ -77,7 +79,12 @@ app.post('/login', (req, res) => {
             if (!match) {
                 res.send({message: "Wrong password"})
             } else {
-                res.json("logged in")
+
+                const accessToken = createTokens(result[0]);
+                
+                res.cookie('access-token', accessToken)
+
+                res.json(result[0])
             }
         }).catch((err) => {
             console.log(err);
@@ -86,6 +93,15 @@ app.post('/login', (req, res) => {
     })
 
 });
+
+// profile routes
+
+app.get("/profile", validateToken, (req, res) => {
+    const sqlSelect = "SELECT * FROM users WHERE id = ?";
+    db.query(sqlSelect, req.id, (err, result) => {
+        res.json(result)
+    })
+})
 
 // listen
 
