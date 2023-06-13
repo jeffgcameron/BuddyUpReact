@@ -11,12 +11,13 @@ export default function TimeSelector({setTime}) {
     var hour                  = data.$H;
     var minutes               = data.$m;
     var minutesPastMidnight   = hour * 60 + minutes;
-    var time = {
-      hour:                   hour,
-      minutes:                minutes,
-      minutesPastMidnight:    minutesPastMidnight
-    }
-   setTime(time);
+    setTime(minutesPastMidnight);
+    // var time = {
+    //   hour:                   hour,
+    //   minutes:                minutes,
+    //   minutesPastMidnight:    minutesPastMidnight
+    // }
+  //  setTime(time);
   };
 
   return (

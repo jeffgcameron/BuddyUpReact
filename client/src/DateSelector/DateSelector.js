@@ -34,13 +34,15 @@ export default function DateSelector({setDate}) {
     //   return 'Sun'
     // }
 
-    var time = {
-      month:        data.$M,
-      // shortMonth:   getShortMonth(),
-      day:          data.$D,
-      // dayOfWeek:    getDayOfWeek(),
-      year:         data.$y
-    }
+    // var time = {
+    //   month:        data.$M,
+    //   // shortMonth:   getShortMonth(),
+    //   day:          data.$D,
+    //   // dayOfWeek:    getDayOfWeek(),
+    //   year:         data.$y
+    // }
+
+    var time = data.$M + data.$D + data.$y
 
     setDate(time)
 

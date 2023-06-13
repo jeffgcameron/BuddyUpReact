@@ -1,6 +1,8 @@
 import './login.scss';
 import * as React from 'react';
 import TextField  from '@mui/material/TextField/TextField';
+import Axios from "axios";
+import $ from "jquery";
 import { Link } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -10,9 +12,11 @@ import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-function Login() {
+function Login({getUserID}) {
 
   const [showPassword, setShowPassword] = React.useState(false);
+  const [email, setEmail]                             = React.useState('')
+  const [password, setPassword]                       = React.useState('')
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -20,12 +24,31 @@ function Login() {
     event.preventDefault();
   };
 
+  var login = function() {
+
+    var data = {
+      email:        email,
+      password:     password
+    }
+
+      Axios.post("http://localhost:3001/login", data, {withCredentials: true}).then((response) => {
+
+        if (response.data.message) {
+          var $error = $('.error');
+          $error.removeClass('hidden');
+          $error.text(response.data.message);
+        } else {
+          getUserID('id')
+        }
+      })
+  };
+
   return (
     <article className="root-login">
 
       <h2 className='margin-bottom'>Login</h2>
 
-      <TextField id="outlined-multiline-static" className="margin-bottom input" label="Email" />
+      <TextField id="outlined-multiline-static" className="margin-bottom input" label="Email" onChange={(e) => {setEmail(e.target.value)}}/>
 
       <br></br>
 
@@ -34,6 +57,7 @@ function Login() {
           <OutlinedInput
             id="outlined-adornment-password"
             type={showPassword ? 'text' : 'password'}
+            onChange={(e) => {setPassword(e.target.value)}}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -52,7 +76,9 @@ function Login() {
 
       <br></br>
 
-      <button className="button margin-bottom">Login</button>
+      <button className="button margin-bottom" onClick={()=> {login()}}>Login</button>
+      <div className='error hidden'></div>
+
       <br></br>
 
       <Link to="/register">Don't Have an Account? Register Here</Link>
