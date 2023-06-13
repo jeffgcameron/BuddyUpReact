@@ -12,7 +12,7 @@ import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-function Register() {
+function Register({getUserID}) {
 
   const [showPassword, setShowPassword]               = React.useState(false);
   const [email, setEmail]                             = React.useState('')
@@ -40,7 +40,7 @@ function Register() {
           $error.removeClass('hidden');
           $error.text(response.data.message);
         } else {
-          console.log(response)
+          getUserID('id')
         }
       })
   }
@@ -83,11 +83,13 @@ function Register() {
     // $error.addClass('hidden')
 
     var data = {
+      id:           crypto.randomUUID(),
       email:        email,
       password:     password
     }
      
     Axios.post("http://localhost:3001/register", data).then((response) => {
+      console.log(response)
       if (response.data.err) {
         showError('This email already exists. Please sign in.')
       } else {

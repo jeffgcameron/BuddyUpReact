@@ -7,12 +7,12 @@ import TextField  from '@mui/material/TextField/TextField';
 import {Container , Row, Col} from 'react-bootstrap';
 import MenuItem from '@mui/material/MenuItem';
 
-function CreatePost() {
+function CreatePost({userID}) {
 
     const [activityName, setActivityName]	= useState('')
     const [location, setLocation]	        = useState('')
     const [time, setTime]	                = useState('')
-    const [plan, setDescription]	    = useState('')
+    const [plan, setDescription]	        = useState('')
     const [buddies, setBuddies]	            = useState('Any')
     const [date, setDate]	                = useState('')
 
@@ -66,15 +66,16 @@ function CreatePost() {
     var createPost = function() {
         
             var data = {
-                activityName:      activityName,
-                location:          location,
-                plan:       plan,
-                time:              time,
-                date:              date,
-                buddies:           buddies
+                activityName:       activityName,
+                location:           location,
+                plan:               plan,
+                time:               time,
+                date:               date,
+                buddies:            buddies,
+                userID:             userID
             }
             
-        Axios.post('http://localhost:3001/api/post', data)
+        Axios.post('http://localhost:3001/api/activites', data)
     }
 
     return (

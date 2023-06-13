@@ -12,7 +12,7 @@ import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-function Login() {
+function Login({getUserID}) {
 
   const [showPassword, setShowPassword] = React.useState(false);
   const [email, setEmail]                             = React.useState('')
@@ -38,7 +38,7 @@ function Login() {
           $error.removeClass('hidden');
           $error.text(response.data.message);
         } else {
-          console.log(response)
+          getUserID('id')
         }
       })
   };

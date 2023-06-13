@@ -4,8 +4,9 @@ import TextField  from '@mui/material/TextField/TextField';
 import BuildProfileForm from './BuildProfileForm/BuildProfileForm';
 import BuildProfileActivityList from './BuildProfileActivityList/BuildProfileActivityList';
 import {Container , Row, Col} from 'react-bootstrap';
+import Axios from 'axios';
 
-function BuildProfile() {
+function BuildProfile({userID}) {
 
 	const [activities, setActivities]		 	= useState([]);
 	const [certifications, setCertifications]	= useState([]);
@@ -42,18 +43,30 @@ function BuildProfile() {
 		})
 	};
 
+	var getList = function(array) {
+		var list = []
+		array.forEach(function(item) {
+			list.push(item.title)
+		})
+		return list.join('*&');
+	}
+
 	var profile = {
+		id:					crypto.randomUUID(),
+		userID:				userID,
 		firstName:			firstName,
 		lastName:			lastName,
 		location:			location,
-		activities: 		activities,
-		certifications:		certifications,
+		activities: 		getList(activities),
+		certifications:		getList(certifications),
 		bio:				bio,
 	}
 
+	console.log(profile)
+
 	var handleSubmit = function(e) {
 		e.preventDefault();
-		console.log(profile)
+		Axios.post('http://localhost:3001/build-profile', profile)
 	}
 
   return (
