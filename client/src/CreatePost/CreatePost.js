@@ -1,13 +1,15 @@
 import './CreatePost.scss';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Axios from 'axios';
 import DateSelector from '../DateSelector/DateSelector.js';
 import TimeSelector from '../TimeSelector/TimeSelector.js';
 import TextField  from '@mui/material/TextField/TextField';
 import {Container , Row, Col} from 'react-bootstrap';
 import MenuItem from '@mui/material/MenuItem';
+import Footer from '../Footer/Footer.js';
+import { Routes, Route, Navigate }  from 'react-router-dom';
 
-function CreatePost({userID}) {
+function CreatePost({userID, setPost}) {
 
     const [activityName, setActivityName]	= useState('')
     const [location, setLocation]	        = useState('')
@@ -15,6 +17,7 @@ function CreatePost({userID}) {
     const [plan, setDescription]	        = useState('')
     const [buddies, setBuddies]	            = useState('Any')
     const [date, setDate]	                = useState('')
+    const [success, setSuccess]	            = useState(false)
 
     var numberOfBuddies = [
         { 
@@ -66,7 +69,7 @@ function CreatePost({userID}) {
     var createPost = function() {
         
             var data = {
-                activityName:       activityName,
+                name:               activityName,
                 location:           location,
                 plan:               plan,
                 time:               time,
@@ -76,7 +79,16 @@ function CreatePost({userID}) {
             }
             
         Axios.post('http://localhost:3001/api/activites', data)
+        setPost(data)
+        setSuccess(true);
+        < Navigate to='/success' />
     }
+    
+    useEffect(() => {
+        Axios.post('http://localhost:3001/my-profile', {userID: userID}).then((response) => {
+            if (response.data.length === 0) window.location.replace('/build-profile');
+        })
+      }, [userID])
 
     return (
         <article className='root-create-post'>
@@ -106,9 +118,13 @@ function CreatePost({userID}) {
                     ))}
                 </TextField>
             </Container>
-
             <button className='button' onClick={createPost}>Create</button>
+            
+            {success ? <Navigate to='/success'></Navigate>: ''}
+
             <p className='hidden error'>Please Fix Errors Indicated Above</p>
+
+        <div className='footer-component'> <Footer /></div>
 
         </article>
     );

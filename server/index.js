@@ -35,7 +35,7 @@ app.get('/api/get-activites', (req, res) => {
 
 app.post('/api/activites', (req, res) => {
 
-    const activityName      = req.body.activityName
+    const name              = req.body.name
     const location          = req.body.location
     const plan              = req.body.plan
     const time              = req.body.time
@@ -44,7 +44,7 @@ app.post('/api/activites', (req, res) => {
     const userID            = req.body.userID
 
     const sqlInsert = "INSERT INTO activities (name, location, plan, time, date, buddies, userID) VALUES (?, ?, ?, ?, ?, ?, ?);";
-    db.query(sqlInsert, [activityName, location, plan, time, date, buddies, userID], (err, reult) => {
+    db.query(sqlInsert, [name, location, plan, time, date, buddies, userID], (err, reult) => {
         console.log(err)
     })
 
@@ -98,24 +98,6 @@ app.post('/login', (req, res) => {
 
 });
 
-// profile routes
-
-// app.get("/auth", validateToken, (req, res) => {
-//     const sqlSelect = "SELECT * FROM users WHERE id = ?";
-//     db.query(sqlSelect, req.id, (err, result) => {
-//         res.locals.user = result
-//         res.send(result)
-//     })
-// })
-
-// app.get("/auth", validateToken, (req, res) => {
-//     const sqlSelect = "SELECT * FROM users WHERE id = ?";
-//     db.query(sqlSelect, req.id, (err, result) => {
-//         res.locals.user = result
-//         res.send(result)
-//     })
-// })
-
 // createProfile
 
     app.post('/build-profile', (req, res) => {
@@ -157,7 +139,11 @@ app.post("/api/my-activities", (req, res) => {
 
 
 app.get("/auth", validateToken, (req, res) => {
-    res.json(req.user)
+    res.send(req.isValid)
+})
+
+app.post("/auth", validateToken, (req, res) => {
+    res.send(req.isValid)
 })
 
 // listen
