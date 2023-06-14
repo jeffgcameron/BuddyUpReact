@@ -12,9 +12,9 @@ import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-function Login({getUserID}) {
+function Login({getCookie, setUserID, setToken}) {
 
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [showPassword, setShowPassword]               = React.useState(false);
   const [email, setEmail]                             = React.useState('')
   const [password, setPassword]                       = React.useState('')
 
@@ -38,7 +38,10 @@ function Login({getUserID}) {
           $error.removeClass('hidden');
           $error.text(response.data.message);
         } else {
-          getUserID('id')
+          getCookie(setToken, 'access-token')
+          getCookie(setUserID, 'id')
+          localStorage.setItem('is-logged-in', 'true')
+          window.location.replace('/home')
         }
       })
   };

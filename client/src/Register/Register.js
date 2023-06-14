@@ -12,7 +12,7 @@ import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-function Register({getUserID}) {
+function Register({getCookie, setUserID, setToken}) {
 
   const [showPassword, setShowPassword]               = React.useState(false);
   const [email, setEmail]                             = React.useState('')
@@ -40,7 +40,10 @@ function Register({getUserID}) {
           $error.removeClass('hidden');
           $error.text(response.data.message);
         } else {
-          getUserID('id')
+          getCookie(setToken, 'access-token')
+          getCookie(setUserID, 'id')
+          localStorage.setItem('is-logged-in', 'true')
+          window.location.replace('/build-profile')
         }
       })
   }
