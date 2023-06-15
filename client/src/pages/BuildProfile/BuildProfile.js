@@ -1,6 +1,5 @@
 import './build-profile.scss';
 import React, {useState} from 'react';
-import $ from "jquery"
 import TextField  from '@mui/material/TextField/TextField';
 import BuildProfileForm from '../../components/BuildProfileForm/BuildProfileForm';
 import BuildProfileActivityList from '../../components/BuildProfileActivityList/BuildProfileActivityList';

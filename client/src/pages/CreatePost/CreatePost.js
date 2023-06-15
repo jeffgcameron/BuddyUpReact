@@ -7,7 +7,7 @@ import TextField  from '@mui/material/TextField/TextField';
 import {Container , Row, Col} from 'react-bootstrap';
 import MenuItem from '@mui/material/MenuItem';
 import Footer from '../../components/Footer/Footer.js';
-import { Routes, Route, Navigate }  from 'react-router-dom';
+import { Navigate }  from 'react-router-dom';
 
 function CreatePost({userID, setPost}) {
 

@@ -7,6 +7,7 @@ import Axios from 'axios';
 function Feed({userID}) {
 
   const [activities, setActivites] = useState([])
+  console.log(activities);
 
   useEffect(() => {
 	Axios.get('http://localhost:3001/api/get-activites').then((response) => {
@@ -17,7 +18,7 @@ function Feed({userID}) {
 		if (response.data.length === 0) window.location.replace('/build-profile');
 		console.log(response);
 	})
-  }, [])
+  }, [userID])
 
   return (
     <article className="root-feed">
