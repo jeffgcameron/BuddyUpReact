@@ -69,7 +69,8 @@ function BuildProfile({userID}) {
 
 	var handleSubmit = function(e) {
 		e.preventDefault();
-		Axios.post('http://localhost:3001/build-profile', profile)
+		// Axios.post('http://localhost:3001/build-profile', profile)
+		Axios.post('https://buddyup-f363402fe1cb.herokuapp.com/build-profile', profile)
 		window.location.replace('/')
 	}
 

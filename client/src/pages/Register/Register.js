@@ -33,7 +33,8 @@ function Register({getCookie, setUserID, setToken}) {
 
   var login = function(data) {
 
-      Axios.post("http://localhost:3001/login", data, {withCredentials: true}).then((response) => {
+      // Axios.post("http://localhost:3001/login", data, {withCredentials: true}).then((response) => {
+      Axios.post("https://buddyup-f363402fe1cb.herokuapp.com/login", data, {withCredentials: true}).then((response) => {
 
         if (response.data.message) {
           var $error = $('.error');
@@ -91,7 +92,8 @@ function Register({getCookie, setUserID, setToken}) {
       password:     password
     }
      
-    Axios.post("http://localhost:3001/register", data).then((response) => {
+    // Axios.post("http://localhost:3001/register", data).then((response) => {
+    Axios.post("https://buddyup-f363402fe1cb.herokuapp.com/register", data).then((response) => {
       console.log(response)
       if (response.data.err) {
         showError('This email already exists. Please sign in.')

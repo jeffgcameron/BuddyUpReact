@@ -30,7 +30,8 @@ function App() {
       token: token
     }
 
-    Axios.post("http://localhost:3001/auth", data).then((response) => {
+    // Axios.post("http://localhost:3001/auth", data).then((response) => {
+    Axios.post("https://buddyup-f363402fe1cb.herokuapp.com/auth", data).then((response) => {
       setIsLoggedIn(response.data)
     })
 
