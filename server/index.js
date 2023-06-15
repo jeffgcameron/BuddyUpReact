@@ -25,16 +25,16 @@ const db = mysql.createConnection({
 
 // all routes
 
-// app.get("/*", function(req, res) {
-//     res.sendFile(
-//         path.join(__dirname, "../client/build/index.html"),
-//         function(err) {
-//             if (err) {
-//                 res.status(500).send(err)
-//             }
-//         }
-//     )
-// })
+app.get("/*", function(req, res) {
+    res.sendFile(
+        path.join(__dirname, "../client/build/index.html"),
+        function(err) {
+            if (err) {
+                res.status(500).send(err)
+            }
+        }
+    )
+})
 
 // activities routes
 
