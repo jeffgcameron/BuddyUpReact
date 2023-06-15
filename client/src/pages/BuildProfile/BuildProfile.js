@@ -70,7 +70,7 @@ function BuildProfile({userID}) {
 	var handleSubmit = function(e) {
 		e.preventDefault();
 		Axios.post('http://localhost:3001/build-profile', profile)
-		window.location.replace('/home')
+		window.location.replace('/')
 	}
 
 	var toggleHelp = function() {

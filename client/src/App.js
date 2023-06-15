@@ -70,7 +70,7 @@ function App() {
           } 
         />
 
-        <Route path='/home'          
+        <Route exact path='/'          
           element={
             <LoggedOutRoute isLoggedIn={isLoggedIn}>
                 <Feed userID={userID}/>

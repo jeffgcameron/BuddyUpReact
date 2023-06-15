@@ -35,7 +35,7 @@ function Footer() {
             <Navbar bg="solid" className="main-blue">
                 <Container className='justify-content-center'>
         			<Nav>
-						<Nav.Link as={Link} to="/home">
+						<Nav.Link as={Link} to="/">
 							<HomeIcon/>
 						</Nav.Link>
 
