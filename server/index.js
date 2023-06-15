@@ -17,11 +17,17 @@ app.use(bodyParser.urlencoded({extended: true}))
 
 
 const db = mysql.createConnection({
-    user:           "root",
-    host:           "localhost",
-    password:       "root",
-    database:       "BUdb"
+    // user:           "root",
+    // host:           "localhost",
+    // password:       "root",
+    // database:       "BUdb"
+    user:           "b69788f17539b9",
+    host:           "us-cdbr-east-06.cleardb.net",
+    password:       "70f93eee",
+    database:       "heroku_c9cbcd67c64d524"
 });
+
+// mysql://b69788f17539b9:70f93eee@us-cdbr-east-06.cleardb.net/heroku_c9cbcd67c64d524?reconnect=true
 
 // all routes
 
