@@ -35,6 +35,7 @@ app.get('/api/get-activites', (req, res) => {
 
 app.post('/api/activites', (req, res) => {
 
+    const id                = req.body.id
     const name              = req.body.name
     const location          = req.body.location
     const plan              = req.body.plan
@@ -42,9 +43,11 @@ app.post('/api/activites', (req, res) => {
     const date              = req.body.date
     const buddies           = req.body.buddies
     const userID            = req.body.userID
+    const userName          = req.body.userName
+    const imgURL          = req.body.imgURL
 
-    const sqlInsert = "INSERT INTO activities (name, location, plan, time, date, buddies, userID) VALUES (?, ?, ?, ?, ?, ?, ?);";
-    db.query(sqlInsert, [name, location, plan, time, date, buddies, userID], (err, reult) => {
+    const sqlInsert = "INSERT INTO activities (id, name, location, plan, time, date, buddies, userID, userName, imgURL) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    db.query(sqlInsert, [id, name, location, plan, time, date, buddies, userID, userName, imgURL], (err, reult) => {
         console.log(err)
     })
 
@@ -104,6 +107,7 @@ app.post('/login', (req, res) => {
 
         console.log(req.body);
         const id                = req.body.id
+        const imgURL            = req.body.imgURL
         const firstName         = req.body.firstName
         const lastName          = req.body.lastName
         const location          = req.body.location
@@ -112,8 +116,8 @@ app.post('/login', (req, res) => {
         const certifications    = req.body.certifications
         const userID            = req.body.userID
 
-        const sqlInsert = "INSERT INTO profiles (id, firstName, lastName, location, bio, activities, certifications, userID) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-        db.query(sqlInsert, [id, firstName, lastName, location, bio, activities, certifications, userID], (err, reult) => {
+        const sqlInsert = "INSERT INTO profiles (id, imgURL, firstName, lastName, location, bio, activities, certifications, userID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        db.query(sqlInsert, [id, imgURL, firstName, lastName, location, bio, activities, certifications, userID], (err, reult) => {
             console.log(err)
         })
 

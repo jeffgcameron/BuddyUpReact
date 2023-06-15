@@ -1,8 +1,9 @@
 import './build-profile.scss';
 import React, {useState} from 'react';
+import $ from "jquery"
 import TextField  from '@mui/material/TextField/TextField';
-import BuildProfileForm from './BuildProfileForm/BuildProfileForm';
-import BuildProfileActivityList from './BuildProfileActivityList/BuildProfileActivityList';
+import BuildProfileForm from '../../components/BuildProfileForm/BuildProfileForm';
+import BuildProfileActivityList from '../../components/BuildProfileActivityList/BuildProfileActivityList';
 import {Container , Row, Col} from 'react-bootstrap';
 import Axios from 'axios';
 
@@ -12,8 +13,10 @@ function BuildProfile({userID}) {
 	const [certifications, setCertifications]	= useState([]);
 	const [bio, setBio] 						= useState('');
 	const [location, setLocation] 				= useState('');
+	const [imgURL, setImgURL] 					= useState('');
 	const [firstName, setFirstName] 			= useState('');
 	const [lastName, setLastName] 				= useState('');
+	const [showHelp, setShowHelp] 				= useState(false);
 
 	var addActivity = function(title) {
 		setActivities(newActivities => {
@@ -53,6 +56,7 @@ function BuildProfile({userID}) {
 
 	var profile = {
 		id:					crypto.randomUUID(),
+		imgURL:				imgURL,
 		userID:				userID,
 		firstName:			firstName,
 		lastName:			lastName,
@@ -67,6 +71,11 @@ function BuildProfile({userID}) {
 	var handleSubmit = function(e) {
 		e.preventDefault();
 		Axios.post('http://localhost:3001/build-profile', profile)
+		window.location.replace('/home')
+	}
+
+	var toggleHelp = function() {
+		setShowHelp((showHelp) ? false : true);
 	}
 
   return (
@@ -85,6 +94,17 @@ function BuildProfile({userID}) {
 
 		<div className='margin-top center-text'>
 			<TextField id="outlined-basic"  className="full-width" label="Location" variant="outlined" onChange={e => setLocation(e.target.value)}/>
+		</div>
+		
+		<div className='margin-top center-text'>
+			<TextField id="outlined-basic"  className="full-width" label="Image URL" variant="outlined" onChange={e => setImgURL(e.target.value)}/>
+			{showHelp 
+			? 	<>
+					<div className='show-help' onClick={toggleHelp}>Hide Help</div> 
+					<div className='help center-text'>Right click on any web image and select "Copy Image Address". Paste into input box above.</div>
+				</>
+			: <div className='show-help' onClick={toggleHelp}>Show Help</div>
+			}
 		</div>
 
 		<div className='margin-top center-text'>
