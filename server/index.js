@@ -8,6 +8,7 @@ const mysql                             = require("mysql")
 const bodyParser                        = require("body-parser");
 const app                               = express();
 const bcrypt                            = require('bcrypt');
+const path                              = require('path');
 
 app.use(express.json())
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
@@ -22,7 +23,18 @@ const db = mysql.createConnection({
     database:       "BUdb"
 });
 
-//
+// all routes
+
+app.get("/*", function(req, res) {
+    res.sendFile(
+        path.join(__dirname, "../client/build/index.html"),
+        function(err) {
+            if (err) {
+                res.status(500).send(err)
+            }
+        }
+    )
+})
 
 // activities routes
 
@@ -152,6 +164,8 @@ app.post("/auth", validateToken, (req, res) => {
 
 // listen
 
-app.listen(process.env.PORT, () => {
-    console.log('running on ' + process.env.PORT);
+var PORT = process.env.PORT || "3001"
+
+app.listen(PORT, () => {
+    console.log('running on ' + PORT);
 })
