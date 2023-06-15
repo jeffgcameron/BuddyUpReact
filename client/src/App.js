@@ -1,33 +1,20 @@
 import './App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {useEffect, useState} from 'react';
-import Header from './Header/Header.js';
-// import Footer from './Footer/Footer.js';
-import Profile from './Profile/Profile.js';
-import LoginRoute from './LoginRoute.js';
-import LoggedOutRoute from './LoggedOutRoute.js';
-import CreatePost from './CreatePost/CreatePost.js';
-import Feed from './Feed/Feed.js'
-import Login from './Login/Login.js';
-import Register from './Register/Register.js';
-import BuildProfile from './BuildProfile/BuildProfile.js';
-import SuccessfulPost from './SuccessfulPost/SuccessfulPost.js';
+import Header from './components/Header/Header.js';
+import Profile from './pages/Profile/Profile.js';
+import LoginRoute from './routes/LoginRoute.js';
+import LoggedOutRoute from './routes/LoggedOutRoute.js';
+import CreatePost from './pages/CreatePost/CreatePost.js';
+import Feed from './pages/Feed/Feed'
+import Login from './pages/Login/Login.js';
+import Register from './pages/Register/Register.js';
+import BuildProfile from './pages/BuildProfile/BuildProfile.js';
+import SuccessfulPost from './pages/SuccessfulPost/SuccessfulPost.js';
 import { Routes, Route }  from 'react-router-dom';
 import Axios from "axios";
 
 function App() {
-
-  
-  useEffect(()=> {
-    
-    var data = {
-      token: token
-    }
-    Axios.post("http://localhost:3001/auth", data).then((response) => {
-      setIsLoggedIn(response.data)
-      console.log(isLoggedIn);
-    })
-  }, [])
 
   const storedID                        = localStorage.getItem('id')
   const storedToken                     = localStorage.getItem('access-token')
@@ -36,17 +23,30 @@ function App() {
   const [token, setToken]               = useState(storedToken)
   const [isLoggedIn, setIsLoggedIn]     = useState(storedIsLoggedIn === "true")
   const [post, setPost]                 = useState({})
-  console.log(post);
+  
+  useEffect(()=> {
+    
+    var data = {
+      token: token
+    }
 
+    Axios.post("http://localhost:3001/auth", data).then((response) => {
+      setIsLoggedIn(response.data)
+    })
+
+  })
 
   var getCookie = function(action, cookieName) {
+
     let cookie = {};
     document.cookie.split(';').forEach(function(el) {
       let [key,value] = el.split('=');
       cookie[key.trim()] = value;
     })
+
     localStorage.setItem(cookieName, cookie[cookieName])
     action(cookie[cookieName]);
+
   }
 
   return (
@@ -96,9 +96,9 @@ function App() {
 
         <Route path='/build-profile'          
           element={
-            <LoggedOutRoute isLoggedIn={isLoggedIn}>
+            // <LoggedOutRoute isLoggedIn={isLoggedIn}>
                 <BuildProfile userID={userID}/>
-            </LoggedOutRoute>
+            // </LoggedOutRoute>
           } 
         />
 

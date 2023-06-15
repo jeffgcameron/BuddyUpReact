@@ -1,21 +1,21 @@
-const express                   = require("express")
-const cors                      = require("cors")
+const express                           = require("express")
+const cors                              = require("cors")
+const cookieParser                      = require('cookie-parser');
+const { createTokens, validateToken }   = require('./JWT.js');
+require('dotenv').config();
 
-const session                   = require('express-session');
-const mysql                     = require("mysql")
-const bodyParser                = require("body-parser");
-const app                       = express();
-const bcrypt                    = require('bcrypt');
-const cookieParser              = require('cookie-parser');
-
-const { createTokens, validateToken }                        = require('./JWT.js');
+const mysql                             = require("mysql")
+const bodyParser                        = require("body-parser");
+const app                               = express();
+const bcrypt                            = require('bcrypt');
 
 app.use(express.json())
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}))
 
-const db = mysql.createPool({
+
+const db = mysql.createConnection({
     user:           "root",
     host:           "localhost",
     password:       "root",
@@ -35,6 +35,7 @@ app.get('/api/get-activites', (req, res) => {
 
 app.post('/api/activites', (req, res) => {
 
+    const id                = req.body.id
     const name              = req.body.name
     const location          = req.body.location
     const plan              = req.body.plan
@@ -42,9 +43,11 @@ app.post('/api/activites', (req, res) => {
     const date              = req.body.date
     const buddies           = req.body.buddies
     const userID            = req.body.userID
+    const userName          = req.body.userName
+    const imgURL            = req.body.imgURL
 
-    const sqlInsert = "INSERT INTO activities (name, location, plan, time, date, buddies, userID) VALUES (?, ?, ?, ?, ?, ?, ?);";
-    db.query(sqlInsert, [name, location, plan, time, date, buddies, userID], (err, reult) => {
+    const sqlInsert = "INSERT INTO activities (id, name, location, plan, time, date, buddies, userID, userName, imgURL) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    db.query(sqlInsert, [id, name, location, plan, time, date, buddies, userID, userName, imgURL], (err, reult) => {
         console.log(err)
     })
 
@@ -104,6 +107,7 @@ app.post('/login', (req, res) => {
 
         console.log(req.body);
         const id                = req.body.id
+        const imgURL            = req.body.imgURL
         const firstName         = req.body.firstName
         const lastName          = req.body.lastName
         const location          = req.body.location
@@ -112,8 +116,8 @@ app.post('/login', (req, res) => {
         const certifications    = req.body.certifications
         const userID            = req.body.userID
 
-        const sqlInsert = "INSERT INTO profiles (id, firstName, lastName, location, bio, activities, certifications, userID) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-        db.query(sqlInsert, [id, firstName, lastName, location, bio, activities, certifications, userID], (err, reult) => {
+        const sqlInsert = "INSERT INTO profiles (id, imgURL, firstName, lastName, location, bio, activities, certifications, userID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        db.query(sqlInsert, [id, imgURL, firstName, lastName, location, bio, activities, certifications, userID], (err, reult) => {
             console.log(err)
         })
 
@@ -148,6 +152,6 @@ app.post("/auth", validateToken, (req, res) => {
 
 // listen
 
-app.listen(3001, () => {
-    console.log('running on 3001');
+app.listen(process.env.PORT, () => {
+    console.log('running on ' + process.env.PORT);
 })

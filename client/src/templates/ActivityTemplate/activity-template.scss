@@ -1,0 +1,40 @@
+@import '../../index.scss';
+
+.root-activity-template {
+
+    li {
+        width: 100%;
+    }
+
+    .align-picture {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .vertical-justify {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .profile-picture {
+        height: 10vh;
+        border-radius: 100%;
+    }
+
+    ul {
+        padding-left: unset;
+    }
+
+    .view-plan {
+        margin-top: .5em;
+        font-size: .9em;
+        color: $mainBlue;
+    }
+
+    span {
+        font-weight: bold;
+    }
+}
