@@ -1,6 +1,6 @@
 import './activity-template.scss';
 import {Container , Row, Col} from 'react-bootstrap';
-// import otherProPic from '../Images/headshot.jpg'
+// import otherProPic from '../images/headshot.jpg'
 import $ from "jquery"
 // import {Col} from 'react-bootstrap';
 
@@ -39,13 +39,11 @@ function ActivityTemplate({item}) {
 						</Col>
 						<Col xs={8} className="vertical-justify">
 
-							{/* <ActivityTemplate item={item}/> */}
-
 							<li>Activity: <span>{item.name}</span></li>
 							
 							<li>Time: <span>{item.date} at {item.time}</span></li>
 							
-							<li>Location: <span>{item.location}</span></li>
+							<li>Meeting Location: <span>{item.location}</span></li>
 							
 							<li>Buddies Needed: <span>{item.buddies}</span></li>
 						

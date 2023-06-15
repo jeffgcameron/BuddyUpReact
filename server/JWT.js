@@ -1,7 +1,8 @@
-const {sign, verify} = require("jsonwebtoken");
+const {sign, verify}    = require("jsonwebtoken");
+require('dotenv').config();
 
 const createTokens = (user) => {
-    const accessToken = sign({"id" : user.id}, "mybusecret")
+    const accessToken = sign({"id" : user.id}, process.env.SECRET)
 
     return accessToken
 }
@@ -10,12 +11,10 @@ const validateToken = (req, res, next) => {
     
     const accessToken = req.body.token
 
-    console.log(accessToken);
-
     // if (!accessToken) { return res.status(400).json({ error: "not auth" }) }
     if (!accessToken) { console.log('no access token'); return }
 
-    verify(accessToken, 'mybusecret', (err, user) => {
+    verify(accessToken, process.env.SECRET, (err, user) => {
         if (err) { console.log({validationError: err}); return }
         req.isValid = true
         next()

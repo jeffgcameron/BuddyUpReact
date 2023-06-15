@@ -96,9 +96,9 @@ function App() {
 
         <Route path='/build-profile'          
           element={
-            <LoggedOutRoute isLoggedIn={isLoggedIn}>
+            // <LoggedOutRoute isLoggedIn={isLoggedIn}>
                 <BuildProfile userID={userID}/>
-            </LoggedOutRoute>
+            // </LoggedOutRoute>
           } 
         />
 
