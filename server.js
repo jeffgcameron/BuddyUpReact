@@ -1,7 +1,8 @@
 const express                           = require("express")
 const cors                              = require("cors")
 const cookieParser                      = require('cookie-parser');
-const { createTokens, validateToken }   = require('./server/JWT.js');
+const {sign, verify}                    = require("jsonwebtoken");
+// const { createTokens, validateToken }   = require('./server/JWT.js');
 require('dotenv').config();
 console.log('wtf mate');
 
@@ -30,9 +31,30 @@ const db = mysql.createConnection({
 
 // mysql://b69788f17539b9:70f93eee@us-cdbr-east-06.cleardb.net/heroku_c9cbcd67c64d524?reconnect=true
 
-// all routes
+// JWT functions
 
-console.log(__dirname);
+const createTokens = (user) => {
+    const accessToken = sign({"id" : user.id}, process.env.SECRET)
+
+    return accessToken
+}
+
+const validateToken = (req, res, next) => {
+    
+    const accessToken = req.body.token
+
+    // if (!accessToken) { return res.status(400).json({ error: "not auth" }) }
+    if (!accessToken) { console.log('no access token'); return }
+
+    verify(accessToken, process.env.SECRET, (err, user) => {
+        if (err) { console.log({validationError: err}); return }
+        req.isValid = true
+        next()
+    })
+
+}
+
+// all routes
 
 if (process.env.NODE_ENV === "production") {
     app.use(express.static("build"));
