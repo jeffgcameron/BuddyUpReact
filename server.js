@@ -1,7 +1,7 @@
 const express                           = require("express")
 const cors                              = require("cors")
 const cookieParser                      = require('cookie-parser');
-const { createTokens, validateToken }   = require('./JWT.js');
+const { createTokens, validateToken }   = require('./server/JWT.js');
 require('dotenv').config();
 
 const mysql                             = require("mysql")
