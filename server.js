@@ -3,6 +3,7 @@ const cors                              = require("cors")
 const cookieParser                      = require('cookie-parser');
 const { createTokens, validateToken }   = require('./server/JWT.js');
 require('dotenv').config();
+console.log('wtf mate');
 
 const mysql                             = require("mysql")
 const bodyParser                        = require("body-parser");
