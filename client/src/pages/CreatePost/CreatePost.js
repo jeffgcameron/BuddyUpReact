@@ -84,7 +84,7 @@ function CreatePost({userID, setPost}) {
                 imgURL:             imgURL
             }
             
-        // Axios.post('http://localhost:3001/api/activites', data)
+        // Axios.post('http://localhost:3001/api/activites', data) 
         Axios.post('https://buddyup-f363402fe1cb.herokuapp.com/api/activites', data)
         setPost(data)
         setSuccess(true);
