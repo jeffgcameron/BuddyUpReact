@@ -9,6 +9,7 @@ const bodyParser                        = require("body-parser");
 const app                               = express();
 const bcrypt                            = require('bcrypt');
 const path                              = require('path');
+console.log(path);
 
 app.use(express.json())
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
