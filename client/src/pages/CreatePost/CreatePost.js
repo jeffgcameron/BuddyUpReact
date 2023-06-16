@@ -84,16 +84,14 @@ function CreatePost({userID, setPost}) {
                 imgURL:             imgURL
             }
             
-        // Axios.post('http://localhost:3001/api/activites', data) 
-        Axios.post('https://buddyup-f363402fe1cb.herokuapp.com/api/activites', data)
+        Axios.post('http://localhost:3001/api/activites', data)
         setPost(data)
         setSuccess(true);
         < Navigate to='/success' />
     }
     
     useEffect(() => {
-        Axios.post('https://buddyup-f363402fe1cb.herokuapp.com/my-profile', {userID: userID}).then((response) => {
-        // Axios.post('http://localhost:3001/my-profile', {userID: userID}).then((response) => {
+        Axios.post('http://localhost:3001/my-profile', {userID: userID}).then((response) => {
             if (response.data.length === 0) window.location.replace('/build-profile');
             console.log(response.data[0].imgURL)
             setUserName(response.data[0].firstName + ' ' + response.data[0].lastName)

@@ -17,14 +17,12 @@ function Profile({userID}) {
             userID:        userID,
           }
 
-        // Axios.post('http://localhost:3001/api/my-activities', data).then((response) => {
-        Axios.post('https://buddyup-f363402fe1cb.herokuapp.com/api/my-activities', data).then((response) => {
+        Axios.post('http://localhost:3001/api/my-activities', data).then((response) => {
             console.log(response);
             setMyActivities(response.data)
         })
 
-        // Axios.post('http://localhost:3001/my-profile', data).then((response) => {
-        Axios.post('https://buddyup-f363402fe1cb.herokuapp.com/my-profile', data).then((response) => {
+        Axios.post('http://localhost:3001/my-profile', data).then((response) => {
             if (response.data.length === 0) { 
                 window.location.replace('/build-profile');
             } else {

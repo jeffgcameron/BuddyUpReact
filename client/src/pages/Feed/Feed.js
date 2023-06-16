@@ -10,13 +10,11 @@ function Feed({userID}) {
   console.log(activities);
 
   useEffect(() => {
-	// Axios.get('http://localhost:3001/api/get-activites').then((response) => {
-	Axios.get('https://buddyup-f363402fe1cb.herokuapp.com/api/get-activites').then((response) => {
+	Axios.get('http://localhost:3001/api/get-activites').then((response) => {
 		setActivites(response.data);
 	})
 
-	// Axios.post('http://localhost:3001/my-profile', {userID: userID}).then((response) => {
-	Axios.post('https://buddyup-f363402fe1cb.herokuapp.com/my-profile', {userID: userID}).then((response) => {
+	Axios.post('http://localhost:3001/my-profile', {userID: userID}).then((response) => {
 		if (response.data.length === 0) window.location.replace('/build-profile');
 		console.log(response);
 	})
