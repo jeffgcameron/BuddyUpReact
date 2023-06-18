@@ -55,6 +55,7 @@ const validateToken = (req, res, next) => {
 
 // all routes
 
+console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === "production") {
     app.use(express.static("build"));
     app.get("*", (req, res) => {
