@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {useEffect, useState} from 'react';
 import Header from './components/Header/Header.js';
 import Profile from './pages/Profile/Profile.js';
-import LoginRoute from './routes/LoginRoute.js.js';
+import LoginRoute from './routes/LoginRoute.js';
 import LoggedOutRoute from './routes/LoggedOutRoute.js';
 import CreatePost from './pages/CreatePost/CreatePost.js';
 import Feed from './pages/Feed/Feed'
