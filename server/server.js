@@ -65,11 +65,10 @@ const validateToken = (req, res, next) => {
 //   }
 
 if (process.env.NODE_ENV === "production") {
-    app.use(express.static(__dirname + "../client/public"));
-    console.log('static', app.use(express.static(__dirname + "../client/public")));
-    console.log('route', __dirname + "../client/public");
 
-    app.get("*", (req, res) => {
+    // app.use(express.static(__dirname + "../client/public"));
+
+    app.get("/", (req, res) => {
         console.log('getting');
         res.sendFile(path.join(__dirname, '../client', 'public', 'index.html'));
 
