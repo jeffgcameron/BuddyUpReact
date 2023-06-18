@@ -55,7 +55,7 @@ const validateToken = (req, res, next) => {
 
 // all routes
 
-app.get("/", (req, res) => res.send("Api Running"));
+// app.get("/", (req, res) => res.send("Api Running"));
 
 // if (process.env.NODE_ENV === "production") {
 //     app.use(express.static("build"));
@@ -66,9 +66,11 @@ app.get("/", (req, res) => res.send("Api Running"));
 
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(__dirname + "../client/public"));
+    console.log('static', app.use(express.static(__dirname + "../client/public")));
+    console.log('route', __dirname + "../client/public");
 
     app.get("*", (req, res) => {
-
+        console.log('getting');
         res.sendFile(path.join(__dirname, '../client', 'public', 'index.html'));
 
    });
