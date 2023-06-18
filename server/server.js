@@ -68,7 +68,7 @@ console.log("dirname", __dirname);
 console.log("process.env", process.env.NODE_ENV);
 if (process.env.NODE_ENV === "production") {
 console.log('here inside this');
-    app.use(express.static(__dirname, "../client/build"));
+    app.use(express.static(__dirname + "../client/build"));
 
     app.get("*", (req, res) => {
 
