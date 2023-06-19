@@ -1,26 +1,66 @@
-const express                   = require("express")
-const cors                      = require("cors")
+const express                           = require("express")
+const cors                              = require("cors")
+const cookieParser                      = require('cookie-parser');
+const {sign, verify}                    = require("jsonwebtoken");
+// const { createTokens, validateToken }   = require('./server/JWT.js');
+require('dotenv').config();
 
-const session                   = require('express-session');
-const mysql                     = require("mysql")
-const bodyParser                = require("body-parser");
-const app                       = express();
-const bcrypt                    = require('bcrypt');
-const cookieParser              = require('cookie-parser');
-
-const { createTokens, validateToken }                        = require('./JWT.js');
+const mysql                             = require("mysql")
+const bodyParser                        = require("body-parser");
+const app                               = express();
+const bcrypt                            = require('bcrypt');
+const path                              = require('path');
 
 app.use(express.json())
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}))
 
-const db = mysql.createPool({
-    user:           "root",
-    host:           "localhost",
-    password:       "root",
-    database:       "BUdb"
+
+const db = mysql.createConnection({
+    // user:           "root",
+    // host:           "localhost",
+    // password:       "root",
+    // database:       "BUdb"
+    user:           "b69788f17539b9",
+    host:           "us-cdbr-east-06.cleardb.net",
+    password:       "70f93eee",
+    database:       "heroku_c9cbcd67c64d524"
 });
+
+// mysql://b69788f17539b9:70f93eee@us-cdbr-east-06.cleardb.net/heroku_c9cbcd67c64d524?reconnect=true
+
+// JWT functions
+
+const createTokens = (user) => {
+    const accessToken = sign({"id" : user.id}, process.env.SECRET)
+
+    return accessToken
+}
+
+const validateToken = (req, res, next) => {
+    
+    const accessToken = req.body.token
+
+    // if (!accessToken) { return res.status(400).json({ error: "not auth" }) }
+    if (!accessToken) { console.log('no access token'); return }
+
+    verify(accessToken, process.env.SECRET, (err, user) => {
+        if (err) { console.log({validationError: err}); return }
+        req.isValid = true
+        next()
+    })
+
+}
+
+// all routes
+
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static("build"));
+    app.get("*", (req, res) => {
+      res.sendFile(path.resolve(__dirname,  "build", "index.html"));
+    });
+  }
 
 // activities routes
 
@@ -33,6 +73,7 @@ app.get('/api/get-activites', (req, res) => {
 
 app.post('/api/activites', (req, res) => {
 
+    const id                = req.body.id
     const name              = req.body.name
     const location          = req.body.location
     const plan              = req.body.plan
@@ -40,9 +81,11 @@ app.post('/api/activites', (req, res) => {
     const date              = req.body.date
     const buddies           = req.body.buddies
     const userID            = req.body.userID
+    const userName          = req.body.userName
+    const imgURL            = req.body.imgURL
 
-    const sqlInsert = "INSERT INTO activities (name, location, plan, time, date, buddies, userID) VALUES (?, ?, ?, ?, ?, ?, ?);";
-    db.query(sqlInsert, [name, location, plan, time, date, buddies, userID], (err, reult) => {
+    const sqlInsert = "INSERT INTO activities (id, name, location, plan, time, date, buddies, userID, userName, imgURL) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    db.query(sqlInsert, [id, name, location, plan, time, date, buddies, userID, userName, imgURL], (err, reult) => {
         console.log(err)
     })
 
@@ -102,6 +145,7 @@ app.post('/login', (req, res) => {
 
         console.log(req.body);
         const id                = req.body.id
+        const imgURL            = req.body.imgURL
         const firstName         = req.body.firstName
         const lastName          = req.body.lastName
         const location          = req.body.location
@@ -110,8 +154,8 @@ app.post('/login', (req, res) => {
         const certifications    = req.body.certifications
         const userID            = req.body.userID
 
-        const sqlInsert = "INSERT INTO profiles (id, firstName, lastName, location, bio, activities, certifications, userID) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-        db.query(sqlInsert, [id, firstName, lastName, location, bio, activities, certifications, userID], (err, reult) => {
+        const sqlInsert = "INSERT INTO profiles (id, imgURL, firstName, lastName, location, bio, activities, certifications, userID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        db.query(sqlInsert, [id, imgURL, firstName, lastName, location, bio, activities, certifications, userID], (err, reult) => {
             console.log(err)
         })
 
@@ -146,6 +190,8 @@ app.post("/auth", validateToken, (req, res) => {
 
 // listen
 
-app.listen(3001, () => {
-    console.log('running on 3001');
+var PORT = process.env.PORT || "3001"
+
+app.listen(PORT, () => {
+    console.log('running on ' + PORT);
 })

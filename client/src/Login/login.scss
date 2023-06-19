@@ -1,0 +1,19 @@
+@import '../index.scss';
+
+.root-login {
+    
+    padding-top:     10vh;
+    display:        block;
+    text-align:     center;
+    // background-color: $mainBlue;
+
+    .margin-bottom {
+        margin-bottom: .75em
+    }
+
+    .input {
+        width: 60%;
+    }
+
+
+}
