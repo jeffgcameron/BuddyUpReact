@@ -2,15 +2,17 @@
 
 .root-login {
     
-    padding-top:     10vh;
-    display:        block;
-    text-align:     center;
-    background-color: $mainBlue;
-    height: 90vh;
+    padding-top:        10vh;
+    display:            block;
+    text-align:         center;
+    background-color:   $mainBlue;
+    height:             90vh;
 
     .login-box {
-        background-color: $mainWhite;
-        margin: 0 3em;
+        background-color:           rgb(225, 224, 224);
+        margin:                     0 3em;
+        padding:                    1em;
+        border-radius:              10%;
     }
 
     .margin-bottom {
@@ -19,5 +21,10 @@
 
     .input {
         width: 60%;
+    }
+
+    .link {
+        font-size: .8em;
+        color: $mainBlue;
     }
 }

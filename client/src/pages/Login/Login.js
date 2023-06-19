@@ -89,7 +89,7 @@ function Login({getCookie, setUserID, setToken}) {
 
         <br></br>
 
-        <Link to="/register">Don't Have an Account? Register Here</Link>
+        <Link className="link" to="/register">Don't Have an Account? Register Here</Link>
 
       </Box>
 
