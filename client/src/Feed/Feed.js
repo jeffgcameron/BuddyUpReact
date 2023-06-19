@@ -1,8 +1,8 @@
 import './feed.scss';
 import React, {useState, useEffect} from 'react';
 import ActivityTemplate from '../ActivityTemplate/ActivityTemplate.js'
-import jeffProPic from '../Images/GC.jpg'
-import otherProPic from '../Images/headshot.jpg'
+import jeffProPic from '../images/GC.jpg'
+import otherProPic from '../images/headshot.jpg'
 import Footer from '../Footer/Footer.js';
 import Axios from 'axios';
 
