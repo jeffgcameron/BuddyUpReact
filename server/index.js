@@ -22,8 +22,6 @@ const db = mysql.createConnection({
     database:       "BUdb"
 });
 
-//
-
 // activities routes
 
 app.get('/api/get-activites', (req, res) => {
