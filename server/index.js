@@ -161,8 +161,6 @@ app.post("/auth", validateToken, (req, res) => {
 
 // listen
 
-var PORT = process.env.PORT || "3001"
-
-app.listen(PORT, () => {
-    console.log('running on ' + PORT);
+app.listen(3001, () => {
+    console.log('running on 3001');
 })

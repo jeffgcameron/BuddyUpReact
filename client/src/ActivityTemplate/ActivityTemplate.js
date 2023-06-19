@@ -1,6 +1,6 @@
 import './activity-template.scss';
 import {Container , Row, Col} from 'react-bootstrap';
-import otherProPic from '../Images/headshot.jpg'
+// import otherProPic from '../Images/headshot.jpg'
 import $ from "jquery"
 // import {Col} from 'react-bootstrap';
 
