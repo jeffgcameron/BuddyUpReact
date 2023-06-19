@@ -24,7 +24,7 @@ function Feed({userID}) {
 		<p className="center-text scroll-text header-text">Scroll to View Upcoming Activities!</p>
 		<hr></hr>
 		{activities.map((item) => (
-			<ActivityTemplate key={item.id} item={item}/>
+			<ActivityTemplate key={item.id} item={item} signedInUserID={userID}/>
 		))} 
 
 		<div className='footer-component'> <Footer /></div>

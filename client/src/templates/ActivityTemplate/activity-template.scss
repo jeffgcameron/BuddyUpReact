@@ -13,6 +13,11 @@
         align-items: center;
     }
 
+    .view-profile {
+        text-decoration: none;
+        color: $mainBlue;
+    }
+
     .vertical-justify {
         display: flex;
         flex-direction: column;
