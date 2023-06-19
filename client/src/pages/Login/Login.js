@@ -24,7 +24,9 @@ function Login({getCookie, setUserID, setToken}) {
     event.preventDefault();
   };
 
-  var login = function() {
+  var login = function(e) {
+
+    e.preventDefault()
 
     var data = {
       email:        email,
@@ -47,35 +49,35 @@ function Login({getCookie, setUserID, setToken}) {
   };
 
   return (
-    <article className="root-login">
+    <form className="root-login" onSubmit={login}>
 
       <h2 className='margin-bottom'>Login</h2>
 
-      <TextField id="outlined-multiline-static" className="margin-bottom input" label="Email" onChange={(e) => {setEmail(e.target.value)}}/>
+        <TextField id="outlined-multiline-static" className="margin-bottom input" label="Email" onChange={(e) => {setEmail(e.target.value)}}/>
 
-      <br></br>
+        <br></br>
 
-      <FormControl className='input' variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-password"
-            type={showPassword ? 'text' : 'password'}
-            onChange={(e) => {setPassword(e.target.value)}}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
-          />
-        </FormControl>
+        <FormControl className='input' variant="outlined">
+            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              type={showPassword ? 'text' : 'password'}
+              onChange={(e) => {setPassword(e.target.value)}}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Password"
+            />
+          </FormControl>
 
       <br></br>
 
@@ -86,7 +88,7 @@ function Login({getCookie, setUserID, setToken}) {
 
       <Link to="/register">Don't Have an Account? Register Here</Link>
 
-    </article>
+    </form>
   );
 }
 

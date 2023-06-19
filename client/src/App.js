@@ -23,7 +23,7 @@ function App() {
   const [token, setToken]               = useState(storedToken)
   const [isLoggedIn, setIsLoggedIn]     = useState(storedIsLoggedIn === "true")
   const [post, setPost]                 = useState({})
-  
+
   useEffect(()=> {
     
     var data = {
