@@ -1,11 +1,10 @@
 const express                   = require("express")
 const cors                      = require("cors")
-const mysql                             = require("mysql")
-const bodyParser                        = require("body-parser");
-const app                               = express();
-const bcrypt                            = require('bcrypt');
+
+const session                   = require('express-session');
 const mysql                     = require("mysql")
 const bodyParser                = require("body-parser");
+const app                       = express();
 const bcrypt                    = require('bcrypt');
 const cookieParser              = require('cookie-parser');
 
@@ -164,8 +163,13 @@ app.post("/auth", validateToken, (req, res) => {
 
 // listen
 
+<<<<<<< HEAD
 var PORT = process.env.PORT || "3001"
 
 app.listen(PORT, () => {
     console.log('running on ' + PORT);
+=======
+app.listen(3001, () => {
+    console.log('running on 3001');
+>>>>>>> parent of 7ab2b7b (preparing for production)
 })
