@@ -11,6 +11,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Box from '@mui/material/Box';
 
 function Register({getCookie, setUserID, setToken}) {
 
@@ -107,64 +108,68 @@ function Register({getCookie, setUserID, setToken}) {
   return (
     <article className="root-register">
 
-      <h2>Register</h2>
-
-      <TextField id="outlined-multiline-static" className="margin-bottom input" label="Email" onChange={(e) => {setEmail(e.target.value)}}/>
-
-      <FormControl className='input margin-bottom' variant="outlined" >
-          <InputLabel htmlFor="create-password">Password</InputLabel>
-          <OutlinedInput
-            id="create-password"
-            type={showPassword ? 'text' : 'password'}
-            onChange={(e) => {setPassword(e.target.value)}}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
-          />
-      </FormControl>
-      
-      <FormControl className='input margin-bottom' variant="outlined">
-          <InputLabel htmlFor="confirm-password">Confirm Password</InputLabel>
-          <OutlinedInput
-            id="confirm-password"
-            type={showPassword ? 'text' : 'password'}
-            onChange={(e) => {setConfirmPassword(e.target.value)}}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Confirm Password"
-          />
-      </FormControl>
+      <Box className="box" component="form" onSubmit={login}>
 
 
-      <br></br>
+        <h2>Register</h2>
 
-      <button className='button margin-bottom' onClick={() => {register()}}>Register</button>
+        <TextField id="outlined-multiline-static" className="margin-bottom input" label="Email" onChange={(e) => {setEmail(e.target.value)}}/>
 
-      <div className='error hidden'></div>
+        <FormControl className='input margin-bottom' variant="outlined" >
+            <InputLabel htmlFor="create-password">Password</InputLabel>
+            <OutlinedInput
+              id="create-password"
+              type={showPassword ? 'text' : 'password'}
+              onChange={(e) => {setPassword(e.target.value)}}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Password"
+            />
+        </FormControl>
+        
+        <FormControl className='input margin-bottom' variant="outlined">
+            <InputLabel htmlFor="confirm-password">Confirm Password</InputLabel>
+            <OutlinedInput
+              id="confirm-password"
+              type={showPassword ? 'text' : 'password'}
+              onChange={(e) => {setConfirmPassword(e.target.value)}}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Confirm Password"
+            />
+        </FormControl>
 
-      <br></br>
 
-      <Link to="/login">Already Registered? Login Here</Link>
+        <br></br>
+
+        <button className='button margin-bottom' onClick={() => {register()}}>Register</button>
+
+        <div className='error hidden'></div>
+
+        <br></br>
+
+        <Link className="link" to="/login">Already Registered? Login Here</Link>
+      </Box>
 
     </article>
   );
