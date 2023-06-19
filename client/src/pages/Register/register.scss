@@ -2,15 +2,17 @@
 
 .root-register {
 
-    margin-top:     10vh;
-    display:        block;
-    text-align:     center;
+    padding-top:            10vh;
+    display:                block;
+    text-align:             center;
+    background-color:       $mainBlue;
+    min-height:             90vh;
 
     .margin-bottom {
-        margin-bottom: .75em
+        margin-bottom:      .75em
     }
 
     .input {
-        width: 60%;
+        width:                 60%;
     }
 }
