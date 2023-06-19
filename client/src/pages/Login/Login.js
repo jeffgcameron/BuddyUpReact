@@ -11,6 +11,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Box from '@mui/material/Box';
 
 function Login({getCookie, setUserID, setToken}) {
 
@@ -49,46 +50,50 @@ function Login({getCookie, setUserID, setToken}) {
   };
 
   return (
-    <form className="root-login" onSubmit={login}>
+    <article className="root-login">
 
-      <h2 className='margin-bottom'>Login</h2>
+      <Box className="login-box" component="form" onSubmit={login}>
 
-        <TextField id="outlined-multiline-static" className="margin-bottom input" label="Email" onChange={(e) => {setEmail(e.target.value)}}/>
+        <h2 className='margin-bottom'>Login</h2>
+
+          <TextField id="outlined-multiline-static" className="margin-bottom input" label="Email" onChange={(e) => {setEmail(e.target.value)}}/>
+
+          <br></br>
+
+          <FormControl className='input' variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-password"
+                type={showPassword ? 'text' : 'password'}
+                onChange={(e) => {setPassword(e.target.value)}}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="Password"
+              />
+            </FormControl>
 
         <br></br>
 
-        <FormControl className='input' variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-password"
-              type={showPassword ? 'text' : 'password'}
-              onChange={(e) => {setPassword(e.target.value)}}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Password"
-            />
-          </FormControl>
+        <button className="button margin-bottom" onClick={()=> {login()}}>Login</button>
+        <div className='error hidden'></div>
 
-      <br></br>
+        <br></br>
 
-      <button className="button margin-bottom" onClick={()=> {login()}}>Login</button>
-      <div className='error hidden'></div>
+        <Link to="/register">Don't Have an Account? Register Here</Link>
 
-      <br></br>
+      </Box>
 
-      <Link to="/register">Don't Have an Account? Register Here</Link>
-
-    </form>
+    </article>
   );
 }
 

@@ -8,6 +8,11 @@
     background-color: $mainBlue;
     height: 90vh;
 
+    .login-box {
+        background-color: $mainWhite;
+        margin: 0, 3em;
+    }
+
     .margin-bottom {
         margin-bottom: .75em
     }
@@ -15,6 +20,4 @@
     .input {
         width: 60%;
     }
-
-
 }
