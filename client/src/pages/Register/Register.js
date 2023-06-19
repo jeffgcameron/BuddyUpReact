@@ -11,6 +11,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Box from '@mui/material/Box';
 
 function Register({getCookie, setUserID, setToken}) {
 
@@ -107,6 +108,8 @@ function Register({getCookie, setUserID, setToken}) {
   return (
     <article className="root-register">
 
+      <Box className="box" component="form" onSubmit={register}>
+
       <h2>Register</h2>
 
       <TextField id="outlined-multiline-static" className="margin-bottom input" label="Email" onChange={(e) => {setEmail(e.target.value)}}/>
@@ -164,7 +167,9 @@ function Register({getCookie, setUserID, setToken}) {
 
       <br></br>
 
-      <Link to="/login">Already Registered? Login Here</Link>
+      <Link className='link' to="/login">Already Registered? Login Here</Link>
+
+      </Box>
 
     </article>
   );

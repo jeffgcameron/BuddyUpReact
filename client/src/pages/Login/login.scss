@@ -2,11 +2,11 @@
 
 .root-login {
     
-    padding-top:        10vh;
-    display:            block;
-    text-align:         center;
-    background-color:   $mainBlue;
-    height:             90vh;
+    padding-top:            10vh;
+    display:                block;
+    text-align:             center;
+    background-color:       $mainBlue;
+    min-height:             90vh;
 
     .login-box {
         background-color:           rgb(225, 224, 224);
@@ -16,15 +16,11 @@
     }
 
     .margin-bottom {
-        margin-bottom: .75em
+        margin-bottom:          .75em
     }
 
     .input {
         width: 60%;
     }
 
-    .link {
-        font-size: .8em;
-        color: $mainBlue;
-    }
 }

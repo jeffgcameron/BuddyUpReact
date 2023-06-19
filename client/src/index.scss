@@ -10,6 +10,18 @@ body {
 	font-size: 				16px;
 }
 
+.box{
+	background-color:           rgb(225, 224, 224);
+	margin:                     0 3em;
+	padding:                    1em;
+	border-radius:              10%;
+}
+
+.link {
+	font-size: .8em;
+	color: $mainBlue;
+}
+
 h1, h2, h3, .header-text {
    font-family: 			$styleText;
    font-weight: 			bold;

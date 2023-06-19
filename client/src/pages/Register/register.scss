@@ -2,9 +2,11 @@
 
 .root-register {
 
-    margin-top:     10vh;
+    padding-top:     10vh;
     display:        block;
     text-align:     center;
+    background-color:       $mainBlue;
+    min-height:             90vh;
 
     .margin-bottom {
         margin-bottom: .75em
