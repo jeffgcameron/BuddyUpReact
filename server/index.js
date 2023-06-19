@@ -1,22 +1,29 @@
-const express                           = require("express")
-const cors                              = require("cors")
-const cookieParser                      = require('cookie-parser');
-const { createTokens, validateToken }   = require('./JWT.js');
-require('dotenv').config();
+const express                   = require("express")
+const cors                      = require("cors")
 
+<<<<<<< HEAD
 const mysql                             = require("mysql")
 const bodyParser                        = require("body-parser");
 const app                               = express();
 const bcrypt                            = require('bcrypt');
 // const path                              = require('path');
+=======
+const session                   = require('express-session');
+const mysql                     = require("mysql")
+const bodyParser                = require("body-parser");
+const app                       = express();
+const bcrypt                    = require('bcrypt');
+const cookieParser              = require('cookie-parser');
+
+const { createTokens, validateToken }                        = require('./JWT.js');
+>>>>>>> parent of 7ab2b7b (preparing for production)
 
 app.use(express.json())
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}))
 
-
-const db = mysql.createConnection({
+const db = mysql.createPool({
     user:           "root",
     host:           "localhost",
     password:       "root",
@@ -56,7 +63,7 @@ app.post('/api/activites', (req, res) => {
     const buddies           = req.body.buddies
     const userID            = req.body.userID
     const userName          = req.body.userName
-    const imgURL            = req.body.imgURL
+    const imgURL          = req.body.imgURL
 
     const sqlInsert = "INSERT INTO activities (id, name, location, plan, time, date, buddies, userID, userName, imgURL) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     db.query(sqlInsert, [id, name, location, plan, time, date, buddies, userID, userName, imgURL], (err, reult) => {
@@ -164,8 +171,13 @@ app.post("/auth", validateToken, (req, res) => {
 
 // listen
 
+<<<<<<< HEAD
 var PORT = process.env.PORT || "3001"
 
 app.listen(PORT, () => {
     console.log('running on ' + PORT);
+=======
+app.listen(3001, () => {
+    console.log('running on 3001');
+>>>>>>> parent of 7ab2b7b (preparing for production)
 })

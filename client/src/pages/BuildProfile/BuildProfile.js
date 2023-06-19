@@ -77,18 +77,6 @@ function BuildProfile({userID}) {
 		setShowHelp((showHelp) ? false : true);
 	}
 
-	// var askForLocation = function() {
-		navigator.geolocation.getCurrentPosition(function(position) {
-			console.log("Latitude is :", position.coords.latitude);
-			console.log("Longitude is :", position.coords.longitude);
-			console.log(position);
-	  });
-
-	  
-	// }
-	
-	// askForLocation()
-
   return (
 	<Container className="root-build-profile">
 
