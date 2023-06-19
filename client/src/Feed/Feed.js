@@ -1,7 +1,9 @@
 import './feed.scss';
 import React, {useState, useEffect} from 'react';
-import ActivityTemplate from '../../templates/ActivityTemplate/ActivityTemplate.js'
-import Footer from '../../components/Footer/Footer.js';
+import ActivityTemplate from '../ActivityTemplate/ActivityTemplate.js'
+import jeffProPic from '../Images/GC.jpg'
+import otherProPic from '../Images/headshot.jpg'
+import Footer from '../Footer/Footer.js';
 import Axios from 'axios';
 
 function Feed({userID}) {
@@ -25,7 +27,7 @@ function Feed({userID}) {
 		<p className="center-text scroll-text header-text">Scroll to View Upcoming Activities!</p>
 		<hr></hr>
 		{activities.map((item) => (
-			<ActivityTemplate key={item.id} item={item}/>
+			<ActivityTemplate item={item}/>
 		))} 
 
 		<div className='footer-component'> <Footer /></div>

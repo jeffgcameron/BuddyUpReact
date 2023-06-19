@@ -1,0 +1,15 @@
+@import './index.scss';
+
+$theme-colors: (
+  'info':                   tomato,
+  'danger':                 teal,
+  'active':					        $mainWhite
+);
+
+.nav-link.active {
+    // color:              	$mainWhite !important;
+    // background-color:   	red
+}
+
+/* import bootstrap to set changes */
+@import '~bootstrap/scss/bootstrap';

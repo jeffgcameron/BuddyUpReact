@@ -1,10 +1,10 @@
 import './Profile.scss';
 import React, {useEffect, useState} from 'react';
-import ProfileAbout from '../../components/ProfileAbout/ProfileAbout.js';
-import ProfileActivites from '../../components/ProfileActivites/ProfileActivities.js'
-import ActivityTemplate from '../../templates/ActivityTemplate/ActivityTemplate.js';
+import ProfileAbout from './ProfileAbout/ProfileAbout.js';
+import ProfileActivites from './ProfileActivites/ProfileActivities.js'
+import ActivityTemplate from '../ActivityTemplate/ActivityTemplate.js';
 import Axios from 'axios';
-import Footer from '../../components/Footer/Footer.js';
+import Footer from '../Footer/Footer.js';
 
 function Profile({userID}) {
     
@@ -33,8 +33,6 @@ function Profile({userID}) {
         })
       }, [userID])
 
-      console.log(myProfile);
-
     return (
         <article className='root-profile'>
             <ProfileAbout myProfile={myProfile}/>
@@ -43,7 +41,9 @@ function Profile({userID}) {
             <hr></hr>
             <h3>My Posts</h3>
             {myActivities.map((item) => (
-                <ActivityTemplate key={item.id} className="activity" item ={item}/>
+                <div key={item.id} className="activity">
+                    <ActivityTemplate item ={item}/>
+                </div>
 		    ))} 
             <div className='footer-component'> <Footer /></div>
         </article>

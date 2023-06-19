@@ -1,17 +1,17 @@
 import './activity-template.scss';
 import {Container , Row, Col} from 'react-bootstrap';
-// import otherProPic from '../Images/headshot.jpg'
+import otherProPic from '../Images/headshot.jpg'
 import $ from "jquery"
 // import {Col} from 'react-bootstrap';
 
 function ActivityTemplate({item}) {
 
-  var toggleDetails = function(value) {
-    var $target			= $(value.target)
-    var $parent 		= $target.closest('.activity')
-    var $detail			= $parent.find('.activity-plan')
-    $detail.toggleClass('hidden');
-    ($detail.hasClass('hidden')) ? updateText(true, $target) : updateText(false, $target)
+    var toggleDetails = function(value) {
+	var $target			= $(value.target)
+	var $parent 		= $target.closest('.activity')
+	var $detail			= $parent.find('.activity-plan')
+	$detail.toggleClass('hidden');
+	($detail.hasClass('hidden')) ? updateText(true, $target) : updateText(false, $target)
   };
 
   var updateText = function(isHidden, $target) {
@@ -19,19 +19,17 @@ function ActivityTemplate({item}) {
 	$target.text(text)
   }
 
-  console.log(item)
-
   return (
     <article className="root-activity-template">
 
-    <Container key={item.id} className="activity">
+<Container key={item.id} className="activity">
 				<ul>
 
 					<Row>
 						<Col xs={4} className="vertical-justify">
 
 							<li className="align-picture">
-								<img className='profile-picture' src={item.imgURL} alt="Profile"></img>
+								<img className='profile-picture' src={otherProPic} alt="Profile"></img>
 							</li>
 							
 							<li className='center-text header-text'>{item.userName}</li>

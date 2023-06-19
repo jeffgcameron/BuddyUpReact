@@ -1,6 +1,6 @@
 import './successful-post.scss';
-import Footer from '../../components/Footer/Footer.js';
-import ActivityTemplate from '../../templates/ActivityTemplate/ActivityTemplate.js'
+import Footer from '../Footer/Footer.js';
+import ActivityTemplate from '../ActivityTemplate/ActivityTemplate.js'
 
 function SuccessfulPost({post}) {
   return (
