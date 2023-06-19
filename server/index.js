@@ -1,22 +1,15 @@
 const express                   = require("express")
 const cors                      = require("cors")
-
-<<<<<<< HEAD
 const mysql                             = require("mysql")
 const bodyParser                        = require("body-parser");
 const app                               = express();
 const bcrypt                            = require('bcrypt');
-// const path                              = require('path');
-=======
-const session                   = require('express-session');
 const mysql                     = require("mysql")
 const bodyParser                = require("body-parser");
-const app                       = express();
 const bcrypt                    = require('bcrypt');
 const cookieParser              = require('cookie-parser');
 
 const { createTokens, validateToken }                        = require('./JWT.js');
->>>>>>> parent of 7ab2b7b (preparing for production)
 
 app.use(express.json())
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
@@ -171,13 +164,8 @@ app.post("/auth", validateToken, (req, res) => {
 
 // listen
 
-<<<<<<< HEAD
 var PORT = process.env.PORT || "3001"
 
 app.listen(PORT, () => {
     console.log('running on ' + PORT);
-=======
-app.listen(3001, () => {
-    console.log('running on 3001');
->>>>>>> parent of 7ab2b7b (preparing for production)
 })
