@@ -53,8 +53,6 @@ app.post('/api/activites', (req, res) => {
     const date              = req.body.date
     const buddies           = req.body.buddies
     const userID            = req.body.userID
-    const userName          = req.body.userName
-    const imgURL          = req.body.imgURL
 
     const sqlInsert = "INSERT INTO activities (name, location, plan, time, date, buddies, userID) VALUES (?, ?, ?, ?, ?, ?, ?);";
     db.query(sqlInsert, [name, location, plan, time, date, buddies, userID], (err, reult) => {

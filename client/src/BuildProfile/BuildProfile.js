@@ -67,12 +67,7 @@ function BuildProfile({userID}) {
 	var handleSubmit = function(e) {
 		e.preventDefault();
 		Axios.post('http://localhost:3001/build-profile', profile)
-		window.location.replace('/')
 	}
-
-	// var toggleHelp = function() {
-	// 	setShowHelp((showHelp) ? false : true);
-	// }
 
   return (
 	<Container className="root-build-profile">
