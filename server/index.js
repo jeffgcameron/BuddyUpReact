@@ -22,19 +22,6 @@ const db = mysql.createPool({
     database:       "BUdb"
 });
 
-// all routes
-
-// app.get("/*", function(req, res) {
-//     res.sendFile(
-//         path.join(__dirname, "../client/build/index.html"),
-//         function(err) {
-//             if (err) {
-//                 res.status(500).send(err)
-//             }
-//         }
-//     )
-// })
-
 // activities routes
 
 app.get('/api/get-activites', (req, res) => {
