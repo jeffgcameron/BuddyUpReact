@@ -53,6 +53,8 @@ app.post('/api/activites', (req, res) => {
     const date              = req.body.date
     const buddies           = req.body.buddies
     const userID            = req.body.userID
+    const userName          = req.body.userName
+    const imgURL          = req.body.imgURL
 
     const sqlInsert = "INSERT INTO activities (name, location, plan, time, date, buddies, userID) VALUES (?, ?, ?, ?, ?, ?, ?);";
     db.query(sqlInsert, [name, location, plan, time, date, buddies, userID], (err, reult) => {
@@ -159,13 +161,8 @@ app.post("/auth", validateToken, (req, res) => {
 
 // listen
 
-<<<<<<< HEAD
 var PORT = process.env.PORT || "3001"
 
 app.listen(PORT, () => {
     console.log('running on ' + PORT);
-=======
-app.listen(3001, () => {
-    console.log('running on 3001');
->>>>>>> parent of 7ab2b7b (preparing for production)
 })
