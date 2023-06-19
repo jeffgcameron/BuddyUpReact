@@ -108,7 +108,7 @@ function Register({getCookie, setUserID, setToken}) {
   return (
     <article className="root-register">
 
-      <Box className="box" component="form" onSubmit={login}>
+      <Box className="box" component="form">
 
 
         <h2>Register</h2>

@@ -50,7 +50,7 @@ function Login({getCookie, setUserID, setToken}) {
   return (
     <article className="root-login">
 
-      <Box className="box" component="form" onSubmit={login}>
+      <Box className="box">
 
         <h2 className='margin-bottom'>Login</h2>
 

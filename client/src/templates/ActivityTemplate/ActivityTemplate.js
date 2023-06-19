@@ -1,10 +1,9 @@
 import './activity-template.scss';
 import {Container , Row, Col} from 'react-bootstrap';
-// import otherProPic from '../images/headshot.jpg'
+import { Link } from 'react-router-dom';
 import $ from "jquery"
-// import {Col} from 'react-bootstrap';
 
-function ActivityTemplate({item}) {
+function ActivityTemplate({item, signedInUserID}) {
 
   var toggleDetails = function(value) {
     var $target			= $(value.target)
@@ -19,7 +18,14 @@ function ActivityTemplate({item}) {
 	$target.text(text)
   }
 
-  console.log(item)
+  var goToProfile = function(userID) {
+	console.log(userID);
+  }
+
+  var getLink = function() {
+	if (signedInUserID === item.userID) return '/profile'
+	return `/user/userID?=${item.userID}`
+  }
 
   return (
     <article className="root-activity-template">
@@ -28,13 +34,16 @@ function ActivityTemplate({item}) {
 				<ul>
 
 					<Row>
-						<Col xs={4} className="vertical-justify">
+						<Col xs={4} className="vertical-justify" onClick={()=> {goToProfile(item.userID)}}>
+							<Link to={getLink()} className="view-profile">
 
-							<li className="align-picture">
-								<img className='profile-picture' src={item.imgURL} alt="Profile"></img>
-							</li>
-							
-							<li className='center-text header-text'>{item.userName}</li>
+								<li className="align-picture">
+									<img className='profile-picture' src={item.imgURL} alt="Profile"></img>
+								</li>
+								
+								<li className='center-text header-text'>{item.userName}</li>
+
+							</Link>
 
 						</Col>
 						<Col xs={8} className="vertical-justify">

@@ -11,6 +11,7 @@ import Login from './pages/Login/Login.js';
 import Register from './pages/Register/Register.js';
 import BuildProfile from './pages/BuildProfile/BuildProfile.js';
 import SuccessfulPost from './pages/SuccessfulPost/SuccessfulPost.js';
+import User from './pages/User/User.js';
 import { Routes, Route }  from 'react-router-dom';
 import Axios from "axios";
 
@@ -83,6 +84,14 @@ function App() {
             <LoggedOutRoute isLoggedIn={isLoggedIn}>
                 <Profile userID={userID}/>
             </LoggedOutRoute>
+          } 
+        />
+
+        <Route path='/user/:userID'          
+          element={
+            // <LoggedOutRoute isLoggedIn={isLoggedIn}>
+                <User />
+            // </LoggedOutRoute>
           } 
         />
 

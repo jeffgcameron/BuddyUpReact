@@ -1,13 +1,14 @@
-// @import url('https://fonts.googleapis.com/css2?family=Economica&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Economica:wght@400;700&display=swap');
 
 $mainBlue:             		#445d71;
 $mainWhite:             	#FFFFFF;
 $styleText:					'Economica', sans-serif;
+$offWhite:					rgb(225, 224, 224);
 
 body {
 	font-family: 			"Roboto","Helvetica","Arial",sans-serif;
 	font-size: 				16px;
+	background-color: 		$offWhite;
 }
 
 h1, h2, h3, .header-text {
@@ -16,7 +17,7 @@ h1, h2, h3, .header-text {
 }
 
 .box{
-	background-color:           rgb(225, 224, 224);
+	background-color:           $offWhite;
 	margin:                     0 3em;
 	padding:                    1em;
 	border-radius:              10%;
