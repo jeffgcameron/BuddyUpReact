@@ -89,9 +89,7 @@ function App() {
 
         <Route path='/user/:userID'          
           element={
-            // <LoggedOutRoute isLoggedIn={isLoggedIn}>
-                <User />
-            // </LoggedOutRoute>
+            <User />
           } 
         />
 

@@ -7,7 +7,7 @@ import TextField  from '@mui/material/TextField/TextField';
 import {Container , Row, Col} from 'react-bootstrap';
 import MenuItem from '@mui/material/MenuItem';
 import Footer from '../../components/Footer/Footer.js';
-import { Routes, Route, Navigate }  from 'react-router-dom';
+import { Navigate }  from 'react-router-dom';
 
 function CreatePost({userID, setPost}) {
 
@@ -20,7 +20,6 @@ function CreatePost({userID, setPost}) {
     const [success, setSuccess]	            = useState(false)
     const [userName, setUserName]	        = useState('')
     const [imgURL, setImgURL]	            = useState('')
-    console.log(imgURL);
 
     var numberOfBuddies = [
         { 
@@ -93,7 +92,6 @@ function CreatePost({userID, setPost}) {
     useEffect(() => {
         Axios.post('http://localhost:3001/my-profile', {userID: userID}).then((response) => {
             if (response.data.length === 0) window.location.replace('/build-profile');
-            console.log(response.data[0].imgURL)
             setUserName(response.data[0].firstName + ' ' + response.data[0].lastName)
             setImgURL(response.data[0].imgURL)
         })

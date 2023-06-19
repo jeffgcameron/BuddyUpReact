@@ -17,7 +17,7 @@ function Feed({userID}) {
 		if (response.data.length === 0) window.location.replace('/build-profile');
 		console.log(response);
 	})
-  }, [])
+  }, [userID])
 
   return (
     <article className="root-feed">

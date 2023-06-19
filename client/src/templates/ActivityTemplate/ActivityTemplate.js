@@ -18,10 +18,6 @@ function ActivityTemplate({item, signedInUserID}) {
 	$target.text(text)
   }
 
-  var goToProfile = function(userID) {
-	console.log(userID);
-  }
-
   var getLink = function() {
 	if (signedInUserID === item.userID) return '/profile'
 	return `/user/userID?=${item.userID}`
@@ -34,7 +30,7 @@ function ActivityTemplate({item, signedInUserID}) {
 				<ul>
 
 					<Row>
-						<Col xs={4} className="vertical-justify" onClick={()=> {goToProfile(item.userID)}}>
+						<Col xs={4} className="vertical-justify">
 							<Link to={getLink()} className="view-profile">
 
 								<li className="align-picture">
@@ -50,7 +46,9 @@ function ActivityTemplate({item, signedInUserID}) {
 
 							<li>Activity: <span>{item.name}</span></li>
 							
-							<li>Time: <span>{item.date} at {item.time}</span></li>
+							<li>Date: <span>{item.date}</span></li>
+
+							<li>Time: <span>{item.time}</span></li>
 							
 							<li>Meeting Location: <span>{item.location}</span></li>
 							
