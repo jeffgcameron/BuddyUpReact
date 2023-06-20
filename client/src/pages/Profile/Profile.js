@@ -37,13 +37,13 @@ function Profile({userID}) {
 
     return (
         <article className='root-profile'>
-            <ProfileAbout myProfile={myProfile}/>
+            <ProfileAbout myProfile={myProfile} showEdit={true}/>
             <hr></hr>
             <ProfileActivites myProfile={myProfile} />
             <hr></hr>
             <h3>My Posts</h3>
             {myActivities.map((item) => (
-                <ActivityTemplate key={item.id} className="activity" item ={item}/>
+                <ActivityTemplate key={item.id} className="activity" item ={item} showEdit={true}/>
 		    ))} 
             <div className='footer-component'> <Footer /></div>
         </article>

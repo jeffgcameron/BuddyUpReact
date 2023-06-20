@@ -31,6 +31,14 @@ app.get('/api/get-activites', (req, res) => {
     })
 })
 
+app.post('/api/get-activity', (req, res) => {
+    console.log(req);
+    const sqlSelect = "Select * FROM activities WHERE id =?";
+    db.query(sqlSelect, [req.body.id], (err, result) => {
+        res.send(result)
+    })
+})
+
 app.post('/api/activites', (req, res) => {
 
     const id                = req.body.id
@@ -103,7 +111,6 @@ app.post('/login', (req, res) => {
 
     app.post('/build-profile', (req, res) => {
 
-        console.log(req.body);
         const id                = req.body.id
         const imgURL            = req.body.imgURL
         const firstName         = req.body.firstName
@@ -120,6 +127,50 @@ app.post('/login', (req, res) => {
         })
 
     });
+
+// edit profile
+
+app.put('/edit-profile', (req, res) => {
+    console.log(req.body);
+
+    const id                = req.body.id
+    const imgURL            = req.body.imgURL
+    const firstName         = req.body.firstName
+    const lastName          = req.body.lastName
+    const location          = req.body.location
+    const bio               = req.body.bio
+    const activities        = req.body.activities
+    const certifications    = req.body.certifications
+
+
+    const sqlInsert = "UPDATE profiles SET firstName = ?, lastName = ?, imgURL = ?, location = ?, bio = ?, activities = ?, certifications = ? WHERE id = ?";
+    db.query(sqlInsert, [firstName, lastName, imgURL, location, bio, activities, certifications, id], (err, reult) => {
+        console.log(err)
+    })
+
+});
+
+// edit post 
+
+
+app.put('/edit-post', (req, res) => {
+    console.log(req.body);
+
+    const id                = req.body.id
+    const name              = req.body.name
+    const location          = req.body.location
+    const plan              = req.body.plan
+    const time              = req.body.time
+    const date              = req.body.date
+    const buddies           = req.body.buddies
+
+
+    const sqlInsert = "UPDATE activities SET name = ?, plan = ?, time = ?, location = ?, date = ?, buddies = ? WHERE id = ?";
+    db.query(sqlInsert, [name, plan, time, location, date, buddies, id], (err, reult) => {
+        console.log(err)
+    })
+
+});
 
 // my profile
 

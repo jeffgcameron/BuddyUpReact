@@ -6,13 +6,18 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 const { convertTime }   = require('../../functions/DateFunctions.js');
 
-export default function TimeSelector({setTime}) {
+export default function TimeSelector({setTime, time}) {
+
+  console.log(time)
 
   return (
     <article className='root-time-selector'>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={['TimePicker']}>
-            <TimePicker label="Time" onChange={e => setTime(convertTime(e))} />
+        {time 
+          ? <TimePicker label="Time" onChange={e => setTime(convertTime(e))} /> 
+          : <TimePicker label="Time" onChange={e => setTime(convertTime(e))} />
+        }
         </DemoContainer>
         </LocalizationProvider>
     </article>

@@ -7,11 +7,14 @@ import Axios from 'axios';
 function Feed({userID}) {
 
   const [activities, setActivites] = useState([])
+  const [profiles, setProfiles] = useState([])
 
   useEffect(() => {
 	Axios.get('http://localhost:3001/api/get-activites').then((response) => {
 		setActivites(response.data);
 	})
+
+
 
 	Axios.post('http://localhost:3001/my-profile', {userID: userID}).then((response) => {
 		if (response.data.length === 0) window.location.replace('/build-profile');

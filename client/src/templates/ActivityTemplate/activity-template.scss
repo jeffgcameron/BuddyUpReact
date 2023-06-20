@@ -25,7 +25,9 @@
     }
 
     .profile-picture {
-        height: 10vh;
+        object-fit: cover;
+        height: 13vh;
+        width: 13vh;
         border-radius: 100%;
     }
 

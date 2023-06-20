@@ -1,9 +1,10 @@
 import './activity-template.scss';
 import {Container , Row, Col} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import EditIcon from '@mui/icons-material/Edit';
 import $ from "jquery"
 
-function ActivityTemplate({item, signedInUserID}) {
+function ActivityTemplate({item, signedInUserID, showEdit}) {
 
   var toggleDetails = function(value) {
     var $target			= $(value.target)
@@ -61,6 +62,10 @@ function ActivityTemplate({item, signedInUserID}) {
 					<li className="view-plan center-text header-text" onClick={toggleDetails}>View Plan Details</li>
 
 					<li className="hidden center-text activity-plan">{item.plan}</li>
+					{showEdit ? 
+					<li> <Link to={`/edit-post/id?=${item.id}`}><EditIcon /></Link></li>
+					: ''}
+					
 
 			   </ul>
 			   <hr></hr>
