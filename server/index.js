@@ -31,6 +31,21 @@ app.get('/api/get-activites', (req, res) => {
     })
 })
 
+app.post('/api/get-activity', (req, res) => {
+    const sqlSelect = "Select * FROM activities WHERE id =?";
+    db.query(sqlSelect, [req.body.id], (err, result) => {
+        res.send(result)
+    })
+})
+
+app.delete('/api/delete-activity', (req, res) => {
+    console.log(req.body);
+    const sqlSelect = "DELETE FROM activities WHERE id =?";
+    db.query(sqlSelect, [req.body.id], (err, result) => {
+        console.log(err);
+    })
+})
+
 app.post('/api/activites', (req, res) => {
 
     const id                = req.body.id
@@ -41,15 +56,22 @@ app.post('/api/activites', (req, res) => {
     const date              = req.body.date
     const buddies           = req.body.buddies
     const userID            = req.body.userID
-    const userName          = req.body.userName
-    const imgURL            = req.body.imgURL
 
-    const sqlInsert = "INSERT INTO activities (id, name, location, plan, time, date, buddies, userID, userName, imgURL) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-    db.query(sqlInsert, [id, name, location, plan, time, date, buddies, userID, userName, imgURL], (err, reult) => {
+    const sqlInsert = "INSERT INTO activities (id, name, location, plan, time, date, buddies, userID) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+    db.query(sqlInsert, [id, name, location, plan, time, date, buddies, userID], (err, reult) => {
         console.log(err)
     })
 
 });
+
+//get all profiles 
+
+app.get('/api/get-profiles', (req, res) => {
+    const sqlSelect = "Select * FROM profiles";
+    db.query(sqlSelect, (err, result) => {
+        res.send(result)
+    })
+})
 
 // user routes
 
@@ -103,7 +125,6 @@ app.post('/login', (req, res) => {
 
     app.post('/build-profile', (req, res) => {
 
-        console.log(req.body);
         const id                = req.body.id
         const imgURL            = req.body.imgURL
         const firstName         = req.body.firstName
@@ -120,6 +141,50 @@ app.post('/login', (req, res) => {
         })
 
     });
+
+// edit profile
+
+app.put('/edit-profile', (req, res) => {
+    console.log(req.body);
+
+    const id                = req.body.id
+    const imgURL            = req.body.imgURL
+    const firstName         = req.body.firstName
+    const lastName          = req.body.lastName
+    const location          = req.body.location
+    const bio               = req.body.bio
+    const activities        = req.body.activities
+    const certifications    = req.body.certifications
+
+
+    const sqlInsert = "UPDATE profiles SET firstName = ?, lastName = ?, imgURL = ?, location = ?, bio = ?, activities = ?, certifications = ? WHERE id = ?";
+    db.query(sqlInsert, [firstName, lastName, imgURL, location, bio, activities, certifications, id], (err, reult) => {
+        console.log(err)
+    })
+
+});
+
+// edit post 
+
+
+app.put('/edit-post', (req, res) => {
+    console.log(req.body);
+
+    const id                = req.body.id
+    const name              = req.body.name
+    const location          = req.body.location
+    const plan              = req.body.plan
+    const time              = req.body.time
+    const date              = req.body.date
+    const buddies           = req.body.buddies
+
+
+    const sqlInsert = "UPDATE activities SET name = ?, plan = ?, time = ?, location = ?, date = ?, buddies = ? WHERE id = ?";
+    db.query(sqlInsert, [name, plan, time, location, date, buddies, id], (err, reult) => {
+        console.log(err)
+    })
+
+});
 
 // my profile
 

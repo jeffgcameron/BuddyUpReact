@@ -79,11 +79,11 @@ function CreatePost({userID, setPost}) {
                 date:               date,
                 buddies:            buddies,
                 userID:             userID,
-                userName:           userName,
-                imgURL:             imgURL
             }
             
         Axios.post('http://localhost:3001/api/activites', data)
+        data.imgURL     = imgURL
+        data.userName   = userName
         setPost(data)
         setSuccess(true);
         < Navigate to='/success' />

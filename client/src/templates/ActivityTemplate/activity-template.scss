@@ -25,7 +25,9 @@
     }
 
     .profile-picture {
-        height: 10vh;
+        object-fit: cover;
+        height: 13vh;
+        width: 13vh;
         border-radius: 100%;
     }
 
@@ -41,5 +43,16 @@
 
     span {
         font-weight: bold;
+    }
+
+    .actions {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: .5em;
+
+        > a {
+            padding: 0 1em;
+        }
     }
 }

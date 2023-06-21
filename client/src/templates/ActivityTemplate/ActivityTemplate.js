@@ -1,9 +1,12 @@
 import './activity-template.scss';
 import {Container , Row, Col} from 'react-bootstrap';
+import Axios from 'axios';
 import { Link } from 'react-router-dom';
+import EditIcon from '@mui/icons-material/Edit';
+import DialogBox from '../../components/DialogBox/DialogBox';
 import $ from "jquery"
 
-function ActivityTemplate({item, signedInUserID}) {
+function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActivity}) {
 
   var toggleDetails = function(value) {
     var $target			= $(value.target)
@@ -23,25 +26,41 @@ function ActivityTemplate({item, signedInUserID}) {
 	return `/user/userID?=${item.userID}`
   }
 
-  return (
-    <article className="root-activity-template">
+  var deleteActivity = function() {
+	Axios.delete('http://localhost:3001/api/delete-activity', { data: {id: item.id}})
+	removeActivity(item.id)
+  }
 
-    <Container key={item.id} className="activity">
+  return (
+    <Container key={item.id} className="root-activity-template activity">
 				<ul>
 
 					<Row>
 						<Col xs={4} className="vertical-justify">
-							<Link to={getLink()} className="view-profile">
 
-								<li className="align-picture">
+							{showLink 
+								? <Link to={getLink()} className="view-profile">
+
+									<li className="align-picture">
+										<img className='profile-picture' src={item.imgURL} alt="Profile"></img>
+									</li>
+									
+									<li className='center-text header-text'>{item.userName}</li>
+									
+
+								</Link>
+								: <>
+									<li className="align-picture">
 									<img className='profile-picture' src={item.imgURL} alt="Profile"></img>
-								</li>
+									</li>
 								
-								<li className='center-text header-text'>{item.userName}</li>
-
-							</Link>
+									<li className='center-text header-text'>{item.userName}</li>
+								</>
+							}
+							
 
 						</Col>
+
 						<Col xs={8} className="vertical-justify">
 
 							<li>Activity: <span>{item.name}</span></li>
@@ -50,9 +69,9 @@ function ActivityTemplate({item, signedInUserID}) {
 
 							<li>Time: <span>{item.time}</span></li>
 							
-							<li>Meeting Location: <span>{item.location}</span></li>
+							<li>Meeting: <span>{item.location}</span></li>
 							
-							<li>Buddies Needed: <span>{item.buddies}</span></li>
+							<li>Buddies: <span>{item.buddies}</span></li>
 						
 						</Col>
 
@@ -60,13 +79,21 @@ function ActivityTemplate({item, signedInUserID}) {
 
 					<li className="view-plan center-text header-text" onClick={toggleDetails}>View Plan Details</li>
 
-					<li className="hidden center-text activity-plan">{item.plan}</li>
+					<li className="hidden center-text activity-plan">
+						<div>{item.plan}</div>
+						{showEdit ? 
+								<div className='actions'> 
+									<Link className='link' to={`/edit-post/id?=${item.id}`}><EditIcon /></Link>
+									<DialogBox deleteActivity={deleteActivity} name={item.name}/>
+								</div>
+							: ''}
+					</li>
+
+					
 
 			   </ul>
 			   <hr></hr>
 			</Container>
-
-    </article>
   );
 }
 

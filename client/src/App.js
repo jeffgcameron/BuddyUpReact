@@ -12,6 +12,8 @@ import Register from './pages/Register/Register.js';
 import BuildProfile from './pages/BuildProfile/BuildProfile.js';
 import SuccessfulPost from './pages/SuccessfulPost/SuccessfulPost.js';
 import User from './pages/User/User.js';
+import EditProfile from './pages/EditProfile/EditProfile.js';
+import EditPost from './pages/EditPost/EditPost.js';
 import { Routes, Route }  from 'react-router-dom';
 import Axios from "axios";
 
@@ -71,6 +73,14 @@ function App() {
           } 
         />
 
+        <Route eact path='/'          
+          element={
+            <LoggedOutRoute isLoggedIn={isLoggedIn}>
+                <Feed userID={userID}/>
+            </LoggedOutRoute>
+          } 
+        />
+
         <Route path='/home'          
           element={
             <LoggedOutRoute isLoggedIn={isLoggedIn}>
@@ -92,6 +102,17 @@ function App() {
             <User />
           } 
         />
+        <Route path='/edit-profile'          
+          element={
+            <EditProfile userID={userID}/>
+          } 
+        />
+
+        <Route path='/edit-post/:id'          
+          element={
+            <EditPost userID={userID} setPost={setPost}/>
+          } 
+        />
 
         <Route path='/post'          
           element={
@@ -100,12 +121,20 @@ function App() {
             </LoggedOutRoute>
           } 
         />
+{/* 
+        <Route path='/edit-post'          
+          element={
+            <LoggedOutRoute isLoggedIn={isLoggedIn}>
+                <CreatePost userID={userID} setPost={setPost}/>
+            </LoggedOutRoute>
+          } 
+        /> */}
 
         <Route path='/build-profile'          
           element={
-            // <LoggedOutRoute isLoggedIn={isLoggedIn}>
+            <LoggedOutRoute isLoggedIn={isLoggedIn}>
                 <BuildProfile userID={userID}/>
-            // </LoggedOutRoute>
+            </LoggedOutRoute>
           } 
         />
 
