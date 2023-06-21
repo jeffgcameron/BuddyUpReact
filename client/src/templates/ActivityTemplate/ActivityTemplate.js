@@ -1,6 +1,7 @@
 import './activity-template.scss';
 import {Container , Row, Col} from 'react-bootstrap';
 import Axios from 'axios';
+import ActivityActions from '../../components/ActivityActions/ActivityActions.js';
 import { Link } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import DialogBox from '../../components/DialogBox/DialogBox';
@@ -89,9 +90,9 @@ function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActiv
 							: ''}
 					</li>
 
-					
-
 			   </ul>
+			   <ActivityActions />
+			   
 			   <hr></hr>
 			</Container>
   );
