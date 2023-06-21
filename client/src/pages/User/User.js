@@ -1,12 +1,13 @@
-import './Profile.scss';
+import './user.scss';
 import React, {useEffect, useState} from 'react';
+import {useLocation} from 'react-router-dom';
 import ProfileAbout from '../../components/ProfileAbout/ProfileAbout.js';
 import ProfileActivites from '../../components/ProfileActivites/ProfileActivities.js'
 import ActivityTemplate from '../../templates/ActivityTemplate/ActivityTemplate.js';
 import Axios from 'axios';
 import Footer from '../../components/Footer/Footer.js';
 
-function Profile({userID}) {
+function User() {
     
     var [myActivities, setMyActivities]     = useState([])
     var [myProfile, setMyProfie]            = useState({})
@@ -20,12 +21,8 @@ function Profile({userID}) {
         }
     })
 
-
-	var removeActivity = function(id) {
-		setMyActivities(currentActivities => {
-			return (currentActivities.filter(item => item.id !== id))
-		})
-	};
+    const { search }    = useLocation();
+    var userID          = search.split('=')[1]
 
     useEffect(() => {
        
@@ -33,7 +30,9 @@ function Profile({userID}) {
             userID:        userID,
           }
 
+
         Axios.post('http://localhost:3001/api/my-activities', data).then((response) => {
+            console.log(response);
             setMyActivities(response.data)
         })
 
@@ -48,22 +47,19 @@ function Profile({userID}) {
         })
       }, [userID])
 
+
     return (
-        <article className='root-profile'>
-            <ProfileAbout myProfile={myProfile} showEdit={true}/>
+        <article className='root-user'>
+            <ProfileAbout myProfile={myProfile}/>
             <hr></hr>
             <ProfileActivites myProfile={myProfile} />
             <hr></hr>
-            <h3>My Posts</h3>
-            {myActivities.length === 0 
-                ? <p className='no-activities'>You Have Not Created any Activities</p> 
-                : ''
-            }
+            <h3>{myProfile.firstName}'s Posts</h3>
             {myActivities.map((item) => (
-                <ActivityTemplate key={item.id} className="activity" item={item} showEdit={true} removeActivity={removeActivity}/>
+                <ActivityTemplate key={item.id} className="activity" item ={item}/>
 		    ))} 
             <div className='footer-component'> <Footer /></div>
         </article>
     )
 }
-export default Profile;
+export default User;
