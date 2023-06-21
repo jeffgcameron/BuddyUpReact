@@ -1,0 +1,13 @@
+@import '../../index.scss';
+
+.root-activity-actions {
+    display: flex;
+    padding: .5em;
+    // background-color: $mainBlue;
+    justify-content: center;
+    text-align: center;
+
+    .clicked{
+        color: red;
+    }
+}
