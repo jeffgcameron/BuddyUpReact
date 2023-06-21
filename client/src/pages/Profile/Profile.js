@@ -11,6 +11,22 @@ function Profile({userID}) {
     var [myActivities, setMyActivities]     = useState([])
     var [myProfile, setMyProfie]            = useState({})
 
+    myActivities.forEach(function(activity){
+        if (myProfile.imgURL) {
+            activity.imgURL =myProfile.imgURL
+        }
+        if (myProfile.firstName && myProfile.lastName) {
+            activity.userName = myProfile.firstName + ' ' + myProfile.lastName
+        }
+    })
+
+
+	var removeActivity = function(id) {
+		setMyActivities(currentActivities => {
+			return (currentActivities.filter(item => item.id !== id))
+		})
+	};
+
     useEffect(() => {
        
         var data = {
@@ -42,8 +58,12 @@ function Profile({userID}) {
             <ProfileActivites myProfile={myProfile} />
             <hr></hr>
             <h3>My Posts</h3>
+            {myActivities.length === 0 
+                ? <p className='no-activities'>You Have Not Created any Activities</p> 
+                : ''
+            }
             {myActivities.map((item) => (
-                <ActivityTemplate key={item.id} className="activity" item ={item} showEdit={true}/>
+                <ActivityTemplate key={item.id} className="activity" item={item} showEdit={true} removeActivity={removeActivity}/>
 		    ))} 
             <div className='footer-component'> <Footer /></div>
         </article>

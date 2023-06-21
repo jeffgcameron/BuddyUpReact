@@ -11,10 +11,10 @@ export default function DateSelector({setDate, date}) {
   var setNewDate = function(data) {
     // console.log(data)
 
-    // var date = data.$W + '/' + data.$M + '/' + data.$D + '/' +  data.$y
+    var date = data.$W + '/' + data.$M + '/' + data.$D + '/' +  data.$y
 
-    // setDate(convertDate(date))
-    setDate(data.$d)
+    setDate(convertDate(date))
+    // setDate(data.$d)
 
   }
 

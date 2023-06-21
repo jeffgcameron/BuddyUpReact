@@ -44,4 +44,15 @@
     span {
         font-weight: bold;
     }
+
+    .actions {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: .5em;
+
+        > a {
+            padding: 0 1em;
+        }
+    }
 }

@@ -9,14 +9,15 @@ function ProfileAbout({myProfile, showEdit}) {
         <article className='root-profile-about'>
 
             <img className='profile-picture' src={myProfile.imgURL} alt="Profile"></img>
-            <div className='profile-name header-text'>{myProfile.firstName} {myProfile.lastName} {showEdit 
+            <div className='profile-name header-text'>{myProfile.firstName} {myProfile.lastName}</div>
+            <div className='profile-location style-text'><FontAwesomeIcon icon={faLocationDot} /> {myProfile.location}</div>
+            <div className='profile-bio'>{myProfile.bio}</div>
+            <div>{showEdit 
 				? 
 				<Link className='link' to="/edit-profile"><EditIcon /></Link>
 				: ''
 				}
             </div>
-            <div className='profile-location style-text'><FontAwesomeIcon icon={faLocationDot} /> {myProfile.location}</div>
-            <div className='profile-bio'>{myProfile.bio}</div>
         </article>
     )
 }

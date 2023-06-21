@@ -32,10 +32,17 @@ app.get('/api/get-activites', (req, res) => {
 })
 
 app.post('/api/get-activity', (req, res) => {
-    console.log(req);
     const sqlSelect = "Select * FROM activities WHERE id =?";
     db.query(sqlSelect, [req.body.id], (err, result) => {
         res.send(result)
+    })
+})
+
+app.delete('/api/delete-activity', (req, res) => {
+    console.log(req.body);
+    const sqlSelect = "DELETE FROM activities WHERE id =?";
+    db.query(sqlSelect, [req.body.id], (err, result) => {
+        console.log(err);
     })
 })
 
@@ -49,15 +56,22 @@ app.post('/api/activites', (req, res) => {
     const date              = req.body.date
     const buddies           = req.body.buddies
     const userID            = req.body.userID
-    const userName          = req.body.userName
-    const imgURL            = req.body.imgURL
 
-    const sqlInsert = "INSERT INTO activities (id, name, location, plan, time, date, buddies, userID, userName, imgURL) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-    db.query(sqlInsert, [id, name, location, plan, time, date, buddies, userID, userName, imgURL], (err, reult) => {
+    const sqlInsert = "INSERT INTO activities (id, name, location, plan, time, date, buddies, userID) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+    db.query(sqlInsert, [id, name, location, plan, time, date, buddies, userID], (err, reult) => {
         console.log(err)
     })
 
 });
+
+//get all profiles 
+
+app.get('/api/get-profiles', (req, res) => {
+    const sqlSelect = "Select * FROM profiles";
+    db.query(sqlSelect, (err, result) => {
+        res.send(result)
+    })
+})
 
 // user routes
 

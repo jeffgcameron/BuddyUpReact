@@ -8,8 +8,6 @@ const { convertTime }   = require('../../functions/DateFunctions.js');
 
 export default function TimeSelector({setTime, time}) {
 
-  console.log(time)
-
   return (
     <article className='root-time-selector'>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
