@@ -26,8 +26,6 @@ function Feed({userID}) {
 	activities.sort(function(itemOne, itemTwo){
 	let x = itemOne.date.toLowerCase();
 	let y = itemTwo.date.toLowerCase();
-	console.log(x);
-	console.log(y);
 	if (x < y) {return -1;}
 	if (x > y) {return 1;}
 	if (x === y) {
@@ -38,8 +36,6 @@ function Feed({userID}) {
 	}
 	return 0;
 	});
-
-	console.log(activities);
 
 	var removeActivity = function(id) {
 		setActivities(currentActivities => {
@@ -73,7 +69,9 @@ function Feed({userID}) {
 		{activities.filter((item) => {
 			if (searchTerm === ''){
 				return item
-			} else if (item.name.toLowerCase().includes(searchTerm.toLowerCase()) || item.location.toLowerCase().includes(searchTerm.toLowerCase())){
+			} else if (item.name.toLowerCase().includes(searchTerm.toLowerCase()) 
+			|| item.location.toLowerCase().includes(searchTerm.toLowerCase()) 
+			|| item.userName.toLowerCase().includes(searchTerm.toLowerCase())){
 				return item
 			}
 		}).map((item) => (

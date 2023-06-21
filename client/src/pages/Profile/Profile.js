@@ -34,7 +34,6 @@ function Profile({userID}) {
           }
 
         Axios.post('http://localhost:3001/api/my-activities', data).then((response) => {
-            console.log(response);
             setMyActivities(response.data)
         })
 
@@ -48,8 +47,6 @@ function Profile({userID}) {
             }
         })
       }, [userID])
-
-      console.log(myProfile);
 
     return (
         <article className='root-profile'>
