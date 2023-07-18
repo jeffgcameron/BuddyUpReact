@@ -1,4 +1,4 @@
-import './dialog-box.scss';
+import './delete-dialog-box.scss';
 
 import * as React from 'react';
 import Button from '@mui/material/Button';
@@ -15,7 +15,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function DialogBox({deleteActivity, name}) {
+export default function DeleteDialogBox({deleteActivity, name}) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {

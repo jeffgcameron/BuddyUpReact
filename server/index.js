@@ -204,6 +204,15 @@ app.post("/api/my-activities", (req, res) => {
     })
 })
 
+// saves
+
+app.post("/api/saves"), (req, res) => {
+    const sqlInsert = "INSERT INTO activities SET name = ?, plan = ?, time = ?, location = ?, date = ?, buddies = ? WHERE id = ?";
+    db.query(sqlInsert, [name, plan, time, location, date, buddies, id], (err, reult) => {
+        console.log(err)
+    })
+}
+
 
 app.get("/auth", validateToken, (req, res) => {
     res.send(req.isValid)

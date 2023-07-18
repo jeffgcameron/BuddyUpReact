@@ -4,7 +4,7 @@ import Axios from 'axios';
 import ActivityActions from '../../components/ActivityActions/ActivityActions.js';
 import { Link } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
-import DialogBox from '../../components/DialogBox/DialogBox';
+import DeleteDialogBox from '../../components/DeleteDialogBox/DeleteDialogBox';
 import $ from "jquery"
 
 function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActivity}) {
@@ -85,13 +85,13 @@ function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActiv
 						{showEdit ? 
 								<div className='actions'> 
 									<Link className='link' to={`/edit-post/id?=${item.id}`}><EditIcon /></Link>
-									<DialogBox deleteActivity={deleteActivity} name={item.name}/>
+									<DeleteDialogBox deleteActivity={deleteActivity} name={item.name}/>
 								</div>
 							: ''}
 					</li>
 
 			   </ul>
-			   <ActivityActions />
+			   <ActivityActions item={item} signedInUserID={signedInUserID}/>
 			   
 			   <hr></hr>
 			</Container>
