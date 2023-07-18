@@ -6,9 +6,8 @@ import AddCommentIcon from '@mui/icons-material/AddComment';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import SaveDialogBox from '../SaveDialogBox/SaveDialogBox';
 
-function ActivityActions(item, signedInUserID) {
+function ActivityActions({item, signedInUserID}) {
   const [like, setLike] = useState(false)
-
   var showCommentField = function() {
 
   }
@@ -16,12 +15,15 @@ function ActivityActions(item, signedInUserID) {
   var determineSaveorUnsave = function(shouldSave) {
     
     var savePost = function() {
-
       var data = {
-        id:           signedInUserID,
+        id:           crypto.randomUUID(),
+        userID:       signedInUserID,
+        activityID:   item.id
       }
 
-      Axios.post('http://localhost:3001/api/saves', data)
+      console.log(data)
+
+      Axios.post('http://localhost:3001/save-activity', data)
       console.log('saving');
     };
     
@@ -43,7 +45,7 @@ function ActivityActions(item, signedInUserID) {
     <ul className="root-activity-actions">
         <li onClick={showCommentField}><AddCommentIcon className='comment-button'></AddCommentIcon></li>
         <li><HowToRegIcon className='like-button' onClick={likePost}></HowToRegIcon></li>
-        <li><SaveDialogBox action={determineSaveorUnsave} item={item.item}/></li>
+        <li><SaveDialogBox action={determineSaveorUnsave} item={item}/></li>
     </ul>
 
     </>

@@ -91,7 +91,7 @@ function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActiv
 					</li>
 
 			   </ul>
-			   <ActivityActions item={item} signedInUserID={signedInUserID}/>
+			   <ActivityActions item={item} signedInUserID={signedInUserID} />
 			   
 			   <hr></hr>
 			</Container>

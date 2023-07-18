@@ -206,12 +206,28 @@ app.post("/api/my-activities", (req, res) => {
 
 // saves
 
-app.post("/api/saves"), (req, res) => {
-    const sqlInsert = "INSERT INTO activities SET name = ?, plan = ?, time = ?, location = ?, date = ?, buddies = ? WHERE id = ?";
-    db.query(sqlInsert, [name, plan, time, location, date, buddies, id], (err, reult) => {
+app.post('/save-activity', (req, res) => {
+
+    console.log(req.body);
+    console.log('here saves');
+    console.log(req.body);
+    const id                = req.body.id
+    const userID            = req.body.userID
+    const activityID        = req.body.activityID
+
+    const sqlInsert = "INSERT INTO saves (id, userID, activityID) VALUES (?, ?, ?);";
+    db.query(sqlInsert, [id, userID, activityID], (err, result) => {
         console.log(err)
     })
-}
+
+});
+
+app.post("/api/my-saves", (req, res) => {
+    const sqlSelect = "SELECT * FROM saves WHERE userID = ?";
+    db.query(sqlSelect, [req.body.userID], (err, result) => {
+        res.send(result)
+    })
+})
 
 
 app.get("/auth", validateToken, (req, res) => {

@@ -7,9 +7,10 @@ import Axios from 'axios';
 
 function Feed({userID}) {
 
-  const [activities, setActivities] 	= useState([])
-  const [profiles, setProfiles] 		= useState([])
-  const [searchTerm, setSearchTerm] 	= useState('')
+  const [activities, setActivities] 				= useState([])
+  const [profiles, setProfiles] 					= useState([])
+  const [mySavedActivities, setMySavedActivities] 	= useState([])
+  const [searchTerm, setSearchTerm] 				= useState('')
 
 	activities.forEach(function(activity) {
 
@@ -43,6 +44,8 @@ function Feed({userID}) {
 		})
 	};
 
+	console.log(mySavedActivities);
+
   useEffect(() => {
 
 	Axios.get('http://localhost:3001/api/get-activites').then((response) => {
@@ -55,6 +58,10 @@ function Feed({userID}) {
 
 	Axios.post('http://localhost:3001/my-profile', {userID: userID}).then((response) => {
 		if (response.data.length === 0) window.location.replace('/build-profile');
+	})
+
+	Axios.post('http://localhost:3001/api/my-saves', {userID: userID}).then((response) => {
+		setMySavedActivities(response.data)
 	})
 
 
@@ -75,7 +82,7 @@ function Feed({userID}) {
 				return item
 			}
 		}).map((item) => (
-			<ActivityTemplate key={item.id} item={item} signedInUserID={userID} showEdit={item.showEdit} showLink={true} removeActivity={removeActivity}/>
+			<ActivityTemplate key={item.id} item={item} signedInUserID={userID} showEdit={item.showEdit} showLink={true} removeActivity={removeActivity} mySavedActivities={mySavedActivities}/>
 		))} 
 
 		<div className='footer-component'> <Footer /></div>
