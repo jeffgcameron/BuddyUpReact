@@ -1,10 +1,10 @@
 import './activity-template.scss';
 import {Container , Row, Col} from 'react-bootstrap';
-import Axios from 'axios';
+// import Axios from 'axios';
 import ActivityActions from '../../components/ActivityActions/ActivityActions.js';
 import { Link } from 'react-router-dom';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteDialogBox from '../../components/DeleteDialogBox/DeleteDialogBox';
+// import EditIcon from '@mui/icons-material/Edit';
+// import DeleteDialogBox from '../../components/DeleteDialogBox/DeleteDialogBox';
 import $ from "jquery"
 
 function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActivity}) {
@@ -29,10 +29,10 @@ function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActiv
 	return `/user/userID?=${item.userID}`
   }
 
-  var deleteActivity = function() {
-	Axios.delete('http://localhost:3001/api/delete-activity', { data: {id: item.id}})
-	removeActivity(item.id)
-  }
+//   var deleteActivity = function() {
+// 	Axios.delete('http://localhost:3001/api/delete-activity', { data: {id: item.id}})
+// 	removeActivity(item.id)
+//   }
 
   return (
     <Container key={item.id} className="root-activity-template activity">
