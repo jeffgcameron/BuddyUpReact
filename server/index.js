@@ -194,6 +194,10 @@ app.post("/my-profile", (req, res) => {
     })
 })
 
+// individual activity
+
+
+
 // myActivities
 
 app.post("/api/my-activities", (req, res) => {

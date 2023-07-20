@@ -1,15 +1,14 @@
 import './activity-template.scss';
 import {Container , Row, Col} from 'react-bootstrap';
-// import Axios from 'axios';
+import React, {useEffect, useState} from 'react';
+import Axios from 'axios';
 import ActivityActions from '../../components/ActivityActions/ActivityActions.js';
 import { Link } from 'react-router-dom';
 // import EditIcon from '@mui/icons-material/Edit';
 // import DeleteDialogBox from '../../components/DeleteDialogBox/DeleteDialogBox';
 import $ from "jquery"
 
-function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActivity}) {
-
-
+function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActivity, handleSavedOrUnsaved}) {
 
   var toggleDetails = function(value) {
     var $target			= $(value.target)
@@ -29,10 +28,21 @@ function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActiv
 	return `/user/userID?=${item.userID}`
   }
 
-//   var deleteActivity = function() {
-// 	Axios.delete('http://localhost:3001/api/delete-activity', { data: {id: item.id}})
-// 	removeActivity(item.id)
-//   }
+//   useEffect(() => {
+// 	if (getDetail) {
+// 		Axios.post('http://localhost:3001/api/get-activity', {id: item.activityID}).then((res) => {
+// 			item.buddies    = res.data[0].buddies
+// 			item.date       = res.data[0].date
+// 			item.id         = res.data[0].id
+// 			item.location   = res.data[0].location
+// 			item.name       = res.data[0].name
+// 			item.plan       = res.data[0].plan
+// 			item.time    	= res.data[0].time
+// 			item.userID     = res.data[0].userID
+// 			setsavedActivity(item)
+// 		})
+// 	}
+//   })
 
   return (
     <Container key={item.id} className="root-activity-template activity">
@@ -93,7 +103,7 @@ function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActiv
 					</li>
 
 			   </ul>
-			   <ActivityActions item={item} signedInUserID={signedInUserID} savedActivityID={item.savedActivityID} showEdit={showEdit} removeActivity={removeActivity}/>
+			   <ActivityActions item={item} signedInUserID={signedInUserID} savedActivityID={item.savedActivityID} showEdit={showEdit} removeActivity={removeActivity} handleSavedOrUnsaved={handleSavedOrUnsaved}/>
 			   
 			   <hr></hr>
 			</Container>

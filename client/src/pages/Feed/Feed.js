@@ -1,5 +1,6 @@
 import './feed.scss';
 import React, {useState, useEffect} from 'react';
+import $ from "jquery";
 import SearchBar from '../../components/SearchBar/SearchBar.js';
 import ActivityTemplate from '../../templates/ActivityTemplate/ActivityTemplate.js'
 import Footer from '../../components/Footer/Footer.js';
@@ -11,6 +12,8 @@ function Feed({userID}) {
   const [profiles, setProfiles] 					= useState([])
   const [mySavedActivities, setMySavedActivities] 	= useState([])
   const [searchTerm, setSearchTerm] 				= useState('')
+  const [filter, setFilter] 						= useState('all')
+  console.log(filter);
 
 	activities.forEach(function(activity) {
 
@@ -56,10 +59,29 @@ function Feed({userID}) {
 		})
 	};
 
-	var showSavedActivities = function() {
-		console.log(mySavedActivities);
-
+	var filterActivities = function(term) {
+		setFilter(term)
+		$('.filter-actions li').removeClass('filtered')
+		$('.filter-actions .' + term).addClass('filtered')
 	}
+
+	var handleSavedOrUnsaved = function(id, savedID) {
+		console.log(savedID);
+			const newList = activities.map((item) => {
+				if (item.id === id) {
+				  const updatedItem = {
+					...item,
+					savedActivityID: savedID,
+				  };
+		  
+				  console.log(updatedItem);
+				  return updatedItem;
+				}
+				return item;
+			  });
+		  
+			  setActivities(newList);
+	};
 
   useEffect(() => {
 
@@ -77,28 +99,64 @@ function Feed({userID}) {
 
 	Axios.post('http://localhost:3001/api/my-saves', {userID: userID}).then((response) => {
 		setMySavedActivities(response.data)
-		showSavedActivities()
 	})
-
-
 
   }, [userID])
 
   return (
     <article className="root-feed">
 		<SearchBar setSearchTerm={setSearchTerm}/>
+		<ul className='filter-actions'>
+			<li className='filtered all'  onClick={()=>{filterActivities('all')}}>
+				<div>All</div>
+			</li>
+			<li className='my' onClick={()=>{filterActivities('my')}}>
+				<div>My Activities</div>
+			</li>
+			<li className='saved' onClick={()=>{filterActivities('saved')}}>
+				<div>Saved</div>
+			</li>
+			<li className='signed' onClick={()=>{filterActivities('signed')}}>
+				<div>Signed Up</div>
+			</li>
+		</ul>
 		<p className="center-text scroll-text header-text">Scroll to View Upcoming Activities!</p>
 		<hr></hr>
 		{activities.filter((item) => {
-			if (searchTerm === ''){
+			if (searchTerm === '' && filter === 'all'){
 				return item
-			} else if (item.name.toLowerCase().includes(searchTerm.toLowerCase()) 
-			|| item.location.toLowerCase().includes(searchTerm.toLowerCase()) 
-			|| item.userName.toLowerCase().includes(searchTerm.toLowerCase())){
+			} else if (filter === 'all' && item.name.toLowerCase().includes(searchTerm.toLowerCase()) ){
+				return item
+			} else if (filter === 'all' && item.location.toLowerCase().includes(searchTerm.toLowerCase()) ){
+				return item
+			} else if (filter === 'all' && item.userName.toLowerCase().includes(searchTerm.toLowerCase()) ){
+				return item
+			} else if (filter === 'saved' && item.savedActivityID && item.name.toLowerCase().includes(searchTerm.toLowerCase()) ){
+				return item
+			} else if (filter === 'saved' && item.savedActivityID && item.location.toLowerCase().includes(searchTerm.toLowerCase()) ){
+				return item
+			} else if (filter === 'saved' && item.savedActivityID && item.userName.toLowerCase().includes(searchTerm.toLowerCase()) ){
+				return item
+			} else if (filter === 'my' && item.showEdit && item.name.toLowerCase().includes(searchTerm.toLowerCase()) ){
+				return item
+			} else if (filter === 'my' && item.showEdit && item.location.toLowerCase().includes(searchTerm.toLowerCase()) ){
+				return item
+			} else if (filter === 'my' && item.showEdit && item.userName.toLowerCase().includes(searchTerm.toLowerCase()) ){
+				return item
+			} else if (filter === 'signed' && item.signedUp && item.name.toLowerCase().includes(searchTerm.toLowerCase()) ){
+				return item
+			} else if (filter === 'signed' && item.signedUp && item.location.toLowerCase().includes(searchTerm.toLowerCase()) ){
+				return item
+			} else if (filter === 'signed' && item.signedUp && item.userName.toLowerCase().includes(searchTerm.toLowerCase()) ){
 				return item
 			}
+			// } else if (item.name.toLowerCase().includes(searchTerm.toLowerCase()) 
+			// || item.location.toLowerCase().includes(searchTerm.toLowerCase()) 
+			// || item.userName.toLowerCase().includes(searchTerm.toLowerCase())){
+			// 	return item
+			// }
 		}).map((item) => (
-			<ActivityTemplate key={item.id} item={item} signedInUserID={userID} showEdit={item.showEdit} showLink={true} removeActivity={removeActivity} savedActivityID={item.savedActivityID}/>
+			<ActivityTemplate key={item.id} item={item} signedInUserID={userID} showEdit={item.showEdit} showLink={true} removeActivity={removeActivity} savedActivityID={item.savedActivityID} handleSavedOrUnsaved={handleSavedOrUnsaved}/>
 		))} 
 
 		<div className='footer-component'> <Footer /></div>

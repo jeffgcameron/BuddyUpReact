@@ -9,10 +9,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteDialogBox from '../../components/DeleteDialogBox/DeleteDialogBox';
 import { Link } from 'react-router-dom';
 
-function ActivityActions({item, signedInUserID, savedActivityID, showEdit, removeActivity}) {
+function ActivityActions({item, signedInUserID, savedActivityID, showEdit, removeActivity, handleSavedOrUnsaved}) {
   const [like, setLike]   = useState(false)
-  var isSaved             = (savedActivityID) ? true : false;
-  console.log(isSaved)
   var showCommentField = function() {
 
   }
@@ -28,10 +26,12 @@ function ActivityActions({item, signedInUserID, savedActivityID, showEdit, remov
 
       Axios.post('http://localhost:3001/save-activity', data)
       console.log('saving');
+      handleSavedOrUnsaved(item.id, data.id)
     };
     
     var unsavePost = function() {
       Axios.delete('http://localhost:3001/api/delete-save', { data: {id: savedActivityID}})
+      handleSavedOrUnsaved(item.id, false)
     };
 
     (shouldSave) ? savePost() : unsavePost()

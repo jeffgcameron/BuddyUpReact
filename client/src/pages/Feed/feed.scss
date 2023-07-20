@@ -11,4 +11,22 @@
         text-align: center;
     }
 
+    .filter-actions {
+        display: flex;
+        justify-content: space-around;
+        padding-left: 0;
+
+        > li {
+            padding: .25em .5em;
+            border: 1px solid $mainBlue;
+            border-radius: 10%;
+            color: $mainBlue;
+        }
+
+        .filtered {
+            background-color: $mainBlue;
+            color: $mainWhite;
+        }
+    }
+
 }
