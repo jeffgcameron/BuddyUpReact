@@ -35,7 +35,7 @@
         padding-left: unset;
     }
 
-    .view-plan {
+    .view-plan, .view-buddies {
         margin-top: .5em;
         font-size: .9em;
         color: $mainBlue;
@@ -54,5 +54,24 @@
         > a {
             padding: 0 1em;
         }
+    }
+
+    .signup {
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: .25em;
+
+            .signup-picture {
+                height: 4vh;
+                width: 4vh;
+                border-radius: 100%;
+            }
+
+            .signup-name {
+                color: black;
+                font-size: .85em;
+            }
     }
 }

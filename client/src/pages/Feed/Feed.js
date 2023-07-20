@@ -9,18 +9,18 @@ import Axios from 'axios';
 function Feed({userID}) {
 
   const [activities, setActivities] 				= useState([])
+  const [signups, setSignups] 						= useState([])
   const [profiles, setProfiles] 					= useState([])
+  const [user, setUser] 							= useState({})
   const [mySavedActivities, setMySavedActivities] 	= useState([])
+  const [mySignups, setMySignups] 					= useState([])
   const [searchTerm, setSearchTerm] 				= useState('')
   const [filter, setFilter] 						= useState('all')
-  console.log(filter);
+
+  console.log(signups)
 
 	activities.forEach(function(activity) {
-
-
-		mySavedActivities.forEach(function(activity){
-
-		})
+		activity.signups = [];
 
 		if (activity.userID === userID) activity.showEdit = true;
 
@@ -37,7 +37,21 @@ function Feed({userID}) {
 				activity.savedActivityID = item.id
 			}
 		})
+
+		mySignups.forEach(function(item) {
+			if (activity.id === item.activityID) {
+				activity.registeredActivityID = item.id
+			}
+		})
+
+		signups.forEach(function(signup) {
+			if (signup.activityID === activity.id) {
+				activity.signups.push(signup) 
+				// console.log(signup);
+			}
+		})
 	})
+	console.log(activities);
 
 	activities.sort(function(itemOne, itemTwo){
 	let x = itemOne.date.toLowerCase();
@@ -83,10 +97,32 @@ function Feed({userID}) {
 			  setActivities(newList);
 	};
 
+	var handleRegisterOrUnregister = function(id, savedID) {
+		console.log(savedID);
+			const newList = activities.map((item) => {
+				if (item.id === id) {
+				  const updatedItem = {
+					...item,
+					registeredActivityID: savedID,
+				  };
+		  
+				  console.log(updatedItem);
+				  return updatedItem;
+				}
+				return item;
+			  });
+		  
+			  setActivities(newList);
+	};
+
   useEffect(() => {
 
 	Axios.get('http://localhost:3001/api/get-activites').then((response) => {
 		setActivities(response.data);
+	})
+
+	Axios.get('http://localhost:3001/api/get-signups').then((response) => {
+		setSignups(response.data);
 	})
 
 	Axios.get('http://localhost:3001/api/get-profiles').then((response) => {
@@ -94,11 +130,19 @@ function Feed({userID}) {
 	})
 
 	Axios.post('http://localhost:3001/my-profile', {userID: userID}).then((response) => {
-		if (response.data.length === 0) window.location.replace('/build-profile');
+		if (response.data.length === 0) {
+			// window.location.replace('/build-profile');
+		} else {
+			setUser(response.data[0])
+		}
 	})
 
 	Axios.post('http://localhost:3001/api/my-saves', {userID: userID}).then((response) => {
 		setMySavedActivities(response.data)
+	})
+
+	Axios.post('http://localhost:3001/api/my-signups', {userID: userID}).then((response) => {
+		setMySignups(response.data)
 	})
 
   }, [userID])
@@ -117,7 +161,7 @@ function Feed({userID}) {
 				<div>Saved</div>
 			</li>
 			<li className='signed' onClick={()=>{filterActivities('signed')}}>
-				<div>Signed Up</div>
+				<div>Registered</div>
 			</li>
 		</ul>
 		<p className="center-text scroll-text header-text">Scroll to View Upcoming Activities!</p>
@@ -143,20 +187,15 @@ function Feed({userID}) {
 				return item
 			} else if (filter === 'my' && item.showEdit && item.userName.toLowerCase().includes(searchTerm.toLowerCase()) ){
 				return item
-			} else if (filter === 'signed' && item.signedUp && item.name.toLowerCase().includes(searchTerm.toLowerCase()) ){
+			} else if (filter === 'signed' && item.registeredActivityID && item.name.toLowerCase().includes(searchTerm.toLowerCase()) ){
 				return item
-			} else if (filter === 'signed' && item.signedUp && item.location.toLowerCase().includes(searchTerm.toLowerCase()) ){
+			} else if (filter === 'signed' && item.registeredActivityID && item.location.toLowerCase().includes(searchTerm.toLowerCase()) ){
 				return item
-			} else if (filter === 'signed' && item.signedUp && item.userName.toLowerCase().includes(searchTerm.toLowerCase()) ){
+			} else if (filter === 'signed' && item.registeredActivityID && item.userName.toLowerCase().includes(searchTerm.toLowerCase()) ){
 				return item
 			}
-			// } else if (item.name.toLowerCase().includes(searchTerm.toLowerCase()) 
-			// || item.location.toLowerCase().includes(searchTerm.toLowerCase()) 
-			// || item.userName.toLowerCase().includes(searchTerm.toLowerCase())){
-			// 	return item
-			// }
 		}).map((item) => (
-			<ActivityTemplate key={item.id} item={item} signedInUserID={userID} showEdit={item.showEdit} showLink={true} removeActivity={removeActivity} savedActivityID={item.savedActivityID} handleSavedOrUnsaved={handleSavedOrUnsaved}/>
+			<ActivityTemplate key={item.id} item={item} signedInUserID={userID} showEdit={item.showEdit} handleRegisterOrUnregister={handleRegisterOrUnregister} showLink={true} removeActivity={removeActivity} handleSavedOrUnsaved={handleSavedOrUnsaved} user={user}/>
 		))} 
 
 		<div className='footer-component'> <Footer /></div>

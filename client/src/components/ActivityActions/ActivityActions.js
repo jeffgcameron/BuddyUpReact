@@ -5,12 +5,12 @@ import Axios from "axios";
 import AddCommentIcon from '@mui/icons-material/AddComment';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import SaveDialogBox from '../SaveDialogBox/SaveDialogBox';
+import SignUpDialogBox from '../SignUpDialogBox/SignUpDialogBox';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteDialogBox from '../../components/DeleteDialogBox/DeleteDialogBox';
 import { Link } from 'react-router-dom';
 
-function ActivityActions({item, signedInUserID, savedActivityID, showEdit, removeActivity, handleSavedOrUnsaved}) {
-  const [like, setLike]   = useState(false)
+function ActivityActions({item, signedInUserID, savedActivityID, showEdit, removeActivity, handleSavedOrUnsaved, registeredActivityID, handleRegisterOrUnregister, user}) {
   var showCommentField = function() {
 
   }
@@ -38,11 +38,30 @@ function ActivityActions({item, signedInUserID, savedActivityID, showEdit, remov
 
   };
 
-  var likePost = function(value) {
-    (like) ? setLike(false) : setLike(true)
-    // $likeButton.toggleClass('clicked')
-  }
+  var determineRegisterorUnregister = function(shouldSave) {
+    
+    var savePost = function() {
+      var data = {
+        id:           crypto.randomUUID(),
+        userID:       signedInUserID,
+        activityID:   item.id,
+        name:         user.firstName + ' ' + user.lastName,
+        imgURL:       user.imgURL
+      }
 
+      Axios.post('http://localhost:3001/signup-activity', data)
+      console.log('saving');
+      handleRegisterOrUnregister(item.id, data.id)
+    };
+    
+    var unsavePost = function() {
+      Axios.delete('http://localhost:3001/api/delete-signup', { data: {id: registeredActivityID}})
+      handleRegisterOrUnregister(item.id, false)
+    };
+
+    (shouldSave) ? savePost() : unsavePost()
+
+  };
 
   var deleteActivity = function() {
     Axios.delete('http://localhost:3001/api/delete-activity', { data: {id: item.id}})
@@ -60,7 +79,8 @@ function ActivityActions({item, signedInUserID, savedActivityID, showEdit, remov
             <li><DeleteDialogBox deleteActivity={deleteActivity} name={item.name}/></li>
           </>
         : <>
-          <li><HowToRegIcon className='like-button' onClick={likePost}></HowToRegIcon></li>
+          {/* <li><HowToRegIcon className='like-button' onClick={likePost}></HowToRegIcon></li> */}
+          <li><SignUpDialogBox action={determineRegisterorUnregister} item={item} registeredActivityID={registeredActivityID}/></li>
           <li><SaveDialogBox action={determineSaveorUnsave} item={item} savedActivityID={savedActivityID}/></li>
         </>
         }

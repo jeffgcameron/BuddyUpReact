@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 // import DeleteDialogBox from '../../components/DeleteDialogBox/DeleteDialogBox';
 import $ from "jquery"
 
-function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActivity, handleSavedOrUnsaved}) {
+function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActivity, handleSavedOrUnsaved, handleRegisterOrUnregister, user}) {
 
   var toggleDetails = function(value) {
     var $target			= $(value.target)
@@ -23,26 +23,29 @@ function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActiv
 	$target.text(text)
   }
 
+  var toggleBuddies = function(value) {
+    var $target			= $(value.target)
+    var $parent 		= $target.closest('.activity')
+    var $detail			= $parent.find('.registered-buddies')
+    $detail.toggleClass('hidden');
+    ($detail.hasClass('hidden')) ? updateBuddyText(true, $target) : updateBuddyText(false, $target)
+  };
+
+  var updateBuddyText = function(isHidden, $target) {
+	var text = (isHidden) ? 'View Registered Buddies' : 'Hide Registered Buddies';
+	$target.text(text)
+  }
+
   var getLink = function() {
 	if (signedInUserID === item.userID) return '/profile'
 	return `/user/userID?=${item.userID}`
   }
 
-//   useEffect(() => {
-// 	if (getDetail) {
-// 		Axios.post('http://localhost:3001/api/get-activity', {id: item.activityID}).then((res) => {
-// 			item.buddies    = res.data[0].buddies
-// 			item.date       = res.data[0].date
-// 			item.id         = res.data[0].id
-// 			item.location   = res.data[0].location
-// 			item.name       = res.data[0].name
-// 			item.plan       = res.data[0].plan
-// 			item.time    	= res.data[0].time
-// 			item.userID     = res.data[0].userID
-// 			setsavedActivity(item)
-// 		})
-// 	}
-//   })
+  var getProfileLink = function(profile) {
+	console.log('here');
+	if (profile.userID === signedInUserID) return '/profile'
+	return `/user/userID?=${profile.userID}`
+  }
 
   return (
     <Container key={item.id} className="root-activity-template activity">
@@ -94,16 +97,39 @@ function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActiv
 
 					<li className="hidden center-text activity-plan">
 						<div>{item.plan}</div>
-						{/* {showEdit ? 
-								<div className='actions'> 
-									<Link className='link' to={`/edit-post/id?=${item.id}`}><EditIcon /></Link>
-									<DeleteDialogBox deleteActivity={deleteActivity} name={item.name}/>
-								</div>
-							: ''} */}
 					</li>
+					{item.signups && item.signups.length > 0 
+						? <>
+							<li className="view-buddies center-text header-text" onClick={toggleBuddies}>View Registered Buddies</li>
+							<li>
+								<ul className="hidden center-text registered-buddies">
+									{item.signups.map(signup => {
+										return (
+											<li key={signup.id} className="signup">
+												<Link to={getProfileLink(signup)} className="view-profile">
+													<Row className="signup">
+														<Col xs={1}>
+																<div className="align-picture">
+																	<img className='signup-picture' src={signup.imgURL} alt="signup"></img>
+																</div>
+														</Col>
+														<Col>
+															<div className='signup-name'>{signup.name}</div>
+														</Col>
+													</Row>
+												</Link>
+											</li>
+									)})}
+								</ul>
+
+							</li>
+						</>
+						: ''
+					}
 
 			   </ul>
-			   <ActivityActions item={item} signedInUserID={signedInUserID} savedActivityID={item.savedActivityID} showEdit={showEdit} removeActivity={removeActivity} handleSavedOrUnsaved={handleSavedOrUnsaved}/>
+
+			   <ActivityActions item={item} signedInUserID={signedInUserID} savedActivityID={item.savedActivityID} showEdit={showEdit} removeActivity={removeActivity} handleSavedOrUnsaved={handleSavedOrUnsaved} handleRegisterOrUnregister={handleRegisterOrUnregister} registeredActivityID={item.registeredActivityID} user={user}/>
 			   
 			   <hr></hr>
 			</Container>

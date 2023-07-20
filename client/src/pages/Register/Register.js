@@ -44,7 +44,7 @@ function Register({getCookie, setUserID, setToken}) {
           getCookie(setToken, 'access-token')
           getCookie(setUserID, 'id')
           localStorage.setItem('is-logged-in', 'true')
-          window.location.replace('/build-profile')
+          // window.location.replace('/build-profile')
         }
       })
   }

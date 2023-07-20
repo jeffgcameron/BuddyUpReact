@@ -236,6 +236,45 @@ app.delete('/api/delete-save', (req, res) => {
     })
 })
 
+// signups
+
+app.get('/api/get-signups', (req, res) => {
+    const sqlSelect = "Select * FROM signups";
+    db.query(sqlSelect, (err, result) => {
+        res.send(result)
+    })
+})
+
+
+app.post('/signup-activity', (req, res) => {
+    const id                = req.body.id
+    const userID            = req.body.userID
+    const activityID        = req.body.activityID
+    const name              = req.body.name
+    const imgURL            = req.body.imgURL
+
+    const sqlInsert = "INSERT INTO signups (id, userID, activityID, name, imgURL) VALUES (?, ?, ?, ?, ?);";
+    db.query(sqlInsert, [id, userID, activityID, name, imgURL], (err, result) => {
+        console.log(err)
+    })
+
+});
+
+app.post("/api/my-signups", (req, res) => {
+    const sqlSelect = "SELECT * FROM signups WHERE userID = ?";
+    db.query(sqlSelect, [req.body.userID], (err, result) => {
+        res.send(result)
+    })
+})
+
+app.delete('/api/delete-signup', (req, res) => {
+    console.log(req.body.id);
+    const sqlSelect = "DELETE FROM signups WHERE id = ?";
+    db.query(sqlSelect, [req.body.id], (err, result) => {
+        console.log(err);
+    })
+})
+
 //auth
 
 app.get("/auth", validateToken, (req, res) => {
