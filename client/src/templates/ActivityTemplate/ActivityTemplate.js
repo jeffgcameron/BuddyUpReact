@@ -9,6 +9,8 @@ import $ from "jquery"
 
 function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActivity}) {
 
+
+
   var toggleDetails = function(value) {
     var $target			= $(value.target)
     var $parent 		= $target.closest('.activity')
@@ -82,16 +84,16 @@ function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActiv
 
 					<li className="hidden center-text activity-plan">
 						<div>{item.plan}</div>
-						{showEdit ? 
+						{/* {showEdit ? 
 								<div className='actions'> 
 									<Link className='link' to={`/edit-post/id?=${item.id}`}><EditIcon /></Link>
 									<DeleteDialogBox deleteActivity={deleteActivity} name={item.name}/>
 								</div>
-							: ''}
+							: ''} */}
 					</li>
 
 			   </ul>
-			   <ActivityActions item={item} signedInUserID={signedInUserID} />
+			   <ActivityActions item={item} signedInUserID={signedInUserID} savedActivityID={item.savedActivityID} showEdit={showEdit} removeActivity={removeActivity}/>
 			   
 			   <hr></hr>
 			</Container>

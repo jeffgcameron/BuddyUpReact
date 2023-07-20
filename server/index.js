@@ -39,7 +39,6 @@ app.post('/api/get-activity', (req, res) => {
 })
 
 app.delete('/api/delete-activity', (req, res) => {
-    console.log(req.body);
     const sqlSelect = "DELETE FROM activities WHERE id =?";
     db.query(sqlSelect, [req.body.id], (err, result) => {
         console.log(err);
@@ -207,10 +206,6 @@ app.post("/api/my-activities", (req, res) => {
 // saves
 
 app.post('/save-activity', (req, res) => {
-
-    console.log(req.body);
-    console.log('here saves');
-    console.log(req.body);
     const id                = req.body.id
     const userID            = req.body.userID
     const activityID        = req.body.activityID
@@ -229,6 +224,15 @@ app.post("/api/my-saves", (req, res) => {
     })
 })
 
+app.delete('/api/delete-save', (req, res) => {
+    console.log(req.body.id);
+    const sqlSelect = "DELETE FROM saves WHERE id = ?";
+    db.query(sqlSelect, [req.body.id], (err, result) => {
+        console.log(err);
+    })
+})
+
+//auth
 
 app.get("/auth", validateToken, (req, res) => {
     res.send(req.isValid)

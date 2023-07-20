@@ -14,12 +14,24 @@ function Feed({userID}) {
 
 	activities.forEach(function(activity) {
 
+
+		mySavedActivities.forEach(function(activity){
+
+		})
+
 		if (activity.userID === userID) activity.showEdit = true;
+
 
 		profiles.forEach(function(profile) {
 			if (profile.userID === activity.userID) {
 				activity.imgURL 		= profile.imgURL
 				activity.userName 		= profile.firstName + ' ' + profile.lastName
+			}
+		})
+
+		mySavedActivities.forEach(function(item) {
+			if (activity.id === item.activityID) {
+				activity.savedActivityID = item.id
 			}
 		})
 	})
@@ -44,7 +56,10 @@ function Feed({userID}) {
 		})
 	};
 
-	console.log(mySavedActivities);
+	var showSavedActivities = function() {
+		console.log(mySavedActivities);
+
+	}
 
   useEffect(() => {
 
@@ -62,6 +77,7 @@ function Feed({userID}) {
 
 	Axios.post('http://localhost:3001/api/my-saves', {userID: userID}).then((response) => {
 		setMySavedActivities(response.data)
+		showSavedActivities()
 	})
 
 
@@ -82,7 +98,7 @@ function Feed({userID}) {
 				return item
 			}
 		}).map((item) => (
-			<ActivityTemplate key={item.id} item={item} signedInUserID={userID} showEdit={item.showEdit} showLink={true} removeActivity={removeActivity} mySavedActivities={mySavedActivities}/>
+			<ActivityTemplate key={item.id} item={item} signedInUserID={userID} showEdit={item.showEdit} showLink={true} removeActivity={removeActivity} savedActivityID={item.savedActivityID}/>
 		))} 
 
 		<div className='footer-component'> <Footer /></div>

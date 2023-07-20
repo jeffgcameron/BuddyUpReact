@@ -5,9 +5,14 @@ import Axios from "axios";
 import AddCommentIcon from '@mui/icons-material/AddComment';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import SaveDialogBox from '../SaveDialogBox/SaveDialogBox';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteDialogBox from '../../components/DeleteDialogBox/DeleteDialogBox';
+import { Link } from 'react-router-dom';
 
-function ActivityActions({item, signedInUserID}) {
-  const [like, setLike] = useState(false)
+function ActivityActions({item, signedInUserID, savedActivityID, showEdit, removeActivity}) {
+  const [like, setLike]   = useState(false)
+  var isSaved             = (savedActivityID) ? true : false;
+  console.log(isSaved)
   var showCommentField = function() {
 
   }
@@ -21,14 +26,12 @@ function ActivityActions({item, signedInUserID}) {
         activityID:   item.id
       }
 
-      console.log(data)
-
       Axios.post('http://localhost:3001/save-activity', data)
       console.log('saving');
     };
     
     var unsavePost = function() {
-      console.log('unsave');
+      Axios.delete('http://localhost:3001/api/delete-save', { data: {id: savedActivityID}})
     };
 
     (shouldSave) ? savePost() : unsavePost()
@@ -40,12 +43,27 @@ function ActivityActions({item, signedInUserID}) {
     // $likeButton.toggleClass('clicked')
   }
 
+
+  var deleteActivity = function() {
+    Axios.delete('http://localhost:3001/api/delete-activity', { data: {id: item.id}})
+    removeActivity(item.id)
+    }
+
   return (
     <>
     <ul className="root-activity-actions">
         <li onClick={showCommentField}><AddCommentIcon className='comment-button'></AddCommentIcon></li>
-        <li><HowToRegIcon className='like-button' onClick={likePost}></HowToRegIcon></li>
-        <li><SaveDialogBox action={determineSaveorUnsave} item={item}/></li>
+        {showEdit ? 
+        <>
+          
+            <li><Link className='link' to={`/edit-post/id?=${item.id}`}><EditIcon /></Link></li>
+            <li><DeleteDialogBox deleteActivity={deleteActivity} name={item.name}/></li>
+          </>
+        : <>
+          <li><HowToRegIcon className='like-button' onClick={likePost}></HowToRegIcon></li>
+          <li><SaveDialogBox action={determineSaveorUnsave} item={item} savedActivityID={savedActivityID}/></li>
+        </>
+        }
     </ul>
 
     </>

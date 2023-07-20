@@ -1,6 +1,6 @@
 import './save-dialog-box.scss';
 
-import * as React from 'react';
+import React, {useState, useEffect} from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -16,10 +16,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function SaveDialogBox({action, item}) {
+export default function SaveDialogBox({action, item, savedActivityID}) {
   const [open, setOpen]             = React.useState(false);
   const [toBeSaved, setToBeSaved]   = React.useState(false);
-  const [value, setValue]             = React.useState('');
+  const [value, setValue]           = React.useState('');
 
 
   const handleClickOpen = (value) => {
@@ -45,7 +45,10 @@ export default function SaveDialogBox({action, item}) {
   return (
     <>
       <Link className='save-activity' onClick={handleClickOpen}>
-        <BookmarkIcon className='save-icon' />
+      { savedActivityID 
+            ?  <BookmarkIcon className='save-icon clicked' />
+            :  <BookmarkIcon className='save-icon' />
+      }
       </Link>
       <Dialog
         open={open}
