@@ -39,7 +39,6 @@ app.post('/api/get-activity', (req, res) => {
 })
 
 app.delete('/api/delete-activity', (req, res) => {
-    console.log(req.body);
     const sqlSelect = "DELETE FROM activities WHERE id =?";
     db.query(sqlSelect, [req.body.id], (err, result) => {
         console.log(err);
@@ -145,7 +144,6 @@ app.post('/login', (req, res) => {
 // edit profile
 
 app.put('/edit-profile', (req, res) => {
-    console.log(req.body);
 
     const id                = req.body.id
     const imgURL            = req.body.imgURL
@@ -155,9 +153,8 @@ app.put('/edit-profile', (req, res) => {
     const bio               = req.body.bio
     const activities        = req.body.activities
     const certifications    = req.body.certifications
-
-
     const sqlInsert = "UPDATE profiles SET firstName = ?, lastName = ?, imgURL = ?, location = ?, bio = ?, activities = ?, certifications = ? WHERE id = ?";
+    
     db.query(sqlInsert, [firstName, lastName, imgURL, location, bio, activities, certifications, id], (err, reult) => {
         console.log(err)
     })
@@ -195,6 +192,10 @@ app.post("/my-profile", (req, res) => {
     })
 })
 
+// individual activity
+
+
+
 // myActivities
 
 app.post("/api/my-activities", (req, res) => {
@@ -204,6 +205,101 @@ app.post("/api/my-activities", (req, res) => {
     })
 })
 
+// comments
+
+app.post('/save-comment', (req, res) => {
+    const id                = req.body.id
+    const userID            = req.body.userID
+    const activityID        = req.body.activityID
+    const comment           = req.body.comment
+    const name              = req.body.name
+    const imgURL            = req.body.imgURL
+    const time              = req.body.time
+
+    const sqlInsert = "INSERT INTO comments (id, userID, activityID, comment, name, imgURL, time) VALUES (?, ?, ?, ?, ?, ?, ?);";
+    db.query(sqlInsert, [id, userID, activityID, comment, name, imgURL, time], (err, result) => {
+        console.log(err)
+    })
+
+});
+
+
+app.get('/api/get-comments', (req, res) => {
+    const sqlSelect = "Select * FROM comments";
+    db.query(sqlSelect, (err, result) => {
+        res.send(result)
+    })
+})
+
+// saves
+
+app.post('/save-activity', (req, res) => {
+    const id                = req.body.id
+    const userID            = req.body.userID
+    const activityID        = req.body.activityID
+
+    const sqlInsert = "INSERT INTO saves (id, userID, activityID) VALUES (?, ?, ?);";
+    db.query(sqlInsert, [id, userID, activityID], (err, result) => {
+        console.log(err)
+    })
+
+});
+
+app.post("/api/my-saves", (req, res) => {
+    const sqlSelect = "SELECT * FROM saves WHERE userID = ?";
+    db.query(sqlSelect, [req.body.userID], (err, result) => {
+        res.send(result)
+    })
+})
+
+app.delete('/api/delete-save', (req, res) => {
+    console.log(req.body.id);
+    const sqlSelect = "DELETE FROM saves WHERE id = ?";
+    db.query(sqlSelect, [req.body.id], (err, result) => {
+        console.log(err);
+    })
+})
+
+// signups
+
+app.get('/api/get-signups', (req, res) => {
+    const sqlSelect = "Select * FROM signups";
+    db.query(sqlSelect, (err, result) => {
+        res.send(result)
+    })
+})
+
+
+app.post('/signup-activity', (req, res) => {
+    const id                = req.body.id
+    const userID            = req.body.userID
+    const activityID        = req.body.activityID
+    const name              = req.body.name
+    const imgURL            = req.body.imgURL
+
+    const sqlInsert = "INSERT INTO signups (id, userID, activityID, name, imgURL) VALUES (?, ?, ?, ?, ?);";
+    db.query(sqlInsert, [id, userID, activityID, name, imgURL], (err, result) => {
+        console.log(err)
+    })
+
+});
+
+app.post("/api/my-signups", (req, res) => {
+    const sqlSelect = "SELECT * FROM signups WHERE userID = ?";
+    db.query(sqlSelect, [req.body.userID], (err, result) => {
+        res.send(result)
+    })
+})
+
+app.delete('/api/delete-signup', (req, res) => {
+    console.log(req.body.id);
+    const sqlSelect = "DELETE FROM signups WHERE id = ?";
+    db.query(sqlSelect, [req.body.id], (err, result) => {
+        console.log(err);
+    })
+})
+
+//auth
 
 app.get("/auth", validateToken, (req, res) => {
     res.send(req.isValid)

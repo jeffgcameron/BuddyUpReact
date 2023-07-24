@@ -7,10 +7,11 @@ import ActivityTemplate from '../../templates/ActivityTemplate/ActivityTemplate.
 import Axios from 'axios';
 import Footer from '../../components/Footer/Footer.js';
 
-function User() {
+function User({signedInUserID}) {
     
     var [myActivities, setMyActivities]     = useState([])
     var [myProfile, setMyProfie]            = useState({})
+    const [mySavedActivities, setMySavedActivities] 	= useState([])
 
     myActivities.forEach(function(activity){
         if (myProfile.imgURL) {
@@ -19,6 +20,13 @@ function User() {
         if (myProfile.firstName && myProfile.lastName) {
             activity.userName = myProfile.firstName + ' ' + myProfile.lastName
         }
+
+        mySavedActivities.forEach(function(item) {
+			if (activity.id === item.activityID) {
+				activity.savedActivityID = item.id
+			}
+		})
+
     })
 
     const { search }    = useLocation();
@@ -30,7 +38,6 @@ function User() {
             userID:        userID,
           }
 
-
         Axios.post('http://localhost:3001/api/my-activities', data).then((response) => {
             console.log(response);
             setMyActivities(response.data)
@@ -38,13 +45,19 @@ function User() {
 
         Axios.post('http://localhost:3001/my-profile', data).then((response) => {
             if (response.data.length === 0) { 
-                window.location.replace('/build-profile');
+                console.log('user here');
+                // window.location.replace('/build-profile');
             } else {
                 response.data[0].activities         = response.data[0].activities.split('*&'); 
                 response.data[0].certifications     = response.data[0].certifications.split('*&'); 
                 setMyProfie(response.data[0])
             }
         })
+
+        Axios.post('http://localhost:3001/api/my-saves', {userID: signedInUserID}).then((response) => {
+            setMySavedActivities(response.data)
+        })
+
       }, [userID])
 
 
@@ -56,7 +69,7 @@ function User() {
             <hr></hr>
             <h3>{myProfile.firstName}'s Posts</h3>
             {myActivities.map((item) => (
-                <ActivityTemplate key={item.id} className="activity" item ={item}/>
+                <ActivityTemplate key={item.id} className="activity" item ={item} signedInUserID={signedInUserID}/>
 		    ))} 
             <div className='footer-component'> <Footer /></div>
         </article>
