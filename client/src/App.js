@@ -99,7 +99,7 @@ function App() {
 
         <Route path='/user/:userID'          
           element={
-            <User />
+            <User signedInUserID={userID}/>
           } 
         />
         <Route path='/edit-profile'          

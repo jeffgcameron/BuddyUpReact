@@ -10,6 +10,7 @@ function Feed({userID}) {
 
   const [activities, setActivities] 				= useState([])
   const [signups, setSignups] 						= useState([])
+  const [comments, setComments] 						= useState([])
   const [profiles, setProfiles] 					= useState([])
   const [user, setUser] 							= useState({})
   const [mySavedActivities, setMySavedActivities] 	= useState([])
@@ -17,10 +18,9 @@ function Feed({userID}) {
   const [searchTerm, setSearchTerm] 				= useState('')
   const [filter, setFilter] 						= useState('all')
 
-  console.log(signups)
-
 	activities.forEach(function(activity) {
-		activity.signups = [];
+		activity.signups 	= [];
+		activity.comments 	= [];
 
 		if (activity.userID === userID) activity.showEdit = true;
 
@@ -48,6 +48,12 @@ function Feed({userID}) {
 			if (signup.activityID === activity.id) {
 				activity.signups.push(signup) 
 				// console.log(signup);
+			}
+		})
+
+		comments.forEach(function(comment) {
+			if (comment.activityID === activity.id) {
+				activity.comments.push(comment) 
 			}
 		})
 	})
@@ -123,6 +129,10 @@ function Feed({userID}) {
 
 	Axios.get('http://localhost:3001/api/get-signups').then((response) => {
 		setSignups(response.data);
+	})
+
+	Axios.get('http://localhost:3001/api/get-comments').then((response) => {
+		setComments(response.data);
 	})
 
 	Axios.get('http://localhost:3001/api/get-profiles').then((response) => {

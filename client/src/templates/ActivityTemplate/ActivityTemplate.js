@@ -17,6 +17,10 @@ function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActiv
     $detail.toggleClass('hidden');
     ($detail.hasClass('hidden')) ? updateText(true, $target) : updateText(false, $target)
   };
+  
+  var addComment = function(comment, name, imgURL) {
+	console.log(comment);
+  }
 
   var updateText = function(isHidden, $target) {
 	var text = (isHidden) ? 'View Plan Details' : 'Hide Plan Details';
@@ -33,6 +37,19 @@ function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActiv
 
   var updateBuddyText = function(isHidden, $target) {
 	var text = (isHidden) ? 'View Registered Buddies' : 'Hide Registered Buddies';
+	$target.text(text)
+  }
+
+  var toggleComments = function(value) {
+    var $target			= $(value.target)
+    var $parent 		= $target.closest('.activity')
+    var $detail			= $parent.find('.comment-list')
+    $detail.toggleClass('hidden');
+    ($detail.hasClass('hidden')) ? updateCommentText(true, $target) : updateCommentText(false, $target)
+  };
+
+  var updateCommentText = function(isHidden, $target) {
+	var text = (isHidden) ? 'View Comments' : 'Hide Comments';
 	$target.text(text)
   }
 
@@ -129,8 +146,37 @@ function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActiv
 
 			   </ul>
 
-			   <ActivityActions item={item} signedInUserID={signedInUserID} savedActivityID={item.savedActivityID} showEdit={showEdit} removeActivity={removeActivity} handleSavedOrUnsaved={handleSavedOrUnsaved} handleRegisterOrUnregister={handleRegisterOrUnregister} registeredActivityID={item.registeredActivityID} user={user}/>
+			   <ActivityActions item={item} signedInUserID={signedInUserID} savedActivityID={item.savedActivityID} showEdit={showEdit} removeActivity={removeActivity} handleSavedOrUnsaved={handleSavedOrUnsaved} handleRegisterOrUnregister={handleRegisterOrUnregister} registeredActivityID={item.registeredActivityID} user={user} addComment={addComment}/>
 			   
+			   {item.comments && item.comments.length > 0 
+						? <>
+							<li className="view-buddies center-text header-text" onClick={toggleComments}>View Comments</li>
+							<li>
+								<ul className="hidden center-text comment-list">
+									{item.comments.map(comment => {
+										return (
+											<li key={comment.id} className="comment">
+													<Row className="comment">
+														<Col xs={1}>
+															<Link to={getProfileLink(comment)} className="view-profile">
+																<div className="align-picture">
+																	<img className='comment-picture' src={comment.imgURL} alt="comment"></img>
+																</div>
+															</Link>
+														</Col>
+														<Col>
+															<div className='comment-name'>{comment.name}</div>
+															<div className='comment-text'>{comment.comment}</div>
+														</Col>
+													</Row>
+											</li>
+									)})}
+								</ul>
+
+							</li>
+						</>
+						: ''
+					}
 			   <hr></hr>
 			</Container>
   );

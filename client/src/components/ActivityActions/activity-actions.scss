@@ -3,11 +3,31 @@
 .root-activity-actions {
     display: flex;
     padding: .5em;
-    // background-color: $mainBlue;
     justify-content: center;
     text-align: center;
 
     .clicked{
-        color: red;
+        color: $mainPurple;
+    }
+}
+
+.comment-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+    .comment-box {
+        width: 75%;
+    }
+
+    .post-comment {
+        padding: .25em .5em;
+        margin-left: .5em;
+        border: 1px solid $mainBlue;
+        border-radius: 10%;
+        background-color: $mainBlue;
+        color: $mainWhite;
+        margin-top: auto;
+        margin-bottom: auto;
     }
 }

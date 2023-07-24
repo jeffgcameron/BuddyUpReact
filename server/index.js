@@ -144,7 +144,6 @@ app.post('/login', (req, res) => {
 // edit profile
 
 app.put('/edit-profile', (req, res) => {
-    console.log(req.body);
 
     const id                = req.body.id
     const imgURL            = req.body.imgURL
@@ -154,9 +153,8 @@ app.put('/edit-profile', (req, res) => {
     const bio               = req.body.bio
     const activities        = req.body.activities
     const certifications    = req.body.certifications
-
-
     const sqlInsert = "UPDATE profiles SET firstName = ?, lastName = ?, imgURL = ?, location = ?, bio = ?, activities = ?, certifications = ? WHERE id = ?";
+    
     db.query(sqlInsert, [firstName, lastName, imgURL, location, bio, activities, certifications, id], (err, reult) => {
         console.log(err)
     })
@@ -203,6 +201,32 @@ app.post("/my-profile", (req, res) => {
 app.post("/api/my-activities", (req, res) => {
     const sqlSelect = "SELECT * FROM activities WHERE userID = ?";
     db.query(sqlSelect, [req.body.userID], (err, result) => {
+        res.send(result)
+    })
+})
+
+// comments
+
+app.post('/save-comment', (req, res) => {
+    const id                = req.body.id
+    const userID            = req.body.userID
+    const activityID        = req.body.activityID
+    const comment           = req.body.comment
+    const name              = req.body.name
+    const imgURL            = req.body.imgURL
+    const time              = req.body.time
+
+    const sqlInsert = "INSERT INTO comments (id, userID, activityID, comment, name, imgURL, time) VALUES (?, ?, ?, ?, ?, ?, ?);";
+    db.query(sqlInsert, [id, userID, activityID, comment, name, imgURL, time], (err, result) => {
+        console.log(err)
+    })
+
+});
+
+
+app.get('/api/get-comments', (req, res) => {
+    const sqlSelect = "Select * FROM comments";
+    db.query(sqlSelect, (err, result) => {
         res.send(result)
     })
 })
