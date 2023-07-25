@@ -1,14 +1,13 @@
 import './activity-template.scss';
 import {Container , Row, Col} from 'react-bootstrap';
 import React, {useEffect, useState} from 'react';
-import Axios from 'axios';
+import Axios from "axios";
 import ActivityActions from '../../components/ActivityActions/ActivityActions.js';
+import DeleteDialogBox from '../../components/DeleteDialogBox/DeleteDialogBox';
 import { Link } from 'react-router-dom';
-// import EditIcon from '@mui/icons-material/Edit';
-// import DeleteDialogBox from '../../components/DeleteDialogBox/DeleteDialogBox';
 import $ from "jquery"
 
-function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActivity, handleSavedOrUnsaved, handleRegisterOrUnregister, user}) {
+function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActivity, removeComment, handleSavedOrUnsaved, handleRegisterOrUnregister, user}) {
 
   var toggleDetails = function(value) {
     var $target			= $(value.target)
@@ -18,8 +17,20 @@ function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActiv
     ($detail.hasClass('hidden')) ? updateText(true, $target) : updateText(false, $target)
   };
   
-  var addComment = function(comment, name, imgURL) {
-	console.log(comment);
+  var addComment = function(comment, name, id, imgURL, $parent) {
+	var $commentToggle 		= $parent.find('.view-comments')
+	var $commentList 		= $parent.find('.comment-list')
+	var $picture 			= "<div class='align-picture'><img class='comment-picture' src='" + imgURL+ "' alt='" + comment + "'></img></div>"
+	var $name  				= "<div class='comment-name'>" + name + "</div>"
+	var $comment  			= "<div class='comment-text'>" + comment + "</div>"
+	var text 				= "<li class='comment' key=" + id + "><div class='comment row'><div class='col-1'>" + $picture + "</div><div class='col'>" + $name + $comment + "</div></div></li>" 
+	$commentToggle.text("Hide Comments")
+	$commentList.append(text)
+  }
+
+  var deleteComment = function(id) {
+	Axios.delete('http://localhost:3001/api/delete-comment', { data: {id: id}})
+	removeComment(id)
   }
 
   var updateText = function(isHidden, $target) {
@@ -150,7 +161,7 @@ function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActiv
 			   
 			   {item.comments && item.comments.length > 0 
 						? <>
-							<li className="view-buddies center-text header-text" onClick={toggleComments}>View Comments</li>
+							<li className="view-comments center-text header-text" onClick={toggleComments}>View Comments</li>
 							<li>
 								<ul className="hidden center-text comment-list">
 									{item.comments.map(comment => {
@@ -168,6 +179,13 @@ function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActiv
 															<div className='comment-name'>{comment.name}</div>
 															<div className='comment-text'>{comment.comment}</div>
 														</Col>
+														{comment.userID === signedInUserID
+														? <Col xs={1} className='delete-comment'>
+															{/* <DeleteForeverIcon onClick={() => {deleteComment(comment.id)}}></DeleteForeverIcon> */}
+															<DeleteDialogBox action={() => deleteComment(comment.id)} name={'your comment'}/>
+														</Col>
+														: ''
+														}
 													</Row>
 											</li>
 									)})}
@@ -175,7 +193,10 @@ function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActiv
 
 							</li>
 						</>
-						: ''
+						: <>
+						<li className="view-comments center-text header-text" onClick={toggleComments}></li>
+						<ul className="center-text comment-list"></ul>
+						</>
 					}
 			   <hr></hr>
 			</Container>

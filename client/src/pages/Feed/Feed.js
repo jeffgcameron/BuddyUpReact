@@ -10,7 +10,7 @@ function Feed({userID}) {
 
   const [activities, setActivities] 				= useState([])
   const [signups, setSignups] 						= useState([])
-  const [comments, setComments] 						= useState([])
+  const [comments, setComments] 					= useState([])
   const [profiles, setProfiles] 					= useState([])
   const [user, setUser] 							= useState({})
   const [mySavedActivities, setMySavedActivities] 	= useState([])
@@ -57,7 +57,6 @@ function Feed({userID}) {
 			}
 		})
 	})
-	console.log(activities);
 
 	activities.sort(function(itemOne, itemTwo){
 	let x = itemOne.date.toLowerCase();
@@ -76,6 +75,12 @@ function Feed({userID}) {
 	var removeActivity = function(id) {
 		setActivities(currentActivities => {
 			return (currentActivities.filter(item => item.id !== id))
+		})
+	};
+
+	var removeComment = function(id) {
+		setComments(curentComments => {
+			return (curentComments.filter(item => item.id !== id))
 		})
 	};
 
@@ -205,7 +210,7 @@ function Feed({userID}) {
 				return item
 			}
 		}).map((item) => (
-			<ActivityTemplate key={item.id} item={item} signedInUserID={userID} showEdit={item.showEdit} handleRegisterOrUnregister={handleRegisterOrUnregister} showLink={true} removeActivity={removeActivity} handleSavedOrUnsaved={handleSavedOrUnsaved} user={user}/>
+			<ActivityTemplate key={item.id} item={item} signedInUserID={userID} showEdit={item.showEdit} handleRegisterOrUnregister={handleRegisterOrUnregister} showLink={true} removeActivity={removeActivity} removeComment={removeComment} handleSavedOrUnsaved={handleSavedOrUnsaved} user={user}/>
 		))} 
 
 		<div className='footer-component'> <Footer /></div>

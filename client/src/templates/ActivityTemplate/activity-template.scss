@@ -35,7 +35,7 @@
         padding-left: unset;
     }
 
-    .view-plan, .view-buddies {
+    .view-plan, .view-buddies, .view-comments {
         margin-top: .5em;
         font-size: .9em;
         color: $mainBlue;
@@ -79,9 +79,13 @@
         
         display: flex;
         padding-left: 1em;
-        // justify-content: center;
         align-items: center;
         margin-top: .25em;
+
+        .delete-comment {
+            margin-right: 1em;
+            color: red;
+        }
 
         .comment-picture {
             height: 5vh;

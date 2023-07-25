@@ -231,6 +231,13 @@ app.get('/api/get-comments', (req, res) => {
     })
 })
 
+app.delete('/api/delete-comment', (req, res) => {
+    const sqlSelect = "DELETE FROM comments WHERE id = ?";
+    db.query(sqlSelect, [req.body.id], (err, result) => {
+        console.log(err);
+    })
+})
+
 // saves
 
 app.post('/save-activity', (req, res) => {

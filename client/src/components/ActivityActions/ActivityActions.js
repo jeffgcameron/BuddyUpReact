@@ -30,7 +30,6 @@ function ActivityActions({item, signedInUserID, savedActivityID, showEdit, remov
     var $parent 		= $target.closest('.activity')
     var $warning		= $parent.find('.comment-warning')
     var $button			= $parent.find('.comment-button')
-    console.log($button);
     var $detail			= $parent.find('.comment-section')
     var $input			= $parent.find('input');
     const d         = new Date();
@@ -46,10 +45,11 @@ function ActivityActions({item, signedInUserID, savedActivityID, showEdit, remov
         imgURL:       user.imgURL,
         time:         time     
       }
+      console.log(data);
 
       Axios.post('http://localhost:3001/save-comment', data)
 
-      addComment(comment, data.name, data.imgURL)
+      addComment(comment, data.name, data.id, data.imgURL, $parent)
       resetStyles()
     }
 
@@ -130,10 +130,9 @@ function ActivityActions({item, signedInUserID, savedActivityID, showEdit, remov
           <>
             
               <li><Link className='link' to={`/edit-post/id?=${item.id}`}><EditIcon /></Link></li>
-              <li><DeleteDialogBox deleteActivity={deleteActivity} name={item.name}/></li>
+              <li><DeleteDialogBox action={deleteActivity} name={item.name}/></li>
             </>
           : <>
-            {/* <li><HowToRegIcon className='like-button' onClick={likePost}></HowToRegIcon></li> */}
             <li><SignUpDialogBox action={determineRegisterorUnregister} item={item} registeredActivityID={registeredActivityID}/></li>
             <li><SaveDialogBox action={determineSaveorUnsave} item={item} savedActivityID={savedActivityID}/></li>
           </>
