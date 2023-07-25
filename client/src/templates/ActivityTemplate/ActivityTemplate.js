@@ -23,7 +23,7 @@ function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActiv
 	var $picture 			= "<div class='align-picture'><img class='comment-picture' src='" + imgURL+ "' alt='" + comment + "'></img></div>"
 	var $name  				= "<div class='comment-name'>" + name + "</div>"
 	var $comment  			= "<div class='comment-text'>" + comment + "</div>"
-	var text 				= "<li class='comment' key=" + id + "><div class='comment row'><div class='col-1'>" + $picture + "</div><div class='col'>" + $name + $comment + "</div></div></li>" 
+	var text 				= "<li key=" + id + "><div class='comment row'><div class='col-1'>" + $picture + "</div><div class='col'>" + $name + $comment + "</div></div></li>" 
 	$commentList.hasClass('hidden') ? $commentToggle.text("View Comments") : $commentToggle.text("Hide Comments") 
 	$commentList.append(text)
   }
@@ -165,7 +165,7 @@ function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActiv
 								<ul className="hidden center-text comment-list">
 									{item.comments.map(comment => {
 										return (
-											<li key={comment.id} className="comment">
+											<li key={comment.id}>
 													<Row className="comment">
 														<Col xs={1}>
 															<Link to={getProfileLink(comment)} className="view-profile">
@@ -179,7 +179,7 @@ function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActiv
 															<div className='comment-text'>{comment.comment}</div>
 														</Col>
 														{comment.userID === signedInUserID
-														? <Col xs={2} className='delete-comment'>
+														? <Col xs={1} className='delete-comment'>
 															{/* <DeleteForeverIcon onClick={() => {deleteComment(comment.id)}}></DeleteForeverIcon> */}
 															<DeleteDialogBox action={() => deleteComment(comment.id)} name={'your comment'}/>
 														</Col>

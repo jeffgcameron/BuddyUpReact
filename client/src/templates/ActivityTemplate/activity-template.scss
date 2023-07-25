@@ -56,6 +56,10 @@
         }
     }
 
+    .registered-buddies {
+        // background-color:  rgb(214, 214, 213);
+    }
+
     .signup{
 
         display: flex;
@@ -81,10 +85,11 @@
         padding-left: 1em;
         align-items: center;
         margin-top: .25em;
-        width: 100%;
+        background-color: rgb(214, 214, 213);
 
         .delete-comment {
-            margin-right: -1em;
+            margin-right: 1em;
+            padding-right: 1em;
             color: red;
         }
 
