@@ -91,15 +91,12 @@ function Feed({userID}) {
 	}
 
 	var handleSavedOrUnsaved = function(id, savedID) {
-		console.log(savedID);
 			const newList = activities.map((item) => {
 				if (item.id === id) {
 				  const updatedItem = {
 					...item,
 					savedActivityID: savedID,
 				  };
-		  
-				  console.log(updatedItem);
 				  return updatedItem;
 				}
 				return item;

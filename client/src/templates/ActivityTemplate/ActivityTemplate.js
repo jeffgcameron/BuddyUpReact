@@ -24,7 +24,7 @@ function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActiv
 	var $name  				= "<div class='comment-name'>" + name + "</div>"
 	var $comment  			= "<div class='comment-text'>" + comment + "</div>"
 	var text 				= "<li class='comment' key=" + id + "><div class='comment row'><div class='col-1'>" + $picture + "</div><div class='col'>" + $name + $comment + "</div></div></li>" 
-	$commentToggle.text("Hide Comments")
+	$commentList.hasClass('hidden') ? $commentToggle.text("View Comments") : $commentToggle.text("Hide Comments") 
 	$commentList.append(text)
   }
 
@@ -70,7 +70,6 @@ function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActiv
   }
 
   var getProfileLink = function(profile) {
-	console.log('here');
 	if (profile.userID === signedInUserID) return '/profile'
 	return `/user/userID?=${profile.userID}`
   }
@@ -180,7 +179,7 @@ function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActiv
 															<div className='comment-text'>{comment.comment}</div>
 														</Col>
 														{comment.userID === signedInUserID
-														? <Col xs={1} className='delete-comment'>
+														? <Col xs={2} className='delete-comment'>
 															{/* <DeleteForeverIcon onClick={() => {deleteComment(comment.id)}}></DeleteForeverIcon> */}
 															<DeleteDialogBox action={() => deleteComment(comment.id)} name={'your comment'}/>
 														</Col>

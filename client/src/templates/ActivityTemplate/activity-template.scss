@@ -81,9 +81,10 @@
         padding-left: 1em;
         align-items: center;
         margin-top: .25em;
+        width: 100%;
 
         .delete-comment {
-            margin-right: 1em;
+            margin-right: -1em;
             color: red;
         }
 

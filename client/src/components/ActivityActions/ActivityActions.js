@@ -45,7 +45,6 @@ function ActivityActions({item, signedInUserID, savedActivityID, showEdit, remov
         imgURL:       user.imgURL,
         time:         time     
       }
-      console.log(data);
 
       Axios.post('http://localhost:3001/save-comment', data)
 
@@ -80,12 +79,12 @@ function ActivityActions({item, signedInUserID, savedActivityID, showEdit, remov
 
       Axios.post('http://localhost:3001/save-activity', data)
       console.log('saving');
-      handleSavedOrUnsaved(item.id, data.id)
+      if (handleSavedOrUnsaved) handleSavedOrUnsaved(item.id, data.id)
     };
     
     var unsavePost = function() {
       Axios.delete('http://localhost:3001/api/delete-save', { data: {id: savedActivityID}})
-      handleSavedOrUnsaved(item.id, false)
+      if (handleSavedOrUnsaved) handleSavedOrUnsaved(item.id, false)
     };
 
     (shouldSave) ? savePost() : unsavePost()
@@ -105,12 +104,12 @@ function ActivityActions({item, signedInUserID, savedActivityID, showEdit, remov
 
       Axios.post('http://localhost:3001/signup-activity', data)
       console.log('saving');
-      handleRegisterOrUnregister(item.id, data.id)
+      if (handleRegisterOrUnregister) handleRegisterOrUnregister(item.id, data.id)
     };
     
     var unsavePost = function() {
       Axios.delete('http://localhost:3001/api/delete-signup', { data: {id: registeredActivityID}})
-      handleRegisterOrUnregister(item.id, false)
+      if (handleRegisterOrUnregister) handleRegisterOrUnregister(item.id, false)
     };
 
     (shouldSave) ? savePost() : unsavePost()
