@@ -15,7 +15,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function DeleteDialogBox({deleteActivity, name}) {
+export default function DeleteDialogBox({action, name}) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -26,7 +26,7 @@ export default function DeleteDialogBox({deleteActivity, name}) {
   const handleClose = (confirm) => {
     setOpen(false);
     console.log(confirm);
-    if (confirm === true) deleteActivity()
+    if (confirm === true) action()
   };
 
   return (

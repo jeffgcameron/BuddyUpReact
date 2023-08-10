@@ -35,7 +35,7 @@
         padding-left: unset;
     }
 
-    .view-plan, .view-buddies {
+    .view-plan, .view-buddies, .view-comments {
         margin-top: .5em;
         font-size: .9em;
         color: $mainBlue;
@@ -54,6 +54,10 @@
         > a {
             padding: 0 1em;
         }
+    }
+
+    .registered-buddies {
+        // background-color:  rgb(214, 214, 213);
     }
 
     .signup{
@@ -79,9 +83,15 @@
         
         display: flex;
         padding-left: 1em;
-        // justify-content: center;
         align-items: center;
         margin-top: .25em;
+        background-color: rgb(214, 214, 213);
+
+        .delete-comment {
+            margin-right: 1em;
+            padding-right: 1em;
+            color: red;
+        }
 
         .comment-picture {
             height: 5vh;

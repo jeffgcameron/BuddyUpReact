@@ -54,7 +54,7 @@ function Login({getCookie, setUserID, setToken}) {
 
         <h2 className='margin-bottom'>Login</h2>
 
-        <TextField id="outlined-multiline-static" className="margin-bottom input" label="Email" onChange={(e) => {setEmail(e.target.value)}}/>
+        <TextField id="outlined-multiline-static" className="margin-bottom input" label="Username" onChange={(e) => {setEmail(e.target.value)}}/>
 
         <br></br>
 

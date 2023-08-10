@@ -56,7 +56,7 @@ function Profile({userID}) {
 
         Axios.post('http://localhost:3001/my-profile', data).then((response) => {
             if (response.data.length === 0) { 
-                // window.location.replace('/build-profile');
+                window.location.replace('/build-profile');
                 console.log('profile here');
             } else {
                 response.data[0].activities         = response.data[0].activities.split('*&'); 

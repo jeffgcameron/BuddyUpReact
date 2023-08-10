@@ -78,8 +78,6 @@ app.post('/register', (req, res) => {
 
     var post = function(hash) {
         const sqlInsert = "INSERT INTO users (id, email, password) VALUES (?, ?, ?);";
-        console.log(req.body)
-        console.log(hash)
         db.query(sqlInsert, [req.body.id, req.body.email, hash], (err, result) => {
                 if (err) res.send({err: err});
                 if (result) res.send(result);
@@ -94,26 +92,27 @@ app.post('/register', (req, res) => {
 
 app.post('/login', (req, res) => {
 
-    const email      = req.body.email
-    const password   = req.body.password
-    const sqlSelect = "SELECT * FROM users WHERE email = ?";
+    const email         = req.body.email
+    const password      = req.body.password
+    const sqlSelect     = "SELECT * FROM users WHERE email = ?";
+    console.log('here for login');
 
     db.query(sqlSelect, [email], (err, result) => {
         if (result.length === 0) { res.send({message: 'No username found'}); return; }
         bcrypt.compare(password, result[0].password).then((match) => {
             if (!match) {
                 res.send({message: "Wrong password"})
+                console.log('no match');
             } else {
-
+                console.log('is match');
                 const accessToken = createTokens(result[0]);
-                
                 res.cookie('access-token', accessToken)
                 res.cookie('id', result[0].id)
 
                 res.json(result[0])
             }
         }).catch((err) => {
-            console.log(err);
+            console.log(err, 'login');
         })
         
     })
@@ -228,6 +227,13 @@ app.get('/api/get-comments', (req, res) => {
     const sqlSelect = "Select * FROM comments";
     db.query(sqlSelect, (err, result) => {
         res.send(result)
+    })
+})
+
+app.delete('/api/delete-comment', (req, res) => {
+    const sqlSelect = "DELETE FROM comments WHERE id = ?";
+    db.query(sqlSelect, [req.body.id], (err, result) => {
+        console.log(err);
     })
 })
 

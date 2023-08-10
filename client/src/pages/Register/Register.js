@@ -32,25 +32,35 @@ function Register({getCookie, setUserID, setToken}) {
     $error.text(text);
   }
 
-  var login = function(data) {
+  var login = function(credentials) {
+
+    var data = {
+      email:        credentials.email,
+      password:     credentials.password
+    }
+    console.log(data);
 
       Axios.post("http://localhost:3001/login", data, {withCredentials: true}).then((response) => {
 
         if (response.data.message) {
           var $error = $('.error');
           $error.removeClass('hidden');
+          console.log('tyhis is bad');
           $error.text(response.data.message);
         } else {
           getCookie(setToken, 'access-token')
           getCookie(setUserID, 'id')
           localStorage.setItem('is-logged-in', 'true')
-          // window.location.replace('/build-profile')
+          console.log('yes this works');
+          window.location.replace('/build-profile')
         }
       })
+
+      
   }
 
-  var register = function() {
-
+  var register = function(e) {
+    e.preventDefault();
     var passwordsMatch = function() {
 
       if (password !== confirmPassword) {
@@ -74,7 +84,7 @@ function Register({getCookie, setUserID, setToken}) {
     var emailIsEmail = function() {
 
       if (email.length === 0) {
-        showError('Please enter valid email');
+        showError('Please enter valid username');
         return false;
       }
 
@@ -97,6 +107,7 @@ function Register({getCookie, setUserID, setToken}) {
       if (response.data.err) {
         showError('This email already exists. Please sign in.')
       } else {
+        console.log('registered');
         login(data)
       }
     }).catch((e) => {
@@ -113,7 +124,7 @@ function Register({getCookie, setUserID, setToken}) {
 
         <h2>Register</h2>
 
-        <TextField id="outlined-multiline-static" className="margin-bottom input" label="Email" onChange={(e) => {setEmail(e.target.value)}}/>
+        <TextField id="outlined-multiline-static" className="margin-bottom input" label="Username" onChange={(e) => {setEmail(e.target.value)}}/>
 
         <FormControl className='input margin-bottom' variant="outlined" >
             <InputLabel htmlFor="create-password">Password</InputLabel>
@@ -162,7 +173,7 @@ function Register({getCookie, setUserID, setToken}) {
 
         <br></br>
 
-        <button className='button margin-bottom' onClick={() => {register()}}>Register</button>
+        <button className='button margin-bottom' onClick={(e) => {register(e)}}>Register</button>
 
         <div className='error hidden'></div>
 

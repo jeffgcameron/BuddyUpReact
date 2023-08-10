@@ -10,7 +10,7 @@ function Feed({userID}) {
 
   const [activities, setActivities] 				= useState([])
   const [signups, setSignups] 						= useState([])
-  const [comments, setComments] 						= useState([])
+  const [comments, setComments] 					= useState([])
   const [profiles, setProfiles] 					= useState([])
   const [user, setUser] 							= useState({})
   const [mySavedActivities, setMySavedActivities] 	= useState([])
@@ -57,7 +57,6 @@ function Feed({userID}) {
 			}
 		})
 	})
-	console.log(activities);
 
 	activities.sort(function(itemOne, itemTwo){
 	let x = itemOne.date.toLowerCase();
@@ -79,6 +78,12 @@ function Feed({userID}) {
 		})
 	};
 
+	var removeComment = function(id) {
+		setComments(curentComments => {
+			return (curentComments.filter(item => item.id !== id))
+		})
+	};
+
 	var filterActivities = function(term) {
 		setFilter(term)
 		$('.filter-actions li').removeClass('filtered')
@@ -86,15 +91,12 @@ function Feed({userID}) {
 	}
 
 	var handleSavedOrUnsaved = function(id, savedID) {
-		console.log(savedID);
 			const newList = activities.map((item) => {
 				if (item.id === id) {
 				  const updatedItem = {
 					...item,
 					savedActivityID: savedID,
 				  };
-		  
-				  console.log(updatedItem);
 				  return updatedItem;
 				}
 				return item;
@@ -141,7 +143,7 @@ function Feed({userID}) {
 
 	Axios.post('http://localhost:3001/my-profile', {userID: userID}).then((response) => {
 		if (response.data.length === 0) {
-			// window.location.replace('/build-profile');
+			window.location.replace('/build-profile');
 		} else {
 			setUser(response.data[0])
 		}
@@ -205,7 +207,7 @@ function Feed({userID}) {
 				return item
 			}
 		}).map((item) => (
-			<ActivityTemplate key={item.id} item={item} signedInUserID={userID} showEdit={item.showEdit} handleRegisterOrUnregister={handleRegisterOrUnregister} showLink={true} removeActivity={removeActivity} handleSavedOrUnsaved={handleSavedOrUnsaved} user={user}/>
+			<ActivityTemplate key={item.id} item={item} signedInUserID={userID} showEdit={item.showEdit} handleRegisterOrUnregister={handleRegisterOrUnregister} showLink={true} removeActivity={removeActivity} removeComment={removeComment} handleSavedOrUnsaved={handleSavedOrUnsaved} user={user}/>
 		))} 
 
 		<div className='footer-component'> <Footer /></div>
