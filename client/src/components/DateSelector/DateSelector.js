@@ -8,7 +8,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 export default function DateSelector({setDate, date}) {
 
   var setNewDate = function(data) {
-    var newDate = data.$M - 1 + '/' + data.$D + '/' +  data.$y
+    var newDate = data.$M + 1 + '/' + data.$D + '/' +  data.$y
     setDate(newDate)
   }
 

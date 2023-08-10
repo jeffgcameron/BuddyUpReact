@@ -143,7 +143,7 @@ function Feed({userID}) {
 
 	Axios.post('http://localhost:3001/my-profile', {userID: userID}).then((response) => {
 		if (response.data.length === 0) {
-			// window.location.replace('/build-profile');
+			window.location.replace('/build-profile');
 		} else {
 			setUser(response.data[0])
 		}

@@ -92,7 +92,7 @@ function CreatePost({userID, setPost}) {
     useEffect(() => {
         Axios.post('http://localhost:3001/my-profile', {userID: userID}).then((response) => {
             // if (response.data.length === 0) console.log('create here');;
-            // if (response.data.length === 0) window.location.replace('/build-profile');
+            if (response.data.length === 0) window.location.replace('/build-profile');
             setUserName(response.data[0].firstName + ' ' + response.data[0].lastName)
             setImgURL(response.data[0].imgURL)
         })

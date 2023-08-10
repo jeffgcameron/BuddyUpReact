@@ -20,10 +20,12 @@ function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActiv
   var addComment = function(comment, name, id, imgURL, $parent) {
 	var $commentToggle 		= $parent.find('.view-comments')
 	var $commentList 		= $parent.find('.comment-list')
+	var $button				= "<div class='delete-comment col-1'> <a class='delete-activity' onClick='" + deleteComment(id) + "'> <svg class='MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root' focusable='false' aria-hidden='true' viewBox='0 0 24 24' data-testid='DeleteForeverIcon'><path d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12 1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z'></path></svg></a></div>"
+	// todo allow for delete 
 	var $picture 			= "<div class='align-picture'><img class='comment-picture' src='" + imgURL+ "' alt='" + comment + "'></img></div>"
 	var $name  				= "<div class='comment-name'>" + name + "</div>"
 	var $comment  			= "<div class='comment-text'>" + comment + "</div>"
-	var text 				= "<li key=" + id + "><div class='comment row'><div class='col-1'>" + $picture + "</div><div class='col'>" + $name + $comment + "</div></div></li>" 
+	var text 				= "<li key=" + id + "><div class='comment row'><div class='col-1'>" + $picture + "</div><div class='col'>" + $name + $comment + "</div>" + $button + "</div></li>" 
 	$commentList.hasClass('hidden') ? $commentToggle.text("View Comments") : $commentToggle.text("Hide Comments") 
 	$commentList.append(text)
   }
@@ -180,7 +182,6 @@ function ActivityTemplate({item, signedInUserID, showEdit, showLink, removeActiv
 														</Col>
 														{comment.userID === signedInUserID
 														? <Col xs={1} className='delete-comment'>
-															{/* <DeleteForeverIcon onClick={() => {deleteComment(comment.id)}}></DeleteForeverIcon> */}
 															<DeleteDialogBox action={() => deleteComment(comment.id)} name={'your comment'}/>
 														</Col>
 														: ''

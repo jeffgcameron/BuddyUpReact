@@ -17,7 +17,6 @@ function User({signedInUserID}) {
     const [comments, setComments] 					    = useState([])
     const [user, setUser] 							    = useState({})
     const [userID, setUserID] 							= useState('')
-    console.log(userID);
 
     userActivities.forEach(function(activity){
         activity.signups 	= [];
@@ -79,8 +78,7 @@ function User({signedInUserID}) {
         Axios.post('http://localhost:3001/my-profile', data).then((response) => {
             console.log(data)
             if (response.data.length === 0) { 
-                console.log('user here');
-                // window.location.replace('/build-profile');
+                window.location.replace('/build-profile');
             } else {
                 response.data[0].activities         = response.data[0].activities.split('*&'); 
                 response.data[0].certifications     = response.data[0].certifications.split('*&'); 
@@ -106,7 +104,7 @@ function User({signedInUserID}) {
 
 	Axios.post('http://localhost:3001/my-profile', {userID: signedInUserID}).then((response) => {
 		if (response.data.length === 0) {
-			// window.location.replace('/build-profile');
+			window.location.replace('/build-profile');
 		} else {
 			setUser(response.data[0])
 		}
